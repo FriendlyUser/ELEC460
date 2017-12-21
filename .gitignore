@@ -1,0 +1,45 @@
+# LaTeX temporary files
+*.aux
+*.log
+*.toc
+*.xdy
+
+# PDF output - usually a bad idea to keep this in Git
+*.pdf
+
+# Zip files
+*.zip
+
+# Latexmk
+*.fdb_latexmk
+
+# SyncTeX
+*.synctex.gz
+
+# LaTeX Beamer
+*.snm
+*.vrb
+*.nav
+*.out
+*.ilg
+
+# BibTeX
+*.bbl
+*.blg
+
+# SVN Files, and text files
+*.svn
+*.txt 
+
+# folders specific for me
+/Mega/
+/Textbooks/
+/CourseHero/
+/Reference/
+
+# Keep lecture slides and other goodies, hmm, maybe manually add
+!/uploads/rubbish/stuff/keep/
+
+# Other files
+*.gif
+*.gif.png

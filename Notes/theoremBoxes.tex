@@ -1,0 +1,46 @@
+\definecolor{ocre}{RGB}{243,102,25} % Define the orange color used for highlighting throughout the book
+\definecolor{aliceblue}{rgb}{0.94, 0.97, 1.0}	% Defintion colback
+\definecolor{byzantium}{rgb}{0.44, 0.16, 0.39}  % Defintion colframe
+
+\definecolor{richelectricblue}{rgb}{0.03, 0.57, 0.82} 	% Example colback
+\definecolor{powderblue}{rgb}{0.69, 0.88, 0.9} 	% Example colframe
+
+\definecolor{cornsilk}{rgb}{1.0, 0.97, 0.86}
+\definecolor{scarlet}{rgb}{1.0, 0.13, 0.0}
+%----------------------------------------------------------------------------------------
+%	THEOREM STYLES
+%----------------------------------------------------------------------------------------
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm} % For math equations, theorems, symbols, etc
+
+\newcommand{\intoo}[2]{\mathopen{]}#1\,;#2\mathclose{[}}
+\newcommand{\ud}{\mathop{\mathrm{{}d}}\mathopen{}}
+\newcommand{\intff}[2]{\mathopen{[}#1\,;#2\mathclose{]}}
+
+\renewcommand{\qedsymbol}{$\blacksquare$}% Optional qed square
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems}
+
+% May need to add breakable, but perhaps each theorem should be continuous, and not split up.
+\newtcbtheorem[number within=section]{theorem}{Theorem}%
+{colback=orange!5,colframe=black,fonttitle=\bfseries}{th}
+
+\newtcbtheorem[number within=section]{definition}{Definition}%
+{colback=aliceblue,colframe=byzantium,fonttitle=\bfseries}{th}
+
+\newtcbtheorem[number within=section]{example}{Example}%
+{colback=powderblue,colframe=richelectricblue,fonttitle=\bfseries}{th}
+
+\newtcbtheorem[number within=section]{corollary}{Corollary}%
+{colback=cornsilk,colframe=scarlet!50!black,fonttitle=\bfseries}{th}
+%----------------------------------------------------------------------------------------
+%	REMARK ENVIRONMENT
+%----------------------------------------------------------------------------------------
+
+\newenvironment{remark}{\par\vspace{10pt}\small % Vertical white space above the remark and smaller font size
+	\begin{list}{}{
+			\leftmargin=35pt % Indentation on the left
+			\rightmargin=25pt}\item\ignorespaces % Indentation on the right
+		\makebox[-2.5pt]{\begin{tikzpicture}[overlay]
+			\node[draw=ocre!60,line width=1pt,circle,fill=ocre!25,font=\sffamily\bfseries,inner sep=2pt,outer sep=0pt] at (-15pt,0pt){\textcolor{ocre}{R}};\end{tikzpicture}} % Orange R in a circle
+		\advance\baselineskip -1pt}{\end{list}\vskip5pt} % Tighter line spacing and white space after remark

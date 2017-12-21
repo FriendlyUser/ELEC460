@@ -1,0 +1,95 @@
+<h1 id="testing-out-images">Testing out Images</h1>
+<h2 id="steady-state-error">Steady-state error</h2>
+<h3 id="definition">Definition</h3>
+<p>Consider a feedback system as in Fig. [fig:sse].</p>
+<p>= [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=blue!20, rectangle, minimum height=2em, minimum width=2em] = [draw, fill=blue!20, circle, node distance=1cm] = [coordinate] = [coordinate]</p>
+<p>(input) ; (sum) ; (system2) <span><span class="math inline">\(G\)</span></span>; (output) ; (h) <span><span class="math inline">\(H\)</span></span>; (input) – node <span><span class="math inline">\(R\)</span></span> (sum); (sum) – node <span><span class="math inline">\(E\)</span></span> (system2); (system2) – node (y) <span><span class="math inline">\(C\)</span></span>(output); (y) |- (h) ; (h) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p>The steady-state error (if it exists) is defined by <span class="math display">\[\label{eq:sse}
+    e_{\mathrm{ss}}:= \lim_{t\to\infty} e(t).\]</span></p>
+<p>If the system is stable, one can apply the Finaly Value Theorem to obtain <span class="math display">\[\lim_{t\to\infty} e(t) = \lim_{s\to 0} sE(s).\]</span></p>
+<p>In general, one would like the steady-state error to be as small as possible, ideally zero.</p>
+<h3 id="system-type-and-steady-state-error">System type and steady-state error</h3>
+<p>In general, to calculate the steady-state error, one uses the FVT as in equation ([eq:sse]). However, if the system is stable and <em>unity-feedback</em>, then one can determine the system type and use this information to obtain the steady-state error much more easily.</p>
+<p>Let <span class="math inline">\(G\)</span> be the feedforward transfer function. Assume that <span class="math inline">\(G\)</span> is written as <span class="math display">\[G=\frac{N(s)}{s^kD(s)},\]</span> where <span class="math inline">\(N\)</span> and <span class="math inline">\(D\)</span> are not factorizable by <span class="math inline">\(s\)</span>. Then the type of the system is given by the integer <span class="math inline">\(k\)</span>. Fig. [fig:systype] shows the general form of systems of types 1, 2 and 3.</p>
+<p><strong>Type 0Type 1Type 2</strong><br />
+</p>
+<p>= [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=3em] = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=blue!20, circle, node distance=1cm] = [coordinate] = [coordinate]</p>
+<p>(input) ; (sum) ; (system) <span><span class="math inline">\(\frac{N_0(s)}{D_0(s)}\)</span></span>; (output) ; (m) ; (input) – node <span><span class="math inline">\(R\)</span></span> (sum); (sum) – node (system); (system) – node (y) <span><span class="math inline">\(C\)</span></span>(output); (y) |- (m) ; (m) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p>(input) ; (sum) ; (system) <span><span class="math inline">\(\frac{N_1(s)}{sD_1(s)}\)</span></span>; (output) ; (m) ; (input) – node <span><span class="math inline">\(R\)</span></span> (sum); (sum) – node (system); (system) – node (y) <span><span class="math inline">\(C\)</span></span>(output); (y) |- (m) ; (m) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p>(input) ; (sum) ; (system) <span><span class="math inline">\(\frac{N_2(s)}{s^2D_2(s)}\)</span></span>; (output) ; (m) ; (input) – node <span><span class="math inline">\(R\)</span></span> (sum); (sum) – node (system); (system) – node (y) <span><span class="math inline">\(C\)</span></span>(output); (y) |- (m) ; (m) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p>Let us carry further the computation of the steady-state error for a stable unity-feedback system. <span class="math display">\[sE(s) = s(R(s)-C(s)) = s\left(R(s)-\frac{G(s)}{1+G(s)}R(s)\right)=\frac{s}{1+G(s)}R(s).\]</span></p>
+<p>For unit-step input, one has <span class="math inline">\(R(s)=1/s\)</span>. Thus, <span class="math display">\[sE(s) = \frac{s}{1+G(s)}*\frac{1}{s} = \frac{1}{1+G(s)}
+\xrightarrow[s\to 0]{}\frac{1}{1+\lim_{s\to 0}G(s)}.\]</span> For a system of type 0, one has <span class="math display">\[\lim_{s\to 0}G(s) = \lim_{s\to 0}\frac{N_0(s)}{D_0(s)} = \frac{N_0(0)}{D_0(0)}.\]</span> Thus, the steady-state error of a system of type 0 for unit-step input is given by <span class="math display">\[e_{\mathrm{ss}}= \frac{1}{1+\frac{N_0(0)}{D_0(0)}}.\]</span></p>
+<p>Carrying out similar calculations, one obtains the following table, which shows the steady-state errors of systems of types 0, 1, 2, 3 for unit-step, unit-ramp and unit-parabola inputs.</p>
+<table>
+<caption>Steady-state errors of systems of different types and for different inputs.<span data-label="tab:systype"></span></caption>
+<thead>
+<tr class="header">
+<th align="center">System type</th>
+<th align="center">Step input</th>
+<th align="center">Ramp input</th>
+<th align="center">Parabolic input</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Type 0</td>
+<td align="center"><span class="math inline">\(\frac{1}{1+K_p}\)</span></td>
+<td align="center"><span class="math inline">\(\infty\)</span></td>
+<td align="center"><span class="math inline">\(\infty\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">Type 1</td>
+<td align="center">0</td>
+<td align="center"><span class="math inline">\(\frac{1}{K_v}\)</span></td>
+<td align="center"><span class="math inline">\(\infty\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center">Type 2</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center"><span class="math inline">\(\frac{1}{K_a}\)</span></td>
+</tr>
+<tr class="even">
+<td align="center">Type 3</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>The constants <span class="math inline">\(K_p\)</span>, <span class="math inline">\(K_v\)</span>, and <span class="math inline">\(K_a\)</span> are defined as below</p>
+<ul>
+<li><p>for a system of type 0, <span class="math inline">\(K_p:=\frac{N_0(0)}{D_0(0)}\)</span> (position constant);</p></li>
+<li><p>for a system of type 1, <span class="math inline">\(K_v:=\frac{N_1(0)}{D_1(0)}\)</span> (velocity constant);</p></li>
+<li><p>for a system of type 2, <span class="math inline">\(K_a:=\frac{N_2(0)}{D_2(0)}\)</span> (acceleration constant).</p></li>
+</ul>
+<h3 id="other-block-diagrams">Other Block Diagrams</h3>
+<p>In the Laplace domain, we have <span class="math display">\[I = K_D(sZ_{\mathrm{ref}}-sZ) + K_P(Z_{\mathrm{ref}}-Z) = (K_Ds+K_P)(Z_{\mathrm{ref}}-Z),\]</span> which leads to the following block diagram.</p>
+<p>[fig:examplesystempd] = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=blue!20, circle, node distance=1cm] = [coordinate] = [coordinate]</p>
+<p>(input) ; (sum) ; (system) <span><span class="math inline">\(K_D s + K_P\)</span></span>; (system2) <span><span class="math inline">\(\frac{k}{ms^2}\)</span></span>; (output) ; (m) ; (input) – node <span><span class="math inline">\(Z_{\mathrm{ref}}\)</span></span> (sum); (sum) – node (system); (system) – node <span><span class="math inline">\(I\)</span></span> (system2); (system2) – node (y) <span><span class="math inline">\(Z\)</span></span>(output); (y) |- (m) ; (m) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p>[fig:lag] = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=blue!20, circle, node distance=1cm] = [coordinate] = [coordinate]</p>
+<p>(input) ; (sum) ; (con1) <span><span class="math inline">\(\frac{s+p_c}{s+z_c}\)</span></span>; (con2) <span><span class="math inline">\(K_D s + K_P\)</span></span>; (system2) <span><span class="math inline">\(\frac{k}{ms^2}\)</span></span>; (output) ; (m) ; (input) – node <span><span class="math inline">\(Z_{\mathrm{ref}}\)</span></span> (sum); (sum) – (con1); (con1) – (con2); (con2) – node <span><span class="math inline">\(I\)</span></span> (system2); (system2) – node (y) <span><span class="math inline">\(Z\)</span></span>(output); (y) |- (m) ; (m) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p>[fig:integral] = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em] = [draw, fill=blue!20, circle, node distance=1cm] = [coordinate] = [coordinate]</p>
+<p>(input) ; (sum) ; (system) <span><span class="math inline">\(\frac{K}{s}\)</span></span>; (system2) <span><span class="math inline">\(\frac{1}{Ts+1}\)</span></span>; (output) ; (m) ; (input) – node <span><span class="math inline">\(R\)</span></span> (sum); (sum) – node (system); (system) – (system2); (system2) – node (y) <span><span class="math inline">\(C\)</span></span>(output); (y) |- (m) ; (m) -| node[pos=0.99] <span><span class="math inline">\(-\)</span></span> node [near end] (sum);</p>
+<p><span>Test</span> A set <span class="math inline">\(\mathcal{D}(G)\)</span> in dense in <span class="math inline">\(L^2(G)\)</span>, <span class="math inline">\(|\cdot|_0\)</span>.</p>
+<h2 id="definitions">Definitions</h2>
+<p>This is an example of a definition. A definition could be mathematical or it could define a concept.</p>
+<p>Given a vector space <span class="math inline">\(E\)</span>, a norm on <span class="math inline">\(E\)</span> is an application, denoted <span class="math inline">\(||\cdot||\)</span>, <span class="math inline">\(E\)</span> in <span class="math inline">\(\mathbb{R}^+=[0,+\infty[\)</span> such that: <span class="math display">\[\begin{aligned}
+    &amp; ||\mathbf{x}||=0\ \Rightarrow\ \mathbf{x}=\mathbf{0}\\
+    &amp; ||\lambda \mathbf{x}||=|\lambda|\cdot ||\mathbf{x}||\\
+    &amp; ||\mathbf{x}+\mathbf{y}||\leq ||\mathbf{x}||+||\mathbf{y}||
+    \end{aligned}\]</span></p>
+<h2 id="notations">Notations</h2>
+<p>Given an open subset <span class="math inline">\(G\)</span> of <span class="math inline">\(\mathbb{R}^n\)</span>, the set of functions <span class="math inline">\(\varphi\)</span> are:</p>
+<ol>
+<li><p>Bounded support <span class="math inline">\(G\)</span>;</p></li>
+<li><p>Infinitely differentiable;</p></li>
+</ol>
+<p>a vector space is denoted by <span class="math inline">\(\mathcal{D}(G)\)</span>.</p>
+<h2 id="remarks">Remarks</h2>
+<p>This is an example of a remark.</p>
+<p>The concepts presented here are now in conventional employment in mathematics. Vector spaces are taken over the field <span class="math inline">\(\mathbb{K}=\mathbb{R}\)</span>, however, established properties are easily extended to <span class="math inline">\(\mathbb{K}=\mathbb{C}\)</span>.</p>
+<h2 id="corollaries">Corollaries</h2>
+<p>This is an example of a corollary.</p>
+<p><span>definition</span> The concepts presented here are now in conventional employment in mathematics. Vector spaces are taken over the field <span class="math inline">\(\mathbb{K}=\mathbb{R}\)</span>, however, established properties are easily extended to <span class="math inline">\(\mathbb{K}=\mathbb{C}\)</span>.</p>
