@@ -1,0 +1,408 @@
+%\title{Article HW Template}
+
+%\documentclass[12pt]{article}
+\documentclass[12pt]{scrartcl}
+\nonstopmode
+%\usepackage[utf-8]{inputenc}
+\usepackage{graphicx} % Required for including pictures
+\graphicspath{{Images/}} % Specifies the directory where pictures are stored
+\usepackage[figurename=Figure]{caption}
+\usepackage{float}    % For tables and other floats
+\usepackage{verbatim} % For comments and other
+\usepackage{amsmath}  % For math
+\usepackage{amssymb}  % For more math
+\usepackage{fullpage} % Set margins and place page numbers at bottom center
+\usepackage{paralist} % paragraph spacing
+\usepackage{listings} % For source code
+\usepackage{subfig}   % For subfigures
+%\usepackage{physics}  % for simplified dv, and 
+\usepackage{enumitem} % useful for itemization
+\usepackage{siunitx}  % standardization of si units
+
+\usepackage{tikz} % Useful for drawing plots
+\usepackage{pgfplotstable}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.5}
+
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	%numbers=left,%
+	%numberstyle={\tiny \color{black}},% size of the numbers
+	%numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},    
+}
+
+\title{ELEC 340 Assignment 1}
+
+\usepackage{circuitikz}
+\usepackage{etoolbox}
+\makeatletter
+
+\pgfcircdeclarebipole{}
+{\ctikzvalof{bipoles/tline/height}}{tline}
+{\ctikzvalof{bipoles/tline/height}}
+{\ctikzvalof{bipoles/tline/width}}
+{   
+	%% First find distance from startpoint to endpoint
+	\pgfpointdiff{\pgfpointanchor{\ctikzvalof{bipole/name}start}{center}}
+	{\pgfpointanchor{\ctikzvalof{bipole/name}end}{center}}
+	\pgfmathparse{veclen(\the\pgf@x,\the\pgf@y)}
+	%% The coordinate system has been changed so that the origin is at the midpoint and
+	%% the line is along the x axis. So shift back by half the length of the line, and 
+	%% make the cylinder of width roughly the length of the line, with a 40pt setback
+	%% on each side.
+	\pgftransformxshift{\pgfmathresult/2-30pt}
+	\pgf@circ@res@left=\dimexpr-\pgfmathresult pt+40pt\relax
+	%% Here is the original function, copied directly from the source of circuittikz, 
+	%% down to next %%
+	\pgf@circ@res@step=.2\pgf@circ@res@right % half x axis
+	\pgfsetlinewidth{\pgfkeysvalueof{/tikz/circuitikz/bipoles/thickness}\pgfstartlinewidth}
+	\pgfpathellipse{\pgfpoint{\pgf@circ@res@right-\pgf@circ@res@step}{0}}
+	{\pgfpoint{\pgf@circ@res@step}{0}}
+	{\pgfpoint{0}{-\pgf@circ@res@up}}
+	\pgfpathmoveto{\pgfpoint{\pgf@circ@res@right-\pgf@circ@res@step}{\pgf@circ@res@up}}
+	\pgfpathlineto{\pgfpoint{\pgf@circ@res@left+\pgf@circ@res@step}{\pgf@circ@res@up}}
+	\pgfpatharc{-90}{90}{-\pgf@circ@res@step and -\pgf@circ@res@up}
+	\pgfpathlineto{\pgfpoint{\pgf@circ@res@right-\pgf@circ@res@step}{\pgf@circ@res@down}}
+	%% I have to fill the figure to block out the original line
+	\pgfsetfillcolor{white}
+	\pgfusepath{draw,fill}
+	%% Redraw part of the line that gets blocked by the cylinder by mistake
+	\pgfpathmoveto{\pgfpoint{\pgf@circ@res@right-2*\pgf@circ@res@step}{0pt}}
+	\pgfpathlineto{\pgfpoint{\pgf@circ@res@right}{0pt}}
+	\pgfusepath{draw}
+}
+\begin{document}
+
+
+\begin{center}
+	\hrule
+	\vspace{.4cm}
+	{\textbf { \large ELEC 340 --- Applied Electromagnetics and Photonics}}
+\end{center}
+{\textbf{Name:}\ David Li \hspace{\fill} \textbf{Student Number:} \ V00818631  \\
+{\textbf{Due Date:} Thursday, 11 January 2018, 11:30 AM \hspace{\fill} \textbf{Assignment 1} \today \\
+\hrule
+
+\paragraph{Problem 1}
+The voltage of an electromagnetic wave traveling on a transmission line is given by, 
+\[
+v(z,t) = 5e^{\alpha z} \sin(4\pi \times 109t - 20 \pi z) \ \si{\volt}
+\]
+where z is the distance in meters from the generator. 
+
+\begin{figure}[H]
+	\centering
+	\tikzstyle{block} = [draw, fill=white, rectangle, 
+	minimum height=3em, minimum width=3em]
+	\begin{circuitikz}
+		\draw (0,4) to [twoport,t=$Z_g$](4,4);
+		\draw (4,0) to[TL] (10,0);
+		\draw (4,4) to[TL]  (10,4);
+		\draw (10,4) to [twoport,t=$Z_L$](10,0);
+		\draw (0,0) to [sI] (0,4);
+		\draw (4,0) to (0,0);
+	\end{circuitikz}
+	\caption{Transmission line}
+\end{figure}
+\begin{enumerate}[label=(\alph*)]
+	\item Find the frequency, wavelength, and phase velocity of the wave.
+	\begin{align*}
+	& \omega = 4 \pi \times 109 \si{\radian / \si{\second}} \rightarrow \text{frequency} = \frac{\omega}{2\pi} = 2 \times 109 = 218 \si{\hertz} \\
+	& \beta=\frac{2\pi}{\lambda}= 20\pi \rightarrow \text{wavelength} =\lambda = {2\pi}{\beta} = \frac{2 \pi} {20 \pi} = 0.1 \si{\meter} \\
+	& \text{phase velocity} =  f \lambda = \frac{\omega}{\beta} = \frac{4 \pi \times 109}{20 \pi} = 21.8 \si{\meter} / \si{\second}
+	\end{align*}
+	\item  At 𝑧 = $2 \si{\meter}$, the amplitude of the wave was measured to be $2 \si{\volt}$. Find $\alpha$. 
+	When $z = 2$, $v(2,t)=2 \si{\volt} = 5e^{\alpha z} \si{\volt}$ 
+\end{enumerate}
+
+\paragraph{Problem 2} 
+A laser beam travelling through fog was observed to have an intensity of 1 ($\mu \si{\watt}/ \si{\meter}^2$) at a distance of $2 \si{\meter}$ from the laser gun and an intensity of 0.2 ($\mu \si{\watt}/ \si{\meter}^2$) at a distance of $3 \si{\meter}$. Given that the intensity of an electromagnetic wave is proportional to the square of its electric-field amplitude, find the attenuation constant $\alpha$ of fog. 
+
+Since intensity of an electromagnetic wave is s proportional to the square of its electric-field amplitude, it is:
+\begin{align*}
+& E(x,t) = E_0e^{-\alpha x}\cos(\omega t - \beta x) \\
+& I(x,t) = [E(x,t)]^2 = [ E_0e^{-\alpha x}\cos(\omega t - \beta x) ]^2 	\\
+& I(x,t) = E_0^2e^{-2\alpha x}\cos^2(\omega t - \beta x)
+\end{align*}
+
+When $x=2 \si{\meter}$, $I(x,t)=1 \mu \si{\watt}/ \si{\meter}^2$, and when $x=3$, $I(x,t)=0.2 (\mu \si{\watt}/ \si{\meter}^2)$
+
+\begin{align*}
+& \cfrac{E_0^2e^{-2\alpha(2)}}{E_0^2e^{-2\alpha(3)}} \\
+&=\cfrac{1 \times 10^{-6}}{0.2 \times 10^{-6}}=5 \\
+& e^{-4\alpha} \times e^{6\alpha}=e^{2\alpha}=5 \\
+& \alpha = 0.8 (NP/m)
+\end{align*}
+\paragraph{Problem 3}
+\begin{enumerate}[label=(\alph*)]
+	\item  $v(t)= 9 \cos(\omega t - \pi / 3) \si{\volt}$ \newline
+	$\tilde{V}=9e^{-j \pi / 3}  \si{\volt}$
+	\item  $v(t)= 12 \sin(\omega t + \pi / 4) \si{\volt}$  \newline
+	Using $\cos(\omega t)=\sin(\omega t + \pi/2)$,  $\sin(\omega t + \pi / 4 + \pi /2 - \pi/2)= \cos(\omega t - \pi /4) $  \newline
+	$\tilde{V}=12e^{-j \pi / 4}  \si{\volt}$
+	\item  $i(x,t)= 5e^{-3x} \sin(\omega t + \pi / 6) \si{\ampere}$  \newline
+	$\sin(\omega t + \pi / 6 + \pi /2 - \pi/2)= \cos(\omega t - \pi / 3) $  \newline
+	$\tilde{I}=5e^{-3x}e^{-j \pi / 3} \si{\ampere}$
+	\item  $ i(t)= -2\cos(\omega t + 3\pi /4) \si{\ampere} $ \newline
+	$\tilde{I}=-2e^{j 3\pi / 4} =2e^{-j\pi}e^{j 3\pi / 4} =2e^{-j \pi / 4} \si{\ampere}$
+	\item  $ i(t)= 4 \sin(\omega t + \pi / 3) + 3\cos(\omega t - \pi /6) \si{\ampere}$ \newline
+	\begin{align*}
+	i(t) & = 4 \sin(\omega t + \pi /3) + 3\cos(\omega t - \pi /6) \\
+	     & = 4 \cos(\pi /2 - (\omega t + \pi /3)) + \cos(\omega t - \pi /6) \\
+	     & = 4 \cos(\omega t - \pi /6 ) + 3\cos(\omega t - \pi /6) \\
+	     & = 7 \cos(\omega t - \pi /6) \si{\ampere}
+	\end{align*}
+\end{enumerate}
+\paragraph{Problem 4}
+\begin{enumerate}[label=(\alph*)]
+	\item $\tilde{V}=-5e^{j\pi/3} \si{\volt}$
+	\begin{align*}
+	& \tilde{V}=5e^{j\pi/3}e^{-j\pi} = 5e^{-2\pi/3} \\
+	& v(t) = 5\cos(\omega t  - 2\pi /3)  \si{\volt}
+	\end{align*}
+	\item $\tilde{V}=-j6e^{-j\pi/4} \si{\volt}$
+	\begin{align*}
+	& \tilde{V}=-j6e^{-j\pi/4}=6e^{j3\pi/2}e^{-j\pi/4} \si{\volt} \\
+	& \tilde{V}= 6e^{j5\pi /4}  \si{\volt} \\
+	& v(t) = 6 \cos(\omega t + 5\pi /4) \si{\volt}
+	\end{align*}
+	\item $\tilde{I}=(6+j8)\si{\ampere}$
+	\begin{align*}
+	& \tilde{I}=(6+j8)=10e^{j53.1301^{o}} \\
+	& i(t) = 10\cos(\omega t + 53.1301^o)
+	\end{align*}
+	\item $\tilde{I}=(-3+j2)\si{\ampere}$
+	\begin{align*}
+	& \tilde{I}=(-3+j2)=\sqrt{13}e^{j141.31^{o}} \\
+	& i(t) = \sqrt{13}\cos(\omega t + 141.31^{o})
+	\end{align*}
+	\item $\tilde{I}=j\si{\ampere}$ \newline
+	$i(t)=\cos(\omega t + \pi /2)$
+\end{enumerate}
+%\subsection*{7.1}
+%Matrix M=$\xi \xi^T$ has rank one since each column of M is a multiple of non-zero vector, $\xi$
+%Matrix M=$\xi \xi^T$ is symmetric because $M^T=\left(\xi \xi^T\right)^{T}=\xi \xi^T= M$ \newline
+%M is positive semidefinite since for any arbitrary $x$, $x^T M x = x^T \left(\xi \xi^T \right)x=(x^T \xi)^2 \geq 0$
+%\subsection*{7.7 a}
+%\begin{align*}
+%& f(x) = 100(x_2-x_1^2)^2 + (1-x_1)^2 \\
+%& g(x) = \begin{bmatrix}
+%{2} {x_{1}} - {400} {x_{1}} ({x_{2}} - {x_{1}}^{2}) - {2} & {200} {x_{2}} - {200} {x_{1}}^{2}
+%\end{bmatrix}
+%\end{align*}
+%In all cases, using the three given data points causes the algorithm to converge to the minimizer at [1 1]. The average CPU results for $\epsilon = 10^{-6}$ is calculated for the three trial points counted over 1000 runs.
+%\begin{figure}[h]
+%{\renewcommand{\arraystretch}{1} %<- modify value to suit your needs
+%\begin{tabular}{ccccc}
+%	Initial Point & $x^*$ & Number of Iterations & Average CPU time & $f(x^*)$  \\ 
+%	\hline 
+%	 &  &  &  &  \\ 
+%	$\begin{bmatrix} 2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$  
+%		& $k=24$ & 0.0301 & $1.6599 \times 10^{-19}$  \\ 
+%	&  &  &  & \\
+%	$\begin{bmatrix} -2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=33$  & 0.0504 & $6.0705 \times 10^{-29}$ \\ 
+%	&  &  &  & \\
+%	$\begin{bmatrix} 2 	\\ -2 \end{bmatrix}$&  $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=23$  &  0.0333 & $1.5440 \times 10^{-20}$ \\ 
+%	\hline 
+%\end{tabular} 
+%}
+%\captionof{table}{DFP Algorithm Results}
+%\end{figure}
+%\subsection*{7.12}
+%\begin{align*}
+%& f(x) = 100(x_2-x_1^2)^2 + (1-x_1)^2 \\
+%& g(x) = \begin{bmatrix}
+%{2} {x_{1}} - {400} {x_{1}} ({x_{2}} - {x_{1}}^{2}) - {2} & {200} {x_{2}} - {200} {x_{1}}^{2}
+%\end{bmatrix}
+%\end{align*}
+%
+%\begin{figure}
+%	{\renewcommand{\arraystretch}{1} %<- modify value to suit your needs
+%		\begin{tabular}{ccccc}
+%			Initial Point & $x^*$ & Number of Iterations & Average CPU time & $f(x^*)$  \\ 
+%			\hline 
+%			&  &  &  &  \\ 
+%			$\begin{bmatrix} 2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$  
+%			& $k=19$ & 0.0250 & $ 4.1931 \times 10^{-19}$  \\ 
+%			&  &  &  & \\
+%			$\begin{bmatrix} -2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=28$  & 0.0416 & $1.3647 \times 10^{-18}$ \\ 
+%			&  &  &  & \\
+%			$\begin{bmatrix} 2 	\\ -2 \end{bmatrix}$&  $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=20$  & 0.0279 & $1.4996 \times 10^{-18}$ \\ 
+%			\hline 
+%		\end{tabular} 
+%	}
+%	\captionof{table}{BFGS Algorithm Results}
+%\end{figure}
+%
+%%\begin{figure}[h]
+%%	{\renewcommand{\arraystretch}{1} %<- modify value to suit your needs
+%%		\begin{tabular}{ccccc}
+%%			Initial Point & $x^*$ & Number of Iterations & Average CPU time & $f(x^*)$  \\ 
+%%			\hline 
+%%			&  &  &  &  \\ 
+%%			$\begin{bmatrix} 2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$  
+%%			& $k=24$ & 0.0468 & $1.6599 \times 10^{-19}$  \\ 
+%%			&  &  &  & \\
+%%			$\begin{bmatrix} -2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=28$  & 0.0604 & $1.9283 \times 10^{-17}$ \\ 
+%%			&  &  &  & \\
+%%			$\begin{bmatrix} 2 	\\ -2 \end{bmatrix}$&  $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=23$  &  0.0483 & $1.5440 \times 10^{-20}$ \\ 
+%%			\hline 
+%%		\end{tabular} 
+%%	}
+%%	\captionof{table}{DFP Algorithm Results}
+%%\end{figure}
+%%\subsection*{7.12}
+%%\begin{align*}
+%%& f(x) = 100(x_2-x_1^2)^2 + (1-x_1)^2 \\
+%%& g(x) = \begin{bmatrix}
+%%{2} {x_{1}} - {400} {x_{1}} ({x_{2}} - {x_{1}}^{2}) - {2} & {200} {x_{2}} - {200} {x_{1}}^{2}
+%%\end{bmatrix}
+%%\end{align*}
+%%
+%%\begin{figure}
+%%	{\renewcommand{\arraystretch}{1} %<- modify value to suit your needs
+%%		\begin{tabular}{ccccc}
+%%			Initial Point & $x^*$ & Number of Iterations & Average CPU time & $f(x^*)$  \\ 
+%%			\hline 
+%%			&  &  &  &  \\ 
+%%			$\begin{bmatrix} 2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$  
+%%			& $k=19$ & 0.0692 & $ 4.1931 \times 10^{-19}$  \\ 
+%%			&  &  &  & \\
+%%			$\begin{bmatrix} -2 	\\ 2 \end{bmatrix}$ & $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=28$  & 0.1206 & $1.3647 \times 10^{-18}$ \\ 
+%%			&  &  &  & \\
+%%			$\begin{bmatrix} 2 	\\ -2 \end{bmatrix}$&  $\begin{bmatrix} 1.0000 	\\ 1.0000 \end{bmatrix}$ & $k=20$  & 0.0879 & $1.4996 \times 10^{-18}$ \\ 
+%%			\hline 
+%%		\end{tabular} 
+%%	}
+%%	\captionof{table}{BFGS Algorithm Results}
+%%\end{figure}
+%Although BFGS and DFP have comparable solution accuracy, the BFGS algorithm is a little more effcient in terms of average CPU time than the DFP algorithm in the three trial cases.
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%
+COMMON COMMANDS:
+%%%%%%%%%%%%%%%%
+% IMAGES
+\begin{figure}[H]
+	\begin{center}
+		\includegraphics[width=0.6\textwidth]{RTL_SCHEM.png}
+	\end{center}
+	\caption{A screenshot of the RTL Schematics produced from the Verilog code.}
+	\label{RTL}
+\end{figure}
+
+% SUBFIGURES IMAGES
+\begin{figure}[H]
+	\centering
+	\subfloat[LED4 Period]{\label{fig:Per4}\includegraphics[width=0.4\textwidth]{period_led4.png}} \\                
+	\subfloat[LED5 Period]{\label{fig:Per5}\includegraphics[width=0.4\textwidth]{period_led5.png}}
+	\subfloat[LED6 Period]{\label{fig:Per6}\includegraphics[width=0.4\textwidth]{period_led6.png}}
+	\caption{Period of LED blink rate captured by osciliscope.}
+	\label{fig:oscil}
+\end{figure}
+
+% INSERT SOURCE CODE
+\lstset{language=Verilog, tabsize=3, backgroundcolor=\color{mygrey}, basicstyle=\small, commentstyle=\color{BrickRed}}
+\lstinputlisting{MODULE.v}
+
+% TEXT TABLE
+\begin{table}
+	\begin{center}
+		\begin{tabular}{|l|c|c|l|}
+			x & x & x & x \\ \hline
+			x & x & x & x \\
+			x & x & x & x \\ \hline
+		\end{tabular}
+		\caption{Caption}
+		\label{label}
+	\end{center}
+\end{table}
+
+% MATHMATICAL ENVIRONMENT
+$ 8 = 2 \times 4 $
+
+% CENTERED FORMULA
+\[  \]
+
+% NUMBERED EQUATION
+\begin{equation}
+
+\end{equation}
+
+% ARRAY OF EQUATIONS (The splat supresses the numbering)
+\begin{align*}
+
+\end{align*}
+
+% NUMBERED ARRAY OF EQUATIONS
+\begin{align}
+
+\end{align}
+
+% ACCENTS
+\dot{x} % dot
+\ddot{x} % double dot
+\tilde{x} % bar
+\tilde{x} % tilde
+\vec{x} % vector
+\hat{x} % hat
+\acute{x} % acute
+\grave{x} % grave
+\breve{x} % breve
+\check{x} % dot (cowboy hat)
+
+% FONTS
+\mathrm{text} % roman
+\mathsf{text} % sans serif
+\mathtt{text} % Typewriter
+\mathbb{text} % Blackboard bold
+\mathcal{text} % Caligraphy
+\mathfrak{text} % Fraktur
+
+\textbf{text} % bold
+\textit{text} % italic
+\textsl{text} % slanted
+\textsc{text} % small caps
+\texttt{text} % typewriter
+\underline{text} % underline
+\emph{text} % emphasized
+
+\begin{tiny}text\end{tiny} % Tiny
+\begin{scriptsize}text\end{scriptsize} % Script Size
+\begin{footnotesize}text\end{footnotesize} % Footnote Size
+\begin{small}text\end{small} % Small
+\begin{normalsize}text\end{normalsize} % Normal Size
+\begin{large}text\end{large} % Large
+\begin{Large}text\end{Large} % Larger
+\begin{LARGE}text\end{LARGE} % Very Large
+\begin{huge}text\end{huge}   % Huge
+\begin{Huge}text\end{Huge}   % Very Huge
+
+
+% GENERATE TABLE OF CONTENTS AND/OR TABLE OF FIGURES
+% These seem to have some issues with the "revtex4" document class.  To use, change
+% the very first line of this document to "article" like this:
+% \documentclass[aps,letterpaper,10pt]{article}
+\tableofcontents
+\listoffigures
+\listoftables
+
+% INCLUDE A HYPERLINK OR URL
+\url{http://www.derekhildreth.com}
+\href{http://www.derekhildreth.com}{Derek Hildreth's Website}
+
+% FOR MORE, REFER TO THE "LINUX CHEAT SHEET.PDF" FILE INCLUDED!
+

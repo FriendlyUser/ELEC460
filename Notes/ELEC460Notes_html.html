@@ -1,0 +1,3407 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+<header>
+
+
+</header>
+<section class="textbody">
+<div class="titlepage">
+
+<h1> ELEC 460 Course Notes</h1>
+
+<div class="author">
+
+<div class="oneauthor">
+
+<p><b>Name: </b> David Li<br />
+<b>Student Number:</b> V00818631<br />
+<b>Term</b> 3A<br />
+<i>Discipline:</i> Computer Engineering<br />
+<i>Email:</i> <a href="mailto:lidavid@uvic.ca" target="_blank"
+>lidavid@uvic.ca</a> </p>
+
+
+</div>
+
+</div>
+
+<div class="titledate">
+
+<p>January 2018 — April 2018</p>
+
+
+</div>
+
+</div>
+<div class="titlepage">
+<div class="center">
+
+<p><span class="textsc">Faculty of Electrical and Computer Engineering</span><br />
+<span class="textsc">Control Theory II </span><br />
+<span style="background:black; width:433.62001pt ; height:1pt ;
+-ms-transform: translate(0pt,-26pt);
+-webkit-transform: translate(0pt,-26pt);
+transform: translate(0pt,-26pt);
+display:inline-block;"></span><br />
+<b><span class="textsc">Digital Control Systems</span></b><br />
+Spring 2018 — <i>Dr. Pan Agathoklis</i><br />
+<span class="textsc">Required Text: Discrete Time Control Systems</span><br />
+<span class="textsc">Spring 2018</span><br />
+<span class="textsc">Victoria, British Columbia, Canada</span><br />
+</p>
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:442pt ; ">
+<div class="flushright">
+<p><i>Course Website</i> <a href="http://www.ece.uvic.ca/&nbsp;panagath/ELEC460/ELEC460.html"
+target="_blank"
+>ELEC 460</a></p>
+
+<p><span class="textsc"><b>Course Assessment:</b></span></p>
+
+<p>Assignments : 5 %</p>
+
+<p>Mid-term : 35 % Monday, February 5, 2018</p>
+
+<p>Final : 60 %</p>
+
+</div>
+</div>
+
+
+<p><span class="textsc">January 6, 2018</span><br />
+<span class="textsc">In partial fulfillment of the academic requirements of this course.<br />
+</span> </p>
+
+
+</div>
+
+</div>
+<h3 id="autosec-6"> Contents</h3><a id="autopage-6"></a>
+
+<nav class="toc">
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-32" class="tocsection"
+><span class="sectionnumber">3.1</span>&#x2001;Steady-state error</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-33" class="tocsubsection"
+><span class="sectionnumber">3.1.1</span>&#x2001;Definition</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-36" class="tocsubsection"
+><span class="sectionnumber">3.1.2</span>&#x2001;System type and steady-state error</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-40" class="tocsubsection"
+><span class="sectionnumber">3.1.3</span>&#x2001;Other Block Diagrams</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Example-commands.html#autosec-49" class="tocsection"
+><span class="sectionnumber">4.1</span>&#x2001;Testing out matlab</a></p>
+
+
+<p><a href="Example-commands.html#autosec-50" class="tocsection"
+><span class="sectionnumber">4.2</span>&#x2001;Testing out Python</a></p>
+
+
+<p><a href="Example-commands.html#autosec-51" class="tocsection"
+><span class="sectionnumber">4.3</span>&#x2001;Testing out Bash</a></p>
+
+
+<p><a href="Example-commands.html#autosec-53" class="tocsection"
+><span class="sectionnumber">4.4</span>&#x2001;Testing out Latex</a></p>
+
+
+<p><a href="Example-commands.html#autosec-54" class="tocsection"
+><span class="sectionnumber">4.5</span>&#x2001;Testing out Bash</a></p>
+
+
+<p><a href="Example-commands.html#autosec-57" class="tocsection"
+><span class="sectionnumber">4.6</span>&#x2001;Example Definitions</a></p>
+
+
+<p><a href="Example-commands.html#autosec-63" class="tocsection"
+><span class="sectionnumber">4.7</span>&#x2001;Notations</a></p>
+
+
+<p><a href="Example-commands.html#autosec-65" class="tocsection"
+><span class="sectionnumber">4.8</span>&#x2001;Remarks</a></p>
+
+
+<p><a href="Example-commands.html#autosec-68" class="tocsection"
+><span class="sectionnumber">4.9</span>&#x2001;Corollaries</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Course-Work.html#autosec-74" class="tocsection"
+><span class="sectionnumber">5.1</span>&#x2001;Assignment 1</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</nav>
+<h3 id="autosec-7"> List of Figures</h3><a id="autopage-7"></a>
+
+<nav class="lof">
+<p><a href="Other-Useful-Concepts.html#autoid-5" class="tocfigure"
+><span class="sectionnumber">3.1</span>&#x2001;Error signal: \(E=R-C\)</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autoid-6" class="tocfigure"
+><span class="sectionnumber">3.2</span>&#x2001;Systems of types 0, 1 and 2. Note that \(N_0, N_1, N_2,
+D_0, D_1, D_2\) should not be factorizable by \(s\).</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autoid-8" class="tocfigure"
+><span class="sectionnumber">3.3</span>&#x2001;Proportional-derivative control.</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autoid-9" class="tocfigure"
+><span class="sectionnumber">3.4</span>&#x2001;Lag compensation in series with PD control.</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autoid-10" class="tocfigure"
+><span class="sectionnumber">3.5</span>&#x2001;First order system with integral controller.</a></p>
+
+
+<p><a href="Course-Work.html#autoid-13" class="tocfigure"
+><span class="sectionnumber">5.1</span>&#x2001;Root Locus created using matplotlib and python control
+library</a></p>
+
+
+<p><a href="Course-Work.html#autoid-14" class="tocfigure"
+><span class="sectionnumber">5.2</span>&#x2001;Bode Plot</a></p>
+
+
+<p><a href="Course-Work.html#autoid-15" class="tocfigure"
+><span class="sectionnumber">5.3</span>&#x2001;Nyquist Plot</a></p>
+
+
+<p><a href="Course-Work.html#autoid-16" class="tocfigure"
+><span class="sectionnumber">5.4</span>&#x2001;Root Locus when K =1</a></p>
+
+
+<p><a href="Course-Work.html#autoid-17" class="tocfigure"
+><span class="sectionnumber">5.5</span>&#x2001;Bode plot when K=1</a></p>
+
+
+<p><a href="Course-Work.html#autoid-17" class="tocfigure"
+><span class="sectionnumber">5.6</span>&#x2001;Nyquist plot when K=1</a></p>
+
+
+<p><a href="Course-Work.html#autoid-18" class="tocfigure"
+><span class="sectionnumber">5.7</span>&#x2001;Phase and Gain Margin in Bode Plot</a></p>
+
+
+<p><a href="Course-Work.html#autoid-19" class="tocfigure"
+><span class="sectionnumber">5.8</span>&#x2001;Step Response of Transfer function with K = 0.479</a></p>
+
+
+</nav>
+<h3 id="autosec-8"> List of Tables</h3><a id="autopage-8"></a>
+
+<nav class="lot">
+<p><a href="Control-Theory.html#autoid-1" class="toctable"
+><span class="sectionnumber">1.1</span>&#x2001;Course Assessment</a></p>
+
+
+<p><a href="Introduction-Review.html#autoid-3" class="toctable"
+><span class="sectionnumber">2.1</span>&#x2001;Electric Quantities</a></p>
+
+
+<p><a href="Introduction-Review.html#autoid-4" class="toctable"
+><span class="sectionnumber">2.2</span>&#x2001;Basic Circuit Relations</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autoid-7" class="toctable"
+><span class="sectionnumber">3.1</span>&#x2001;Steady-state errors of systems of different types and for
+different inputs.</a></p>
+
+
+</nav>
+<h3 id="autosec-9"> Listings</h3><a id="autopage-9"></a>
+<nav class="lol">
+<p><a href="Example-commands.html#autoid-11" class="toclstlisting"
+><span class="sectionnumber">4.1</span>&#x2001;This is a caption</a></p>
+
+<p><a href="Example-commands.html#autoid-12" class="toclstlisting"
+><span class="sectionnumber">4.2</span>&#x2001;This is a caption</a></p>
+
+</nav>
+<h3 id="autosec-10"> Index</h3><a id="autopage-10"></a>
+
+<p><span class="indexitem"></span> Corollaries, 4</p>
+
+
+
+<p><span class="indexitem"></span> Definitions, 1</p>
+
+
+
+<p><span class="indexitem"></span> Notations, 2</p>
+
+
+
+<p><span class="indexitem"></span> Remarks, 3</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+</body>
+</html>
+<!--|Start file|Control-Theory.html|-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Control Theory</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h2 id="autosec-12"> Part&nbsp;<span class="sectionnumber">I&#x2001;</span>Control Theory</h2><a
+id="autopage-12"></a>
+<h3 id="autosec-13"> <span class="sectionnumber">1&#x2001;</span>Course Information</h3><a
+id="autopage-13"></a>
+<blockquote>
+
+<p><b>Course Objectives:</b> Introduction in the analysis and design of digital and/or analog control systems.
+Understanding the mathematical tools used in control system analysis and design. Design digital controllers for
+systems in input-output description and/or state-space description.</p>
+
+
+<p><b>Syllabus ELEC 460:</b> Sampling in Control Systems. The z-transform and response between sampling
+instants. Analysis of sampled data systems and stability testing. State-space analysis and design of continuous and
+discrete systems. Controllability, observability and zero input stability analysis. Pole placement techniques.
+(Prerequisite: 360)</p>
+
+
+</blockquote>
+
+<p><b>Description</b> </p>
+
+
+<ul style="list-style-type:none">
+
+<li>
+
+<p>               —   Apply z-Transform to solve difference</p>
+
+</li>
+<li>
+<p>               —   Discuss description of discrete systems using transfer functions and state-space
+description</p>
+
+</li>
+<li>
+<p>               —   Analyse stability, transient and steady state system response</p>
+
+</li>
+<li>
+<p>               —   Demonstrate the digital implementation of lead and lag compensators</p>
+
+</li>
+<li>
+<p>               —   Analyse controllability and observability for systems in state space description</p>
+
+</li>
+<li>
+<p>               —   Design linear state feedback controllers using pole-placement</p>
+
+</li>
+<li>
+<p>               —   Apply state observers for state estimation of linear systems in state-space description</p>
+
+</li>
+</ul>
+
+<p><b>Assessment:</b></p>
+
+
+<figure id="autoid-1" class="table">
+<table>
+
+<tr>
+<td class="tdc">Assignments:</td>
+<td class="tdc">5 %</td>
+</tr>
+<tr>
+<td class="tdc">Mid-term 35 %</td>
+<td class="tdc">Date: Monday, February 5, 2018</td>
+</tr>
+<tr>
+<td class="tdc">Final</td>
+<td class="tdc">60 %</td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-1"></a>Table&nbsp;1.1:&nbsp;Course Assessment</p>
+
+
+
+</figcaption>
+
+</figure>
+
+<dl>
+
+
+                  <dt>Phase Margin</dt>
+<dd>
+<p>                  (PM) — \(\phi _m\), the difference from the phase plot and 180 degrees at the gain cut-off
+point.</p>
+
+</dd>
+                  <dt>Gain Margin</dt>
+<dd>
+<p>                  (GM) — at the frequency cut-off point, the difference from the magnitude plot and 0 is the
+GM, \(K\).</p>
+
+</dd>
+                  <dt>Bode Plot</dt>
+<dd>
+<p>                 — frequency domain plot that contains \(\phi _m\), and \(K\), see <a
+href="index.html#??">bode diagram</a>.</p>
+
+</dd>
+                  <dt>Root Locus</dt>
+<dd>
+<p>                  — Used in assignment 1, to help determine the damping ratio.</p>
+
+</dd>
+</dl>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Introduction-Review.html|-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Introduction and Review</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h3 id="autosec-17"> <span class="sectionnumber">2&#x2001;</span>Introduction and Review</h3><a
+id="autopage-17"></a>
+
+<p>For this course, <a href="Back-Matter.html#ref-MatlabCST">Matlab Control Systems</a> will be used
+extensively.</p>
+
+
+<p>For instance I can use the same <sup>1</sup> more <sup>2</sup> than <sup>3</sup> once.
+
+<figure id="autoid-2" class="figure">
+
+<p><span id="lateximage1" class="lateximagesource">
+<!--
+              Digital Controller
+
+Zreal                                              Z
+        A/D        Control         D/A   Process
+    −
+-->
+<img src="lateximages\lateximage-1.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+</figure>
+<div class="footnotes">
+<p><sup>1</sup> <a href="Back-Matter.html#ref-textbook:kuo">Kuo Textbook</a></p>
+
+<p><sup>2</sup> <a href="Back-Matter.html#ref-book:129711">Some Textbook</a></p>
+
+<p><sup>3</sup> <a href="Back-Matter.html#ref-MatlabCST">Control System Toolbox</a></p>
+
+<p><sup>3</sup> footnote with two references</p>
+
+
+</div>
+<p><span class="paragraph" id="autosec-21"> Z Transforms</span><a id="autopage-21"></a> </p>
+<div class="center">
+<table>
+
+<tr class="hline" >
+<td colspan="2" class="tdc tvertbarl tvertbarr"><b>T</b>able of Z Transforms</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">\((x_k)_{k=0}^\infty \)</td>
+<td class="tdc tvertbarr">\({\cal Z}\left [(x_k)_{k=0}^\infty \right ]\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr"></td>
+<td class="tdc tvertbarr"></td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(x_k =\delta _k= \left \{ \begin {array}{ll} 1 &amp; k = 0\\ 0 &amp;
+k &gt; 0 \end {array} \right .\)</td>
+<td class="tdc tvertbarr">1</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">(unit pulse)</td>
+<td class="tdc tvertbarr"></td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(x_k = r^k\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {z}{z-r}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">
+
+\(x_k = kr^{k-1}\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {z}{(z-r)^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">
+
+</td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+</div>
+
+<p><b>F</b>irst shift theorem (delaying): if \({\cal Z}[(x_k)]=X(z)\) then </p>
+
+
+<p>\[ {\cal Z}[(x_{k-k_0})]=\frac {1}{z^{k_0}}X(z) \]</p>
+
+
+<p>where \(x_k=0\) for \(k&lt;0\).</p>
+
+
+<p><b>S</b>econd shift theorem (advancing): if \({\cal Z}[(x_k)]=X(z)\) then </p>
+
+
+<p>\[ {\cal Z}[(x_{k+1})]=zX(z)-zx_0 \]</p>
+
+
+<p>and </p>
+
+
+<p>\[ {\cal Z}[(x_{k+2})]=z^2X(z)-z^2x_0-zx_1 \]</p>
+<div class="center">
+<table>
+
+<tr class="hline" >
+<td colspan="2" class="tdc tvertbarl tvertbarr"><b>T</b>able of Laplace Transforms</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">\(f(t)\) for \(t \geq 0\)</td>
+<td class="tdc tvertbarr">\({\cal L}(f)\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr"></td>
+<td class="tdc tvertbarr"></td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(1\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {1}{s}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(e^{at}\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {1}{s-a}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(t^n\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {n!}{s^{n+1}}\) (\(n = 0,1, \ldots \))</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\sin at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {a}{s^2 + a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\cos at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {s}{s^2 + a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\sinh at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {a}{s^2 - a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\cosh at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {s}{s^2 - a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(H_a(t)\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {e^{-as}}{s}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\delta (t-a)\)</td>
+<td class="tdc tvertbarr">\(\displaystyle e^{-as}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(f’(t)\)</td>
+<td class="tdc tvertbarr">\(s{\cal L}(f)-f(0)\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(f”(t)\)</td>
+<td class="tdc tvertbarr">\(s^2{\cal L}(f)-sf(0)-f’(0)\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+</div>
+
+<p>where </p>
+
+
+<p>\[ H_a(t)=\left \{\begin {array}{ll}0&amp;t \le a\\1&amp;t&gt;a\end {array}\right . \]</p>
+
+
+<p><b>F</b>irst shift theorem: If \({\cal L}(f(t))=F(s)\) then </p>
+
+
+<p>\[ {\cal L}\left (e^{at}f(t)\right )=F(s-a).\]</p>
+
+
+<p><b>T</b>hird shift theorem: If \({\cal L}(f(t))=F(s)\) then </p>
+
+
+<p>\[ {\cal L}\left (H_a(t)f(t-a)\right )=e^{-as}F(s).\]</p>
+
+
+<figure id="autoid-3" class="table">
+<div class="center">
+<table>
+
+<tr class="tbrule">
+<td class="tdc tvertbarr">QUANTITY</td>
+<td class="tdc tvertbarr">SYMBOL</td>
+<td class="tdc tvertbarr">UNIT</td>
+<td class="tdc">UNIT ABBERVIATION</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Time</td>
+<td class="tdc tvertbarr">t</td>
+<td class="tdc tvertbarr">second</td>
+<td class="tdc">s</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Frequency (cyclic)</td>
+<td class="tdc tvertbarr">f</td>
+<td class="tdc tvertbarr">hertz</td>
+<td class="tdc">Hz</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Frequency (radian)</td>
+<td class="tdc tvertbarr">\(\omega \)</td>
+<td class="tdc tvertbarr">radian/sec</td>
+<td class="tdc">rad/s</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Phase angle</td>
+<td class="tdc tvertbarr">\(\theta \), \(\varphi \)</td>
+<td class="tdc tvertbarr">degree or radian</td>
+<td class="tdc">\(^{\circ }\) or rad</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Energy</td>
+<td class="tdc tvertbarr">w</td>
+<td class="tdc tvertbarr">joule</td>
+<td class="tdc">J</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Power</td>
+<td class="tdc tvertbarr">p</td>
+<td class="tdc tvertbarr">watt</td>
+<td class="tdc">W</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Charge</td>
+<td class="tdc tvertbarr">q</td>
+<td class="tdc tvertbarr">coulomb</td>
+<td class="tdc">C</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Current</td>
+<td class="tdc tvertbarr">i</td>
+<td class="tdc tvertbarr">ampere</td>
+<td class="tdc">A</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Electric field</td>
+<td class="tdc tvertbarr">E</td>
+<td class="tdc tvertbarr">volt/meter</td>
+<td class="tdc">V/m</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Voltage</td>
+<td class="tdc tvertbarr">v</td>
+<td class="tdc tvertbarr">volt</td>
+<td class="tdc">V</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Impedence</td>
+<td class="tdc tvertbarr">Z</td>
+<td class="tdc tvertbarr">ohm</td>
+<td class="tdc">\(\varOmega \)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Admittance</td>
+<td class="tdc tvertbarr">Y</td>
+<td class="tdc tvertbarr">siemen</td>
+<td class="tdc">S</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Resistance</td>
+<td class="tdc tvertbarr">R</td>
+<td class="tdc tvertbarr">ohm</td>
+<td class="tdc">\(\varOmega \)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Conductance</td>
+<td class="tdc tvertbarr">G</td>
+<td class="tdc tvertbarr">siemen</td>
+<td class="tdc">S</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Reactance</td>
+<td class="tdc tvertbarr">X</td>
+<td class="tdc tvertbarr">ohm</td>
+<td class="tdc">\(\varOmega \)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Susceptance</td>
+<td class="tdc tvertbarr">B</td>
+<td class="tdc tvertbarr">siemen</td>
+<td class="tdc">S</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Inductance, self</td>
+<td class="tdc tvertbarr">L</td>
+<td class="tdc tvertbarr">henry</td>
+<td class="tdc">H</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Inductance, mutual</td>
+<td class="tdc tvertbarr">M</td>
+<td class="tdc tvertbarr">henry</td>
+<td class="tdc">H</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Capacitance</td>
+<td class="tdc tvertbarr">C</td>
+<td class="tdc tvertbarr">farad</td>
+<td class="tdc">F</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Magnetic flux</td>
+<td class="tdc tvertbarr">\(\phi \)</td>
+<td class="tdc tvertbarr">weber</td>
+<td class="tdc">wb</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Flux linkages</td>
+<td class="tdc tvertbarr">\(\lambda \)</td>
+<td class="tdc tvertbarr">weber-turns</td>
+<td class="tdc">wb-t</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Power ratio</td>
+<td class="tdc tvertbarr">\(log_{10}\frac {p_2}{p_1}\)</td>
+<td class="tdc tvertbarr">Bel</td>
+<td class="tdc">B</td>
+</tr>
+<tr class="tbrule">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-3"></a>Table&nbsp;2.1:&nbsp;Electric Quantities</p>
+
+
+
+</figcaption>
+
+</div>
+
+</figure>
+
+<figure id="autoid-4" class="table">
+<div class="center">
+<table>
+
+<tr class="tbrule">
+<td rowspan="1" class="tdc"></td>
+<td colspan="2" class="tdc"> <td rowspan=" 2" class="tdc">I-V RELATIONSHIPS</td>
+<td colspan="3" class="tdc">IMPENDENCE</td>
+</tr>
+<tr>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc tdrule">PHASOR-DOMAIN</td>
+<td class="tdc tdrule">s-DOMAIN</td>
+<td class="tdc tdrule"></td>
+</tr>
+<tr class="hline" >
+<td class="tdc">Resistor</td>
+<td class="tdc">\(v_R(t)=i_R(t) \times R=\dfrac {i_R(t)}{G}\)</td>
+<td class="tdc">\(i_R(t)=\dfrac {v_R(t)}{R}=v_R(t) \times G\)</td>
+<td class="tdc">\(Z_R \)</td>
+<td class="tdc">R</td>
+<td class="tdc">R</td>
+</tr>
+<tr class="hline" >
+<td class="tdc">Inductor</td>
+<td class="tdc">\(v_L(t)=L\times \dfrac { \partial i_L(t)}{\partial t} \)</td>
+<td class="tdc">\(i_L(t)=\dfrac {1}{L} \int _{0}^{t} v_L(x)dx+ i_L(0)\)</td>
+<td class="tdc">\(Z_L \)</td>
+<td class="tdc">\(j\omega L\)</td>
+<td class="tdc">Ls</td>
+</tr>
+<tr class="hline" >
+<td class="tdc">Capacitor</td>
+<td class="tdc">\(v_C(t)=dfrac{1}{C}\int _{0}^{t} i_C(x)dx+ v_C(0)\)</td>
+<td class="tdc">\(i_C(t)=C\times \dfrac {\partial v_C(t)}{\partial t} \)</td>
+<td class="tdc">\(Z_C \)</td>
+<td class="tdc">\(\dfrac {1}{j\omega C} \)</td>
+<td class="tdc">\(\dfrac {1}{Cs}\)</td>
+</tr>
+<tr class="tbrule">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-4"></a>Table&nbsp;2.2:&nbsp;Basic Circuit Relations</p>
+
+
+
+</figcaption>
+
+</div>
+
+</figure>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Other-Useful-Concepts.html|-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Other Useful Concepts</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h3 id="autosec-31"> <span class="sectionnumber">3&#x2001;</span>Other Useful Concepts</h3><a
+id="autopage-31"></a>
+<h4 id="autosec-32"> <span class="sectionnumber">3.1&#x2001;</span>Steady-state error</h4><a
+id="autopage-32"></a>
+<h5 id="autosec-33"> <span class="sectionnumber">3.1.1&#x2001;</span>Definition</h5><a
+id="autopage-33"></a>
+
+<p>Consider a feedback system as in Fig.&nbsp;<a href="Other-Useful-Concepts.html#fig:sse">3.1</a>.</p>
+
+
+<figure id="autoid-5" class="figure">
+
+<p><span id="lateximage2" class="lateximagesource">
+<!--
+R       E       C
+    −       G
+
+
+
+            H
+-->
+<img src="lateximages\lateximage-2.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+<figcaption>
+
+<p><a id="autoid-5"></a>Figure&nbsp;3.1:&nbsp;Error signal: \(E=R-C\)</p>
+
+
+
+</figcaption>
+
+<a id="fig:sse"></a>
+
+</figure>
+
+<p>The steady-state error (if it exists) is defined by</p>
+
+
+<p><span class="hidden"> \( \seteqsection {3} \) </span></p>
+
+
+<!--
+
+
+
+(3.1) --><a id="eq:sse"></a><!--                                      ess := lim e(t).
+                                                                            t→∞
+
+
+
+
+-->
+
+<p>
+\begin{equation} \label {eq:sse} e_{ss} := \lim _{t\to \infty } e(t). \end{equation}
+</p>
+
+
+<p>If the system is stable, one can apply the Finaly Value Theorem to obtain </p>
+
+
+<p>\[ \lim _{t\to \infty } e(t) = \lim _{s\to 0} sE(s). \]</p>
+
+
+<p>In general, one would like the steady-state error to be as small as possible, ideally zero.</p>
+<h5 id="autosec-36"> <span class="sectionnumber">3.1.2&#x2001;</span>System type and steady-state
+error</h5><a id="autopage-36"></a>
+
+<p><span class="marginpar">This is a margin note using the geometry package, set at 3cm vertical offset to the
+line it is typeseted.</span> In general, to calculate the steady-state error, one uses the FVT as in equation&nbsp;(<a
+href="Other-Useful-Concepts.html#eq:sse">3.1</a>).</p>
+
+
+<p><span class="marginpar">This is a margin note using the geometry package, set at 5cm vertical offset to the
+first line it is typeset.</span></p>
+
+
+<p>However, if the system is stable and <em>unity-feedback</em>, then one can determine the system type and use
+this information to obtain the steady-state error much more easily. <span class="marginpar">This is a margin note
+using the geometry package, set at 5cm vertical offset to the first line it is typeset.</span> Let \(G\) be the
+feedforward transfer function. Assume that \(G\) is written as </p>
+
+
+<p>\[ G=\frac {N(s)}{s^kD(s)}, \]</p>
+
+
+<p>where \(N\) and \(D\) are not factorizable by \(s\). Then the type of the system is given by the integer \(k\).
+Fig.&nbsp;<a href="Other-Useful-Concepts.html#fig:systype">3.2</a> shows the general form of systems of
+types 1, 2 and 3.</p>
+
+
+<figure id="autoid-6" class="figure">
+
+<p><span id="lateximage3" class="lateximagesource">
+<!--
+    Type 0           Type 1             Type 2
+
+R   N0 (s)   C   R     N1 (s)   C   R     N2 (s)     C
+−   D0 (s)       −    sD1 (s)       −    s2 D2 (s)
+-->
+<img src="lateximages\lateximage-3.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+<figcaption>
+
+<p><a id="autoid-6"></a>Figure&nbsp;3.2:&nbsp;Systems of types 0, 1 and 2. Note that \(N_0, N_1, N_2, D_0,
+D_1, D_2\) should not be factorizable by \(s\).</p>
+
+
+
+</figcaption>
+
+<a id="fig:systype"></a>
+
+</figure>
+
+<p>Let us carry further the computation of the steady-state error for a stable unity-feedback system. </p>
+
+
+<p>\[ sE(s) = s(R(s)-C(s)) = s\left (R(s)-\frac {G(s)}{1+G(s)}R(s)\right )=\frac {s}{1+G(s)}R(s). \]</p>
+
+
+<p>For unit-step input, one has \(R(s)=1/s\). Thus, </p>
+
+
+<p>\[ sE(s) = \frac {s}{1+G(s)}*\frac {1}{s} = \frac {1}{1+G(s)} \xrightarrow [s\to 0]{}\frac {1}{1+\lim
+_{s\to 0}G(s)}. \]</p>
+
+
+<p>For a system of type 0, one has </p>
+
+
+<p>\[ \lim _{s\to 0}G(s) = \lim _{s\to 0}\frac {N_0(s)}{D_0(s)} = \frac {N_0(0)}{D_0(0)}. \]</p>
+
+
+<p>Thus, the steady-state error of a system of type 0 for unit-step input is given by </p>
+
+
+<p>\[ e_{ss} = \frac {1}{1+\frac {N_0(0)}{D_0(0)}}. \]</p>
+
+
+<p>Carrying out similar calculations, one obtains the following table, which shows the steady-state errors of systems
+of types 0, 1, 2, 3 for unit-step, unit-ramp and unit-parabola inputs.</p>
+
+
+<figure id="autoid-7" class="table">
+<table>
+
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">System type</td>
+<td class="tdc tvertbarr">Step input</td>
+<td class="tdc tvertbarr">Ramp input</td>
+<td class="tdc tvertbarr">Parabolic input</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">Type 0</td>
+<td class="tdc tvertbarr">\(\frac {1}{1+K_p}\)</td>
+<td class="tdc tvertbarr">\(\infty \)</td>
+<td class="tdc tvertbarr">\(\infty \)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">Type 1</td>
+<td class="tdc tvertbarr">0</td>
+<td class="tdc tvertbarr">\(\frac {1}{K_v}\)</td>
+<td class="tdc tvertbarr">\(\infty \)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">Type 2</td>
+<td class="tdc tvertbarr">0</td>
+<td class="tdc tvertbarr">0</td>
+<td class="tdc tvertbarr">\(\frac {1}{K_a}\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">Type 3</td>
+<td class="tdc tvertbarr">0</td>
+<td class="tdc tvertbarr">0</td>
+<td class="tdc tvertbarr">0</td>
+</tr>
+<tr class="hline" >
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-7"></a>Table&nbsp;3.1:&nbsp;Steady-state errors of systems of different types and for different
+inputs.</p>
+
+
+
+</figcaption>
+
+<a id="tab:systype"></a>
+
+</figure>
+
+<p>The constants \(K_p\), \(K_v\), and \(K_a\) are defined as below </p>
+
+
+<ul style="list-style-type:none">
+
+<li>
+
+<p>               •   for a system of type 0, \(K_p:=\frac {N_0(0)}{D_0(0)}\) (position constant);</p>
+
+</li>
+<li>
+<p>               •   for a system of type 1, \(K_v:=\frac {N_1(0)}{D_1(0)}\) (velocity constant);</p>
+
+</li>
+<li>
+<p>               •   for a system of type 2, \(K_a:=\frac {N_2(0)}{D_2(0)}\) (acceleration constant).</p>
+
+</li>
+</ul>
+<h5 id="autosec-40"> <span class="sectionnumber">3.1.3&#x2001;</span>Other Block Diagrams</h5><a
+id="autopage-40"></a>
+
+<p>In the Laplace domain, we have </p>
+
+
+<p>\[ I = K_D(sZ_{real}-sZ) + K_P(Z_{real}-Z) = (K_Ds+K_P)(Z_{real}-Z), \]</p>
+
+
+<p>which leads to the following block diagram.</p>
+
+
+<figure id="autoid-8" class="figure">
+
+<p><span id="lateximage4" class="lateximagesource">
+<!--
+Zreal               I    k    Z
+        KD s + KP
+    −                   ms2
+-->
+<img src="lateximages\lateximage-4.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+<figcaption>
+
+<p><a id="autoid-8"></a>Figure&nbsp;3.3:&nbsp;Proportional-derivative control.</p>
+
+
+
+</figcaption>
+
+</figure>
+
+<figure id="autoid-9" class="figure">
+
+<a id="fig:lag"></a>
+
+<p><span id="lateximage5" class="lateximagesource">
+<!--
+Zreal   s+pc               I    k    Z
+               KD s + KP
+    −   s+zc                   ms2
+-->
+<img src="lateximages\lateximage-5.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+<figcaption>
+
+<p><a id="autoid-9"></a>Figure&nbsp;3.4:&nbsp;Lag compensation in series with PD control.</p>
+
+
+
+</figcaption>
+
+</figure>
+
+<figure id="autoid-10" class="figure">
+
+<a id="fig:integral"></a>
+
+<p><span id="lateximage6" class="lateximagesource">
+<!--
+R       K      1    C
+    −   s   T s+1
+-->
+<img src="lateximages\lateximage-6.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+<figcaption>
+
+<p><a id="autoid-10"></a>Figure&nbsp;3.5:&nbsp;First order system with integral controller.</p>
+
+
+
+</figcaption>
+
+</figure>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Example-commands.html|-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Example commands</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h3 id="autosec-48"> <span class="sectionnumber">4&#x2001;</span>Example commands</h3><a
+id="autopage-48"></a>
+<h4 id="autosec-49"> <span class="sectionnumber">4.1&#x2001;</span>Testing out matlab</h4><a
+id="autopage-49"></a>
+
+<p></p>
+
+      <p>Matlab Output 4.1</p>
+
+
+      <pre><code class = "language-matlab">
+           % M - file : prob7_17 . m
+           % M - file create a plot of the induced torque power
+           % converted power out and efficiency of the induction
+           % motor of Problem 7 -14 as a function of slip .
+           % First , initialize the values needed in this program .
+           r1 = 0.075; % Stator resistance
+           x1 = 0.170; % Stator reactance
+           r2 = 0.065; % Rotor resistance
+           x2 = 0.170; % Rotor reactance
+           xm = 7.2; % Magnetization branch reactance
+           v_phase = 440 / sqrt (3) ; % Phase voltage
+           n_sync = 3000; % Synchronous speed ( r / min )
+           w_sync = 314.2; % Synchronous speed ( rad / s )
+           p_mech = 1000; % Mechanical losses ( W )
+           p_core = 1100; % Core losses ( W )
+           p_misc = 150; % Miscellaneous losses ( W )
+           % Calculate the Thevenin voltage and impedance from Equations
+           % 7 -41 a and 7 -43.
+           v_th = v_phase * ( xm / sqrt ( r1 ^2 + ( x1 + xm ) ^2) ) ;
+           z_th = (( j * xm ) * ( r1 + j * x1 ) ) / ( r1 + j *( x1 + xm ) ) ;
+           r_th = real ( z_th ) ;
+           x_th = imag ( z_th ) ;
+      </code>
+</pre>
+
+<p>                                                                                            </p>
+<h4 id="autosec-50"> <span class="sectionnumber">4.2&#x2001;</span>Testing out Python</h4><a
+id="autopage-50"></a>
+
+<p></p>
+
+      <p>Python Script 4.1</p>
+
+
+      <pre><code class = "language-python">
+      # -* - coding : utf -8 -* -
+      """
+      Created on Sun Dec 31 09:50:49 2017
+
+
+      @author : David Li
+      Helper script to create lwarpnotes , latex file should be set to \ nonstopmode
+      """
+
+
+      import subprocess , os , sys
+      # consider using command line arguments to prompt the user for input if being
+            run from command line or hardcoded value if any arguements are passed
+            through .
+      if len ( sys . argv ) > 1:
+      inpu t_tex_ file = ' ELEC460Notes . tex '
+      else :
+      inpu t_tex_ file = input ( " Enter the tex name . " )
+      input_name , i np u t_ ex t en s io n = os . path . splitext ( input_ tex_fi le )
+      if os . path . isfile ( inpu t_tex_ file ) :
+      print ( ' Proceeding to produce : ' + input_name + '. pdf and ' + input_name
+            + ' _html ' + '\ n ' )
+      else :
+      </code>
+</pre>
+
+<p>                                                                                            </p>
+<h4 id="autosec-51"> <span class="sectionnumber">4.3&#x2001;</span>Testing out Bash</h4><a
+id="autopage-51"></a>
+
+<p>Hmm, cannot do this
+
+<p></p>
+
+      <p>Bash Script 4.1</p>
+
+
+      <pre><code class = "language-bash">
+
+
+      pdflatex file
+      pdflatex file_html . tex
+      lwarpmk limages
+      lwarpmk html
+      lwarpmk pdftohtml
+      </code>
+</pre>
+
+<p>                                                                                          </p>
+
+
+<ul style="list-style-type:none">
+<div class="amsthmbodydefinition">
+<p>   <span class="amsthmnamedefinition">Example</span><span class="amsthmnumberdefinition"> <span
+class="textup">4.3.1</span></span>.&nbsp; Testing out the examples </p>
+
+
+</div>
+
+</ul>
+<h4 id="autosec-53"> <span class="sectionnumber">4.4&#x2001;</span>Testing out Latex</h4><a
+id="autopage-53"></a>
+
+<p></p>
+
+       <p>Latex Commands 4.1</p>
+
+
+       <pre><code class = "language-latex">
+            Testing out latex commands
+            Tiks
+       </code>
+</pre>
+
+<p>                                                                                           </p>
+
+
+<p>This is some garbo text,</p>
+<h4 id="autosec-54"> <span class="sectionnumber">4.5&#x2001;</span>Testing out Bash</h4><a
+id="autopage-54"></a>
+
+<p></p>
+
+      <p>Bash Script 4.2</p>
+
+
+      <pre><code class = "language-bash">
+           Testing out latex commands
+           Tiks
+      </code>
+</pre>
+
+<p>                                                                                          </p>
+
+
+<ul style="list-style-type:none">
+<div class="amsthmbodyplain">
+<p>   <span class="amsthmnameplain">Lemma</span><span class="amsthmnumberplain"> <span
+class="textup">4.5.0.1</span></span>.&nbsp; A lemma to go with my Theorem! </p>
+
+
+</div>
+
+</ul>
+
+<p>Shocked that this still doesn’t work hmm</p>
+
+
+<ul style="list-style-type:none">
+<div class="amsthmbodyplain">
+<p>    <span class="amsthmnameplain">Theorem</span><span class="amsthmnumberplain"> <span
+class="textup">4.5.1</span></span>.&nbsp; <b>Circuits</b> A set \(\mathcal {D}(G)\) in dense in \(L^2(G)\),
+\(|\cdot |_0\). </p>
+
+
+</div>
+
+</ul>
+<h4 id="autosec-57"> <span class="sectionnumber">4.6&#x2001;</span>Example Definitions</h4><a
+id="autopage-57"></a>
+
+<a id="LWRindex-1"></a>
+
+<figcaption>
+
+<p><a id="autoid-11"></a>Listing&nbsp;4.1:&nbsp;This is a caption </p>
+
+
+
+</figcaption>
+<pre><code class = "language-matlab">
+hmm
+</code>
+</pre>
+
+<figcaption>
+
+</figcaption>
+
+<p>This is an example of a definition. A definition could be mathematical or it could define a concept.</p>
+
+
+<figcaption>
+
+<p><a id="autoid-12"></a>Listing&nbsp;4.2:&nbsp;This is a caption </p>
+
+
+
+</figcaption>
+<pre><code class = "language-matlab">
+foo bar = 5;
+</code>
+</pre>
+
+<figcaption>
+
+</figcaption>
+<pre class="verbatim" >
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
+\tikzstyle{block2} = [draw, fill=blue!20, rectangle, minimum height=2em, minimum width=2em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\begin{tikzpicture}[auto, >=latex']
+% Nodes
+\node [input] (input) {};
+\node [sum, right = 1cm of input] (sum) {};
+%\node [block2, right = 1cm of sum] (system) {$K$};
+\node [block, right = 1cm of sum] (system2) {$G$};
+\node [output, right = 2cm of system2] (output) {};
+\node [block, below = 0.5cm of system2] (h) {$H$};
+% Arrows
+\draw [draw,->] (input) -- node {$R$} (sum);
+\draw [->] (sum) -- node {$E$} (system2);
+%\draw [->] (system) -- (system2);
+\draw [->] (system2) -- node (y) {$C$}(output);
+\draw [-] (y) |- (h) {} ;
+\draw [->] (h) -| node[pos=0.99] {$-$}   node [near end] {} (sum);
+\end{tikzpicture}
+</code>
+</pre>
+
+<blockquote>
+
+<p>Legends will fall</p>
+
+
+</blockquote>
+
+<p>“quote with UK English hyphenation”</p>
+
+
+<div class="epigraph">
+
+<div class="qitem">
+
+<p>I recall seeing a package to make quotes </p>
+
+
+<div class="epigraphsource">
+
+<p>Snowball </p>
+
+
+</div>
+
+</div>
+
+</div>
+
+<ul style="list-style-type:none">
+
+<li>
+
+<p>                     Because of limitations in how pandoc works, I suppose I could mix and max using bash and *
+to load all the individual files, in fact maybe that’s what I’ll do, take a month worth of notes and check the loading
+times and if it’s not to bad I’ll continue writing notes on my computer, but if I do it like that then I will have to
+either bring my computer to class or write them down by hand. Seems that using texstudio to compile lwarp is a
+mistake stick to perl command line.</p>
+
+</li>
+</ul>
+
+<ul style="list-style-type:none">
+<div class="amsthmbodydefinition">
+<p>   <span class="amsthmnamedefinition">Definition</span><span class="amsthmnumberdefinition"> <span
+class="textup">4.6.1</span></span>.&nbsp; Given a vector space \(E\), a norm on \(E\) is an application,
+denoted \(||\cdot ||\), \(E\) in \(\mathbb {R}^+=[0,+\infty [\) such that: </p>
+
+
+<p><span class="hidden"> \( \seteqsection {4} \) </span> </p>
+
+
+
+<!--
+
+
+
+(4.1)                                       ||x|| = 0 ⇒ x = 0
+(4.2)                                       ||λx|| = |λ| · ||x||
+(4.3)                                       ||x + y|| ≤ ||x|| + ||y||
+
+
+
+-->
+
+
+<p>
+\begin{align} &amp; ||\mathbf {x}||=0\ \Rightarrow \ \mathbf {x}=\mathbf {0}\\ &amp; ||\lambda \mathbf
+{x}||=|\lambda |\cdot ||\mathbf {x}||\\ &amp; ||\mathbf {x}+\mathbf {y}||\leq ||\mathbf {x}||+||\mathbf {y}||
+\end{align}
+</p>
+
+
+</div>
+
+</ul>
+<h4 id="autosec-63"> <span class="sectionnumber">4.7&#x2001;</span>Notations</h4><a
+id="autopage-63"></a>
+
+<a id="LWRindex-2"></a>
+
+<ul style="list-style-type:none">
+<div class="amsthmbodydefinition">
+<p>    <span class="amsthmnamedefinition">Example</span><span class="amsthmnumberdefinition"> <span
+class="textup">4.7.1</span></span>.&nbsp; Given an open subset \(G\) of \(\mathbb {R}^n\), the set of
+functions \(\varphi \) are: </p>
+
+
+<ul style="list-style-type:none">
+
+<li>
+
+<p>              1.   Bounded support \(G\);</p>
+
+</li>
+<li>
+<p>              2.   Infinitely differentiable;</p>
+
+</li>
+</ul>
+
+<p>a vector space is denoted by \(\mathcal {D}(G)\). </p>
+
+
+</div>
+
+</ul>
+<h4 id="autosec-65"> <span class="sectionnumber">4.8&#x2001;</span>Remarks</h4><a
+id="autopage-65"></a>
+
+<a id="LWRindex-3"></a>
+
+<p>This is an example of a remark.</p>
+
+
+<ul style="list-style-type:none">
+<div class="amsthmbodyremark">
+<p> <span class="amsthmnameremark">Remark</span>.&nbsp; The concepts presented here are now in
+conventional employment in mathematics. Vector spaces are taken over the field \(\mathbb {K}=\mathbb {R}\),
+however, established properties are easily extended to \(\mathbb {K}=\mathbb {C}\). </p>
+
+
+</div>
+
+</ul>
+
+<ul style="list-style-type:none">
+<div class="amsthmbodyplain">
+<p>   <span class="amsthmnameplain">Theorem</span><span class="amsthmnumberplain"> <span
+class="textup">4.8.1</span></span>.&nbsp; Testing out the theorems </p>
+
+
+</div>
+
+</ul>
+<h4 id="autosec-68"> <span class="sectionnumber">4.9&#x2001;</span>Corollaries</h4><a
+id="autopage-68"></a>
+
+<a id="LWRindex-4"></a>
+
+<p>This is an example of a corollary.</p>
+
+
+<ul style="list-style-type:none">
+<div class="amsthmbodyplain">
+<p>    <span class="amsthmnameplain">Corollary</span><span class="amsthmnumberplain"> <span
+class="textup">4.9.0.1</span></span>.&nbsp; The concepts presented here are now in conventional employment
+in mathematics. Vector spaces are taken over the field \(\mathbb {K}=\mathbb {R}\), however, established
+properties are easily extended to \(\mathbb {K}=\mathbb {C}\). </p>
+
+
+</div>
+
+</ul>
+<div class="amsthmproof">
+
+<ul style="list-style-type:none">
+
+
+<li>
+
+<p>        <span class="amsthmproofname">This is a proof.</span> Lwarp can solve my problems of creating good
+quality latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x2001;&#x220E;</span></p>
+
+
+</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Course-Work.html|-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Course Work</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h2 id="autosec-72"> Part&nbsp;<span class="sectionnumber">II&#x2001;</span>Course Work</h2><a
+id="autopage-72"></a>
+<h3 id="autosec-73"> <span class="sectionnumber">5&#x2001;</span>Assignments</h3><a
+id="autopage-73"></a>
+
+<p>This assignments will contain python and matlab code as well as latex code (creating diagrams).</p>
+
+
+<p>I will look into creating classic bode plots using python libariries such as matplotlib. Other diagrams will be
+produced by either inkscape or tikz.</p>
+<h4 id="autosec-74"> <span class="sectionnumber">5.1&#x2001;</span>Assignment 1</h4><a
+id="autopage-74"></a>
+
+<p></p>
+
+         <p>Python Script 5.1</p>
+
+
+         <pre><code class = "language-python">
+         rom numpy import *
+         from pylab import *
+         from control . matlab import *
+         import time
+         ion ()
+         # # Get transfer function from G ( s ) = 1 * K / ( s *( s +1) *( s +20) ) when K = 1
+         # from sympy import *
+         import sympy as sympy
+         from sympy import init_printing
+         # % logstart -o
+         init_printing ()
+         s = sympy . Symbol ( 's ')    # Symbol , `a ` , stored as variable
+         Gs = sympy . expand (( s *( s +1) *( s +20) ) ** -1)
+         print ( Gs )
+         # Print Rlocus
+         sys = tf ([1] ,[1 ,21 ,20 ,0])
+         rvect , kvect = rlocus ( sys )
+         </code>
+</pre>
+
+<p>                                                                                             </p>
+
+
+<div class="epigraph">
+
+<div class="qitem">
+
+<p>This assignment will contain output from matlab and python. </p>
+
+
+<div class="epigraphsource">
+
+<p>David Li </p>
+
+
+</div>
+
+</div>
+
+</div>
+<pre class="verbatim" >
+1/(s**3 + 21*s**2 + 20*s)
+</code>
+</pre>
+
+
+<figure id="autoid-13" class="figure">
+
+<p>
+<a href="Assignments/A1/ipython_files/qt_img486735758753796.png" target="_blank"
+><img src="Assignments/A1/ipython_files/qt_img486735758753796.png"
+alt="[qt_img486735758753796]"
+style="width:304pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+
+<p><a id="autoid-13"></a>Figure&nbsp;5.1:&nbsp;Root Locus created using matplotlib and python control library</p>
+
+
+
+
+</figcaption>
+
+<a id="fig:qtimg486735758753796"></a>
+
+</figure>
+
+<p></p>
+
+       <p>Python Script 5.2</p>
+
+
+       <pre><code class = "language-python">
+       v = sympy . limit ( s * Gs , s , 0)
+            print ( ' The velocity error Kv is : ')
+            print ( Kv )
+            mag , phase , omega = bode ( sys )
+            real , imag , freq = nyquist ( sys , labelFreq =10)
+       </code>
+</pre>
+
+<p>                                                                                                                 </p>
+
+
+<figure id="autoid-14" class="figure">
+
+<p>
+<a href="Assignments/A1/ipython_files/qt_img494204706881540.png" target="_blank"
+><img src="Assignments/A1/ipython_files/qt_img494204706881540.png"
+alt="[qt_img494204706881540]"
+style="width:304pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+
+<p><a id="autoid-14"></a>Figure&nbsp;5.2:&nbsp;Bode Plot</p>
+
+
+
+
+</figcaption>
+
+</figure>
+
+<figure id="autoid-15" class="figure">
+
+<p>
+<a href="Assignments/A1/ipython_files/qt_img492813137477636.png" target="_blank"
+><img src="Assignments/A1/ipython_files/qt_img492813137477636.png"
+alt="[qt_img492813137477636]"
+style="width:304pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+
+<p><a id="autoid-15"></a>Figure&nbsp;5.3:&nbsp;Nyquist Plot</p>
+
+
+
+
+</figcaption>
+
+</figure>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b> </p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
+Number:</b> V00818631<br />
+<b>Due Date:</b> Thursday, 11 January 2018, 11:30 AM <span style="width:16.99585pt;
+display:inline-block"></span> <b>Assignment:</b> Number 1<br />
+</p>
+<h5 id="autosec-77"> 1. Sketch the root locus</h5><a id="autopage-77"></a>
+<h4 id="autosec-78"> </h4><a id="autopage-78"></a>
+
+<figcaption>
+
+
+</figcaption>
+<p></p>
+<pre><code class = "language-matlab">
+G1 = zpk ([] ,[0 , -1 , -20] ,20) % create transfer function
+figure (1); rlocus ( G1 ) % Plot root locus
+</code>
+</pre>
+
+<p></p>
+
+<figcaption>
+
+</figcaption>
+
+<figure id="autoid-16" class="figure">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_01.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_01.png"
+alt="[ELEC460A1_01]"
+style="width:304pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+
+<p><a id="autoid-16"></a>Figure&nbsp;5.4:&nbsp;Root Locus when K =1</p>
+
+
+
+
+</figcaption>
+
+</figure>
+<h5 id="autosec-80"> 2. Find Kv.</h5><a id="autopage-80"></a>
+<h4 id="autosec-81"> </h4><a id="autopage-81"></a>
+
+<p>Using the final value theorem: \(x(\infty ) = \mathop {\lim }\limits _{s \to 0} sX(s)\)<br />
+</p>
+
+
+<figcaption>
+
+
+</figcaption>
+<p></p>
+<pre><code class = "language-matlab">
+syms s ; Kv = limit ( s *20/( s *( s +1)*( s +20)) , s ,0) % compute Kv using limits
+</code>
+</pre>
+
+<p></p>
+
+<figcaption>
+
+</figcaption>
+<h5 id="autosec-83"> 3. Sketch Bode and Nyquist plots.</h5><a id="autopage-83"></a>
+
+<figcaption>
+
+
+</figcaption>
+<p></p>
+<pre><code class = "language-matlab">
+figure (2); bode ( G1 )
+figure (3); nyquist ( G1 )
+</code>
+</pre>
+
+<p></p>
+
+<figcaption>
+
+</figcaption>
+
+<figure id="autoid-17" class="figure">
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:231pt ; ">
+<p>
+<a href="Assignments/A1/ELEC460A1_02.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_02.png"
+alt="[ELEC460A1_02]"
+style="width:206pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p><a id="autoid-17"></a>Figure&nbsp;5.5:&nbsp;Bode plot when K=1</p>
+
+
+
+</figcaption>
+</div>
+
+
+&#x2001;
+
+&#x2001;
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:231pt ; ">
+<p>
+<a href="Assignments/A1/ELEC460A1_03.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_03.png"
+alt="[ELEC460A1_03]"
+style="width:206pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p><a id="autoid-17"></a>Figure&nbsp;5.6:&nbsp;Nyquist plot when K=1</p>
+
+
+
+</figcaption>
+</div>
+
+
+</figure>
+<h5 id="autosec-87"> 4. Find K so that \(\zeta =\sqrt (2)/2\) for the closed loop system.</h5><a
+id="autopage-87"></a>
+
+<p>Using the root locus the value K at which \(\zeta \) is 0.7071 is: 0.476.</p>
+<h5 id="autosec-88"> 5. Find phase and gain margins for this K.</h5><a id="autopage-88"></a>
+
+<figcaption>
+
+
+</figcaption>
+<p></p>
+<pre><code class = "language-matlab">
+G1new = zpk ([] ,[0 , -1 , -20] ,20* K )
+figure (5); margin ( G1new )
+</code>
+</pre>
+
+<p></p>
+
+<figcaption>
+
+</figcaption>
+
+<figure id="autoid-18" class="figure">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_05.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_05.png"
+alt="[ELEC460A1_05]"
+style="width:304pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+
+<p><a id="autoid-18"></a>Figure&nbsp;5.7:&nbsp;Phase and Gain Margin in Bode Plot</p>
+
+
+
+
+</figcaption>
+
+</figure>
+<h5 id="autosec-90"> 6. Sketch the step and ramp responses of the closed loop system for this K</h5><a
+id="autopage-90"></a>
+
+<figcaption>
+
+
+</figcaption>
+<p></p>
+<pre><code class = "language-matlab">
+G1tfnew = tf ( G1new )
+subplot (2 ,1 ,1); step ( G1tfnew ); % % create subplot for step function
+ramps = tf ([1 ,0] ,[1]);
+subplot (2 ,1 ,2); step ( G1tfnew / ramps ); % % create subplot for ramp function
+</code>
+</pre>
+
+<p></p>
+
+<figcaption>
+
+</figcaption>
+
+<figure id="autoid-19" class="figure">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_06.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_06.png"
+alt="[ELEC460A1_06]"
+style="width:304pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+
+<p><a id="autoid-19"></a>Figure&nbsp;5.8:&nbsp;Step Response of Transfer function with K = 0.479</p>
+
+
+
+
+</figcaption>
+
+</figure>
+<h5 id="autosec-92"> 7. Discuss the connection between Kv, zeta, margins and the response of the closed loop
+system.</h5><a id="autopage-92"></a>
+
+<p>The value of Kv is 1, so the steady state velocity error is constant. Additionally the system is stable because of a
+positive phase and gain margin. Finally, the value of \(\zeta = 0.7071\) corresponds to a gain of 0.427.<br />
+</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Back-Matter.html|-->
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Back Matter</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h2 id="autosec-94"> Part&nbsp;<span class="sectionnumber">III&#x2001;</span>Back Matter</h2><a
+id="autopage-94"></a>
+<div class="amsthmproof">
+
+<ul style="list-style-type:none">
+
+
+<li>
+
+<p>        <span class="amsthmproofname">This is a proof.</span> Lwarp can solve my problems of creating good
+quality latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x2001;&#x220E;</span></p>
+
+
+</li>
+
+</ul>
+
+</div>
+<h4 id="autosec-96"> List of Terms Used</h4><a id="autopage-96"></a>
+
+<p> <a href="index.html#??">Actuator</a> <a href="index.html#??">linear time-invariant</a> <a
+href="index.html#??">Multiple Input Multiple Output</a> <a href="index.html#??">Single Input Single
+Output</a> <a href="index.html#??">bode diagram</a> <a href="index.html#??">closed-loop control
+system</a> <a href="index.html#??">Control System</a> <a href="index.html#??">Controller Gain</a> <a
+href="index.html#??">Corner Frequency</a> <a href="index.html#??">critically-damped</a></p>
+<h3 id="autosec-97"> References</h3><a id="autopage-97"></a>
+
+<a id="references"></a>
+
+<a id="refs"></a>
+
+<a id="ref-book:129711"></a>
+
+<p>[1] Ogata, <em>Discrete-time control systems</em>. [Online]. Available: <a
+href="http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9" target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9</a></p>
+
+
+<a id="ref-textbook:niseSolution"></a>
+
+<p>[2] N. S. Nise, <em>Control systems engineering - instructor solutions manual</em>, 6th ed. Wiley, 2010 [Online].
+Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd"
+target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd</a></p>
+
+
+<a id="ref-textbook:nise"></a>
+
+<p>[3] N. S. Nise, <em>Control systems engineering</em>, 7th ed. Wiley, 2015 [Online]. Available: <a
+href="http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba" target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba</a></p>
+
+
+<a id="ref-book:DCSphil"></a>
+
+<p>[4] H. T. P. Chakrabortty Aranya; Nagle, <em>“Digital control system analysis and design: Global edition”</em>,
+4th edition. Pearson Education Limited, 2015 [Online]. Available: <a
+href="http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9" target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9</a></p>
+
+
+<a id="ref-book:209199"></a>
+
+<p>[5] B. Jähne, <em>Digital control systems: Design, identification and implementation</em>..</p>
+
+
+<a id="ref-textbook:ogataSolution"></a>
+
+<p>[6] K. Ogata, <em>Solution manual for modern control engineering</em>, 5th ed. Prentice Hall, 2010 [Online].
+Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e"
+target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e</a></p>
+
+
+<a id="ref-textbook:ogata"></a>
+
+<p>[7] K. Ogata, <em>Modern control engineering</em>, 5th ed. Prentice Hall, 2010 [Online]. Available: <a
+href="http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79" target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79</a></p>
+
+
+<a id="ref-textbook:dorf"></a>
+
+<p>[8] R. H. B. Richard C. Dorf, <em>Modern control systems 12th edition</em>, 12th ed. Prentice Hall, 2011
+[Online]. Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D"
+target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D</a></p>
+
+
+<a id="ref-textbook:dorfSolution"></a>
+
+<p>[9] R. H. B. Richard C. Dorf, <em>Instructor’s solutions manual for modern control systems, 12th edition</em>,
+12th ed. Prentice Hall, 2011 [Online]. Available: <a
+href="http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216" target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216</a></p>
+
+
+<a id="ref-textbook:kuo"></a>
+
+<p>[10] B. C. K. Farid Golnaraghi, <em>Automatic control systems 9th edition</em>, 9th ed. Wiley, 2009 [Online].
+Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA"
+target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA</a></p>
+
+
+<a id="ref-textbook:kuoSolutions"></a>
+
+<p>[11] B. C. K. Farid Golnaraghi, <em>Automatic control systems, 9th edition - solutions manual</em>, 9th ed.
+Wiley, 2009 [Online]. Available: <a
+href="http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89" target="_blank"
+>http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89</a></p>
+
+
+<a id="ref-essElec360:Online"></a>
+
+<p>[12] E. S. Society, “Past exams elec 360 [online] available.” [Online]. Available: <a
+href="http://ess.uvic.ca/exams/ELEC/" target="_blank"
+>http://ess.uvic.ca/exams/ELEC/</a></p>
+
+
+<a id="ref-megaElec360:Online"></a>
+
+<p>[13] MEGA, “Engineering student shared drive [online] available.” [Online]. Available: <a
+href="https://mega.nz/#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA" target="_blank"
+>https://mega.nz/#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA</a></p>
+
+
+<a id="ref-wiki:Cauchy"></a>
+
+<p>[14] Wikipedia, “Cauchy’s integral theorem — wikipedia, the free encyclopedia.” 2017 [Online]. Available: <a
+href="https://en.wikipedia.org/w/index.php?title=Cauchy%27s_integral_theorem&amp;oldid=778695526"
+target="_blank"
+>https://en.wikipedia.org/w/index.php?title=Cauchy%27s_integral_theorem&amp;oldid=778695526</a></p>
+
+
+<a id="ref-MatlabCST"></a>
+
+<p>[15] MATLAB, “MATLAB control systems toolbox.” 2016 b.</p>
+
+
+<a id="ref-MatlabSMT"></a>
+
+<p>[16] MATLAB, “MATLAB symbolic math toolbox.” 2016 b.</p>
+
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>

@@ -1,82 +1,288 @@
 
-\documentclass[a4paper,11pt]{report}
-
-%% Lwarp doesn't compile properly at the moment.
-%\usepackage[
-%HomeHTMLFilename=index,     % Filename of the homepage.
-%%HTMLFilename={node-},       % Filename prefix of other pages.
-%IndexLanguage=english,      % Language for xindy index, glossary.
+\documentclass{scrreprt}
+%% verbatim -- > latex code listing
+%% listing -- > matlab code listing
+%% does not compile glossary or images at the moment
+\nonstopmode
+\usepackage{morewrites}
+\usepackage[
+HomeHTMLFilename=index,     % Filename of the homepage.
+%HTMLFilename={node-},       % Filename prefix of other pages.
+IndexLanguage=english,      % Language for xindy index, glossary.
 %latexmk,                    % Use latexmk to compile.
-%%   OSWindows,                  % Force Windows. (Usually automatic.)
-%mathjax,                    % Use MathJax to display math.
-%]{lwarp}
-%\title{ELEC 460 Some Useful Notes}
+%   OSWindows,                  % Force Windows. (Usually automatic.)
+mathjax,                    % Use MathJax to display math.
+]{lwarp}
+\usepackage{import}
+\title{ELEC 460 Course Notes}
+\author{David Li}
+\setcounter{tocdepth}{2} % Include subsections in the \TOC.
+\setcounter{secnumdepth}{2} % Number down to subsections.
+\setcounter{FileDepth}{0} % Split \HTML\ files at sections, in this case chapters?, 0 for chapters?
+\booltrue{CombineHigherDepths} % Combine parts/chapters/sections
+\setcounter{SideTOCDepth}{0} % Include subsections in the side\TOC
+\HTMLAuthor{David Li} % Sets the HTML meta author tag.
+\HTMLLanguage{en-US} % Sets the HTML meta language.
+\HTMLDescription{Control Theory Notes}%
+
+%\title{ELEC 460 Course Notes}
 %\author{David Li}
-%\setcounter{tocdepth}{2} % Include subsections in the \TOC.
-%\setcounter{secnumdepth}{2} % Number down to subsections.
-%\setcounter{FileDepth}{0} % Split \HTML\ files at sections, in this case chapters?, 0 for chapters?
-%\booltrue{CombineHigherDepths} % Combine parts/chapters/sections
-%\setcounter{SideTOCDepth}{1} % Include subsections in the side\TOC
-%\HTMLAuthor{David Li} % Sets the HTML meta author tag.
-%\HTMLLanguage{en-US} % Sets the HTML meta language.
-%\HTMLDescription{A list of cheatsheets some diagrams}%
-
-
+\date{January 2018 --- April 2018}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
 \usetikzlibrary{shapes,arrows} 
-\newcommand{\sse}{\mathrm{ss}}
-\newcommand{\re}{\mathrm{ref}}
 \usepackage{float}
 
-\usepackage{ifthen}
-% comment out \printHTML in order to print html file, not meaning as pandoc let me down lol, don't even use this.
-\def\printHTML{1}		% If I am printing the file to html, output all the images as png, and then include, 
+%\HTMLFirstPageTop{Name and \fbox{HOMEPAGE LOGO}}
+%\HTMLPageTop{\fbox{LOGO}}
+%\HTMLPageBottom{David Li,  \\ according the academic policy of \textbf{UVIC}, everything I do for a course is owned by me. Contact \url{lidavid@uvic.ca} for more info}
+\CSSFilename{lwarp_sagebrush.css}
 
-\ifx\printHTML\undefined
-%% Output all pictures as png, breaks the tikzset, remark environment
-% I could simplify use the if enviroment in latex, so that if I'm doing it with latex the images are created, otherwise it is all externalized and then I can use pandoc to output to html, in fact I might end up doing that.
-\usetikzlibrary{external}
-\tikzexternalize[mode=list and make]
-\makeatletter
-\tikzset{%
-	external/mode=list and make,
-	external/new make rule/.code args={make #1; ext .#2}{%
-		\tikzexternalwritetomakefile{}%
-		\tikzexternalwritetomakefile{ALL_FIGURES_#2=\tikzexternal@DOLLARchar(ALL_FIGURE_NAMES:\tikzexternal@PERCENTchar=\tikzexternal@PERCENTchar .#2)}%
-		\tikzexternalwritetomakefile{}%
-		\tikzexternalwritetomakefile{#1: \tikzexternal@DOLLARchar(ALL_FIGURES_#2)}%
-		\tikzexternalwritetomakefile{\tikzexternal@TABchar @echo All #2 images exist now. Use make -B to re-generate them.}%
-		\tikzexternalwritetomakefile{}%
-	},
-	external/add fig rule/.code args={.#1 depends: .#2,cmd:#3}{%
-		\tikzset{%
-			external/system call/.add={}{\noexpand\@firstoftwo ^^J},
-			external/system call/.add={}{\noexpand\@firstoftwo ^^J\image.#1: \image.#2},
-			external/system call/.add={}{^^J#3}
-		}
-	}
-}
-\makeatother
-\tikzset{
-	external/new make rule={make allimagespng; ext .png},
-	external/add fig rule={.png depends: .pdf,cmd:convert -density 300 "\image.pdf" "\image.png"}
-}
-\title{ELEC 460 Notes}
-\author{David Li}
-\date{January 2018 --- April 2018}
-\else
-	\title{ELEC 460 Useful Notes}
-	\author{David Li}
-	\date{\today}
-\fi
-\input{theoremBoxes.tex}
 
+%% Trying out mdframed in lwarp
+\usepackage[framemethod=tikz]{mdframed}
+\newmdenv[
+topline=false,
+bottomline=false,
+rightline=false,
+innerrightmargin=0pt
+]{siderule}
+\newenvironment{note}%
+{\begin{siderule}\textbf{Note:}}
+	{\end{siderule}}
+
+\usepackage{hyperref}
+
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=black}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{multirow}
+\usetikzlibrary{bending}
+\usepackage{circuitikz}
+
+%% https://tex.stackexchange.com/questions/301993/create-custom-note-environment-with-tcolorbox
+\usepackage{enumitem}
+\usepackage[listings,theorems]{tcolorbox}
+
+%% See https://tex.stackexchange.com/questions/86711/tcolorbox-list-of-listings
+% add tcblistings to \jobname.lol (list of listings), perhaps undefined in lwarp
+%\makeatletter
+%% add tcblistings to \jobname.lol (list of listings)
+%\tcbset{
+%	addtolol/.style={list entry={\kvtcb@title},add to list={lol}{section}},
+%}
+%\makeatother
+\tcbuselibrary{listings}
+\tcbuselibrary{breakable}
+\newtcblisting[auto counter,number within=chapter]{matlaboutput}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries,colback=white, colframe=black!90, listing only, 
+	listing options={language=Matlab, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Matlab Output \thetcbcounter #1}
+
+\newtcblisting[auto counter,number within=chapter]{pythonscript}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries, colback=gray!5, colframe=green!75, listing only, 
+	listing options={language=python, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Python Script \thetcbcounter  #1}
+
+\newtcblisting[auto counter,number within=chapter]{latexcmd}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries,colback=gray!10, colframe=red!65, listing only, 
+	listing options={language=TeX, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Latex Commands \thetcbcounter  #1}
+
+\newtcblisting[auto counter,number within=chapter]{bashcmd}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries,colback=gray!15, colframe=blue!65, listing only, 
+	listing options={language=bash, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Bash Script \thetcbcounter #1}
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{listings}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+%\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[theorem]
+%\newtheorem{example}{Example}[theorem]
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+%\theoremstyle{proof}
+%\newtheorem{myproof}{Proof}[section]
+\renewcommand\qedsymbol{$\blacksquare$}
+%\newtheorem{definition}{Definition}[section]
 %% Added for bibilography and title page
-\usepackage[backend=bibtex,sorting=none]{biblatex}	% Sort by citation order
-\addbibresource{../textbooks.bib}		% Load bibliography
+% Using pandoc approach, convert to html and copy and paste back in
+% \usepackage[backend=bibtex,sorting=none]{biblatex}	% Sort by citation order
+% \addbibresource{../textbooks.bib}		% Load bibliography
+
+\usepackage{marginnote}
+
+\usepackage{algorithmicx}
+
+\usepackage{glossaries}
+%\setglossarystyle{mcolalttree}
+\input{glossary.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Command to ensure  glossary can be properly updated/printed %%%%%%%%%%
+%%%% makeindex -l -s ELEC360Notes.ist -o ELEC360Notes.gls ELEC360Notes.glo %%%%%%%%%
+%%%%	Use name of latex document								%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeglossaries
+
+\usepackage{moreverb}
+\usepackage{epigraph}
+\usepackage{csquotes}
+\usepackage{makeidx}\makeindex
 \begin{document}
-\chapter{Introduction}
+%% Print Title Page
+\makeatletter
+% Create \printauthor command which will display contact info                     
+\def\printauthor{%                  
+	{\large \@author}}              
+\makeatother
+% Honestly, if footcite works that would be adequate for me
+\author{%
+	\textbf{Name: }  David Li \\
+	\textbf{Student Number:} V00818631	\\
+	\textbf{Term}  3A  \\
+	\textit{Discipline:} Computer Engineering \\  \vspace{4pt}
+	\textit{Email:} \href{mailto:lidavid@uvic.ca}{lidavid@uvic.ca}
+}
+
+\maketitle
+	
+\begin{titlepage}
+	%\AddToShipoutPicture*{\BackgroundPic}
+	\begin{center}
+		%		{\vspace*{3pt} }
+		{\Huge \textsc{Faculty of Electrical and Computer Engineering} \\ \vspace{4pt}}
+		{\Huge \textsc{Control Theory II } \\ \vspace{4pt}}  
+		\rule[13pt]{1\textwidth}{1pt} \\ \vspace{1pt}
+		{\LARGE \textbf{{\textsc{Digital Control Systems}}} \\ Spring 2018 --- \textit{Dr. Pan Agathoklis} \\ }
+		{\Large \textsc{Required Text: Discrete Time Control Systems} \\} 
+		\vspace{4pt} 
+		{\Large \textsc{Spring 2018}} \\ 
+		\vspace{20pt}
+		{\Large \textsc{Victoria, British Columbia, Canada} \\ \vspace{45pt} }
+		
+		\begin{minipage}{0.96\linewidth}
+			\begin{flushright}
+				{
+					\large \textit{Course Website} \href{http://www.ece.uvic.ca/~panagath/ELEC460/ELEC460.html}{ELEC 460}  \\
+					\textsc{\textbf{Course Assessment:}} \\
+					Assignments	: 5 \% \\
+					Mid-term	: 35 \% Monday, February 5, 2018 \\
+					Final	: 60 \%} \\
+			\end{flushright}
+%		\begin{minipage}{0.02\linewidth}
+%			\rule[0pt]{1pt}{110pt} 
+%		\end{minipage}
+		\end{minipage}
+
+%		\\ \vspace{10pt}
+		{\Large \textsc{\today} \\ \vspace{15pt}
+			{\Large \textsc{In partial fulfillment of the academic requirements of this course. \\
+				}
+			}	
+		}
+		
+	\end{center}
+\end{titlepage}
+\tableofcontents
+\listoffigures
+\listoftables
+\lstlistoflistings
+
+\addcontentsline{toc}{chapter}{Index}
+\printindex
+
+\part{Control Theory}
+\chapter{Course Information}
+\begin{quote}
+\textbf{Course Objectives:} Introduction in the analysis and design of digital and/or analog control systems.
+Understanding the mathematical tools used in control system analysis and design.
+Design digital controllers for systems in input-output description and/or state-space description.
+
+\textbf{Syllabus ELEC 460:} Sampling in Control Systems. The z-transform and response between sampling instants. Analysis of
+sampled data systems and stability testing. State-space analysis and design of continuous and discrete systems.
+Controllability, observability and zero input stability analysis. Pole placement techniques. (Prerequisite: 360)
+
+\end{quote}
+
+\textbf{Description}
+\begin{itemize}
+\item[---] Apply z-Transform to solve difference
+\item[---] Discuss description of discrete systems using transfer functions and state-space description
+\item[---] Analyse stability, transient and steady state system response
+\item[---] Demonstrate the digital implementation of lead and lag compensators
+\item[---] Analyse controllability and observability for systems in state space description
+\item[---] Design linear state feedback controllers using pole-placement
+\item[---] Apply state observers for state estimation of linear systems in state-space description
+\end{itemize}
+
+\textbf{Assessment:}
+\begin{table}
+\begin{tabular}{c c }
+Assignments: & 5 \% \\
+Mid-term 35 \% & Date: Monday, February 5, 2018 \\
+Final &  60 \% 
+\end{tabular}
+\caption{Course Assessment}
+\end{table}
+
+\begin{description}
+	\item[Phase Margin] (PM) --- $\phi_m$, the difference from the phase plot and 180 degrees at the gain cut-off point.
+	\item[Gain Margin] (GM) ---  at the  frequency cut-off point, the difference from the magnitude plot and 0 is the GM, $K$.
+	\item[Bode Plot] --- frequency domain plot that contains $\phi_m$, and $K$, see \gls{bodeDia}.
+	\item[Root Locus] --- Used in assignment 1, to help determine the damping ratio.
+\end{description}
+\chapter{Introduction and Review}
+For this course, \hyperlink{ref-MatlabCST}{Matlab Control Systems} will be used extensively.
+
+
+For instance I can use the same \footnote{\hyperlink{ref-textbook:kuo}{Kuo Textbook}} more \footnote{\hyperlink{ref-book:129711}{Some Textbook}} than  \footnote{\hyperlink{ref-MatlabCST}{Control System Toolbox}}
+once.
+
+\footnotetext{footnote with two references}
+\begin{figure}
+\begin{lateximage}
+	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
+	\tikzstyle{controller} = [draw, fill=green!20, rectangle, minimum height=3em, minimum width=4em]
+	\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+	\tikzstyle{input} = [coordinate]
+	\tikzstyle{output} = [coordinate]
+	\begin{tikzpicture}[auto]
+	% Nodes
+	\node [input] (input) {};
+	\node [sum, right = 1cm of input] (sum) {};
+	\node [controller, right = 1cm of sum] (con1) {A/D};
+	\node [controller, right = 1cm of con1] (con2) {Control};
+	\node [controller, right = 1cm of con2] (system2) {D/A};
+	\node [block, right = 1cm of system2] (system3) {Process};
+	\node [output, right = 2cm of system3] (output) {};
+	\node [input, below = 0.5cm of con2] (m) {};
+	% Arrows
+	\draw [draw,->] (input) -- node {$Z_{real}$} (sum);
+	\draw [->] (sum) -- (con1);
+	\draw [->] (con1) -- (con2);
+	\draw [->] (con2) -- node {$$} (system2);
+	\draw [->] (system2) -- node {$$} (system3);
+	\draw [->] (system3) -- node (y) {$Z$}(output);
+	\draw [-] (y) |- (m) {} ;
+	\draw [->] (m) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
+	\draw[thick,dotted]     ($(con1.north west)+(-0.5,0.15)$) rectangle ($(system2.south east)+(0.5,-0.15)$);
+	\node [above = 0.25cm of con2] {Digital Controller};
+	%\node [above = of near end] {+};
+	\end{tikzpicture}
+\end{lateximage}
+\end{figure}
+
+\input{tables.tex}
+\chapter{Other Useful Concepts}
 \section{Steady-state error}
 
 \subsection{Definition}
@@ -84,17 +290,9 @@
 Consider a feedback system as in Fig.~\ref{fig:sse}.
 
 %% Consider adding ELEC460Notes-figure0.png, .. ELEC460Notes-figuren.png by using an if, else statement so I can get native html output using pandoc.
-\ifx\printHTML\undefined
 \begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{images/ELEC460Notes-figure0.png}
-	\caption{Block Diagram}
-	\label{fig:elec460notes-figure0}
-\end{figure}
-
-\else
-\begin{figure}[h]
-	\centering
+		\centering
+\begin{lateximage}
 	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
 	\tikzstyle{block2} = [draw, fill=blue!20, rectangle, minimum height=2em, minimum width=2em]
 	\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
@@ -116,15 +314,14 @@ Consider a feedback system as in Fig.~\ref{fig:sse}.
 	\draw [-] (y) |- (h) {} ;
 	\draw [->] (h) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
 	\end{tikzpicture}  
+\end{lateximage}
 	\caption{Error signal: $E=R-C$}
-	\label{fig:sse}
+\label{fig:sse}
 \end{figure}
-\fi
-
 The steady-state error (if it exists) is defined by
 \begin{equation}
 	\label{eq:sse}
-	e_\sse := \lim_{t\to\infty} e(t).
+	e_{ss} := \lim_{t\to\infty} e(t).
 \end{equation}
 
 If the system is stable, one can apply the Finaly Value Theorem to obtain
@@ -137,11 +334,20 @@ possible, ideally zero.
 
 \subsection{System type and steady-state error}
 
+ \marginnote{This is a margin note using the geometry package, set at 3cm vertical offset to the line it is typeseted.}[3cm]
 In general, to calculate the steady-state error, one uses the FVT as
-in equation~(\ref{eq:sse}). However, if the system is stable and
-\emph{unity-feedback}, then one can determine the system type and use
-this information to obtain the steady-state error much more easily.
+in equation~(\ref{eq:sse}).
 
+\reversemarginpar
+\marginnote{This is a margin note using the geometry package, set at 5cm 
+	vertical offset to the first line it is typeset.}[3cm]
+
+ However, if the system is stable and
+\emph{unity-feedback}, then one can determine the system type and use
+this information to obtain the steady-state error much more easily. 
+\reversemarginpar
+\marginnote{This is a margin note using the geometry package, set at 5cm 
+	vertical offset to the first line it is typeset.}[3cm]
 Let $G$ be the feedforward transfer function. Assume that $G$ is
 written as
 \[
@@ -151,7 +357,9 @@ where $N$ and $D$ are not factorizable by $s$. Then the type of the
 system is given by the integer $k$. Fig.~\ref{fig:systype} shows the
 general form of systems of types 1, 2 and 3.
 
-\begin{figure}[h]
+\begin{figure}
+\begin{lateximage}
+
 	\hspace{1.5cm}\textbf{Type 0}\hspace{3cm}\textbf{Type
 		1}\hspace{3cm}\textbf{Type 2}\\
 	\vspace{0.1cm} 
@@ -206,11 +414,11 @@ general form of systems of types 1, 2 and 3.
 	\draw [-] (y) |- (m) {} ;
 	\draw [->] (m) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
 	\end{tikzpicture}  
+\end{lateximage}
 	\caption{Systems of types 0, 1 and 2. Note that $N_0, N_1, N_2, D_0,
-		D_1, D_2$ should not be factorizable by $s$.}
-	\label{fig:systype}
+	D_1, D_2$ should not be factorizable by $s$.}
+\label{fig:systype}
 \end{figure}
-
 Let us carry further the computation of the steady-state error for a
 stable unity-feedback system.
 \[
@@ -229,7 +437,7 @@ For a system of type 0, one has
 Thus, the steady-state error of a system of type 0 for unit-step input
 is given by
 \[
-e_\sse = \frac{1}{1+\frac{N_0(0)}{D_0(0)}}.
+e_{ss} = \frac{1}{1+\frac{N_0(0)}{D_0(0)}}.
 \]
 
 Carrying out similar calculations, one obtains the following table,
@@ -244,7 +452,7 @@ unit-step, unit-ramp and unit-parabola inputs.
 		Type 0&$\frac{1}{1+K_p}$&$\infty$&$\infty$\\\hline
 		Type 1&0&$\frac{1}{K_v}$&$\infty$\\\hline
 		Type 2&0&0&$\frac{1}{K_a}$\\\hline
-		Type 3&0&0&0\\\hline
+		Type 3&0&0&0 \\ \hline
 	\end{tabular}
 	\caption{Steady-state errors of systems of different types and for
 		different inputs.}
@@ -262,11 +470,13 @@ The constants $K_p$, $K_v$, and $K_a$ are defined as below
 \subsection{Other Block Diagrams}
 In the Laplace domain, we have
 \[
-I = K_D(sZ_\re-sZ) + K_P(Z_\re-Z) = (K_Ds+K_P)(Z_\re-Z),
+I = K_D(sZ_{real}-sZ) + K_P(Z_{real}-Z) = (K_Ds+K_P)(Z_{real}-Z),
 \]
 which leads to the following block diagram.
 
-\begin{figure}[H]
+\begin{figure}
+\begin{lateximage}
+
 	\label{fig:examplesystempd}
 	\centering
 	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
@@ -283,19 +493,21 @@ which leads to the following block diagram.
 	\node [output, right = 2cm of system2] (output) {};
 	\node [input, below = 0.5cm of system] (m) {};
 	% Arrows
-	\draw [draw,->] (input) -- node {$Z_\re$} (sum);
+	\draw [draw,->] (input) -- node {$Z_{real}$} (sum);
 	\draw [->] (sum) -- node {} (system);
 	\draw [->] (system) -- node {$I$} (system2);
 	\draw [->] (system2) -- node (y) {$Z$}(output);
 	\draw [-] (y) |- (m) {} ;
 	\draw [->] (m) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
 	\end{tikzpicture}  
+\end{lateximage}
 	\caption{Proportional-derivative control.}
 \end{figure}
-
-\begin{figure}[H]
+\begin{figure}
 	\label{fig:lag}
 	\centering
+\begin{lateximage}
+
 	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
 	\tikzstyle{controller} = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em]
 	\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
@@ -311,7 +523,7 @@ which leads to the following block diagram.
 	\node [output, right = 2cm of system2] (output) {};
 	\node [input, below = 0.5cm of con2] (m) {};
 	% Arrows
-	\draw [draw,->] (input) -- node {$Z_\re$} (sum);
+	\draw [draw,->] (input) -- node {$Z_{real}$} (sum);
 	\draw [->] (sum) -- (con1);
 	\draw [->] (con1) -- (con2);
 	\draw [->] (con2) -- node {$I$} (system2);
@@ -319,11 +531,15 @@ which leads to the following block diagram.
 	\draw [-] (y) |- (m) {} ;
 	\draw [->] (m) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
 	\end{tikzpicture}  
+
+\end{lateximage}
 	\caption{Lag compensation in series with PD control.}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}
 	\label{fig:integral}
+\begin{lateximage}
+
 	\centering
 	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
 	\tikzstyle{controller} = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em]
@@ -346,20 +562,166 @@ which leads to the following block diagram.
 	\draw [-] (y) |- (m) {} ;
 	\draw [->] (m) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
 	\end{tikzpicture}  
+
+\end{lateximage}
 	\caption{First order system with integral controller.}
 \end{figure}
+	
+\chapter{Example commands}
 
-\begin{theorem}{Anime}
+\section{Testing out matlab}
+\begin{matlaboutput}{}
+	% M-file: prob7_17.m
+	% M-file create a plot of the induced torque power
+	% converted power out and efficiency of the induction
+	% motor of Problem 7-14 as a function of slip.
+	% First, initialize the values needed in this program.
+	r1 = 0.075; % Stator resistance
+	x1 = 0.170; % Stator reactance
+	r2 = 0.065; % Rotor resistance
+	x2 = 0.170; % Rotor reactance
+	xm = 7.2; % Magnetization branch reactance
+	v_phase = 440 / sqrt(3); % Phase voltage
+	n_sync = 3000; % Synchronous speed (r/min)
+	w_sync = 314.2; % Synchronous speed (rad/s)
+	p_mech = 1000; % Mechanical losses (W)
+	p_core = 1100; % Core losses (W)
+	p_misc = 150; % Miscellaneous losses (W)
+	% Calculate the Thevenin voltage and impedance from Equations
+	% 7-41a and 7-43.
+	v_th = v_phase * ( xm / sqrt(r1^2 + (x1 + xm)^2) );
+	z_th = ((j*xm) * (r1 + j*x1)) / (r1 + j*(x1 + xm));
+	r_th = real(z_th);
+	x_th = imag(z_th);
+\end{matlaboutput}
+
+\section{Testing out Python}
+\begin{pythonscript}{}
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Dec 31 09:50:49 2017
+
+@author: David Li
+Helper script to create lwarpnotes, latex file should be set to \nonstopmode
+"""
+
+import subprocess,os,sys
+# consider using command line arguments to prompt the user for input if being run from command line or hardcoded value if any arguements are passed through.
+if len(sys.argv) > 1:
+input_tex_file = 'ELEC460Notes.tex'
+else:
+input_tex_file = input("Enter the tex name. ")
+input_name, input_extension = os.path.splitext(input_tex_file)
+if os.path.isfile(input_tex_file):
+print('Proceeding to produce: ' + input_name + '.pdf and ' + input_name +'_html' + '\n' )
+else:
+\end{pythonscript}
+
+\section{Testing out Bash}
+Hmm, cannot do this
+\begin{bashcmd}{}
+	
+pdflatex file
+pdflatex file_html.tex
+lwarpmk limages
+lwarpmk html
+lwarpmk pdftohtml
+\end{bashcmd}
+
+% Do not nest tags such as lstlisting and example
+\begin{example}
+	Testing out the examples
+\end{example}
+
+\section{Testing out Latex}
+\begin{latexcmd}{}
+	Testing out latex commands
+	Tiks
+\end{latexcmd}
+
+This is some garbo text,
+
+\section{Testing out Bash}
+
+
+\begin{bashcmd}{}
+	Testing out latex commands
+	Tiks
+\end{bashcmd}
+
+\begin{lemma}
+	A lemma to go with my Theorem!
+\end{lemma}
+%------------------------------------------------
+Shocked that this still doesn't work hmm
+
+
+\begin{theorem}{\textbf{Circuits}}
 	A set $\mathcal{D}(G)$ in dense in $L^2(G)$, $|\cdot|_0$. 
 \end{theorem}
+\section{Example Definitions}\index{Definitions}
 
-%------------------------------------------------
-
-\section{Definitions}\index{Definitions}
-
+% Hmm check script again
+\begin{lstlisting}[caption={This is a caption}]
+hmm
+\end{lstlisting}
 This is an example of a definition. A definition could be mathematical or it could define a concept.
+\begin{lstlisting}[caption={This is a caption}]
+foo bar = 5;
+\end{lstlisting}
 
-\begin{definition}{Cute}{label4}
+
+\begin{verbatim}
+	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
+\tikzstyle{block2} = [draw, fill=blue!20, rectangle, minimum height=2em, minimum width=2em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\begin{tikzpicture}[auto, >=latex']
+% Nodes
+\node [input] (input) {};
+\node [sum, right = 1cm of input] (sum) {};
+%\node [block2, right = 1cm of sum] (system) {$K$};
+\node [block, right = 1cm of sum] (system2) {$G$};
+\node [output, right = 2cm of system2] (output) {};
+\node [block, below = 0.5cm of system2] (h) {$H$};
+% Arrows
+\draw [draw,->] (input) -- node {$R$} (sum);
+\draw [->] (sum) -- node {$E$} (system2);
+%\draw [->] (system) -- (system2);
+\draw [->] (system2) -- node (y) {$C$}(output);
+\draw [-] (y) |- (h) {} ;
+\draw [->] (h) -| node[pos=0.99] {$-$}  node [near end] {} (sum);
+\end{tikzpicture} 
+\end{verbatim}
+
+
+%\begin{verbatim*}
+%Text enclosed inside \texttt{verbatim} environment 
+%is printed directly 
+%and all \LaTeX{} commands are ignored.
+%\end{verbatim*}
+%
+%\begin{verse}
+%	A verse starts here,
+%	A hero rises,
+%	The end he is dead.
+%\end{verse}
+\begin{quote}
+	Legends will fall
+\end{quote}
+
+\hyphenquote{UKenglish}{quote with UK English hyphenation}
+
+\epigraph{I recall seeing a package to make quotes}{Snowball}
+
+\begin{verse}
+	
+Because of limitations in how pandoc works, I suppose I could mix and max using bash and * to load all the individual files, in fact maybe that's what I'll do, take a month worth of notes and check the loading times and if it's not to bad I'll continue writing notes on my computer, but if I do it like that then I will have to either bring my computer to class or write them down by hand. Seems that using texstudio to compile lwarp is a mistake stick to perl command line.
+
+\end{verse}
+
+\begin{definition}
 	Given a vector space $E$, a norm on $E$ is an application, denoted $||\cdot||$, $E$ in $\mathbb{R}^+=[0,+\infty[$ such that:
 	\begin{align}
 	& ||\mathbf{x}||=0\ \Rightarrow\ \mathbf{x}=\mathbf{0}\\
@@ -372,7 +734,7 @@ This is an example of a definition. A definition could be mathematical or it cou
 
 \section{Notations}\index{Notations}
 
-\begin{example}{Real Cute}{label5}
+\begin{example}
 	Given an open subset $G$ of $\mathbb{R}^n$, the set of functions $\varphi$ are:
 	\begin{enumerate}
 		\item Bounded support $G$;
@@ -391,18 +753,176 @@ This is an example of a remark.
 	The concepts presented here are now in conventional employment in mathematics. Vector spaces are taken over the field $\mathbb{K}=\mathbb{R}$, however, established properties are easily extended to $\mathbb{K}=\mathbb{C}$.
 \end{remark}
 
+\begin{theorem}
+	Testing out the theorems
+\end{theorem}
 %------------------------------------------------
 
 \section{Corollaries}\index{Corollaries}
 
 This is an example of a corollary.
 
-\begin{corollary}{definition}{label}
+\begin{corollary}
 	The concepts presented here are now in conventional employment in mathematics. Vector spaces are taken over the field $\mathbb{K}=\mathbb{R}$, however, established properties are easily extended to $\mathbb{K}=\mathbb{C}$.
 \end{corollary}
 
-\nocite{*}
 
-\chapter{References}
-\printbibliography[heading=none]
+\begin{proof}[This is a proof]
+	Lwarp can solve my problems of creating good quality latex notes in html.
+\end{proof}
+
+\part{Course Work}
+
+
+\chapter{Assignments}
+This assignments will contain python and matlab code as well as latex code (creating diagrams).
+
+I will look into creating classic bode plots using python libariries such as matplotlib. Other diagrams will be produced by either inkscape or tikz.
+\section{Assignment 1}
+
+\begin{pythonscript}
+from numpy import *
+from pylab import * 
+from control.matlab import *   
+import time
+ion()
+## Get transfer function from G(s) = 1 * K / (s*(s+1)*(s+20)) when K = 1
+#from sympy import *
+import sympy as sympy
+from sympy import init_printing
+# %logstart -o
+init_printing()
+s = sympy.Symbol('s')  # Symbol, `a`, stored as variable
+Gs = sympy.expand((s*(s+1)*(s+20))**-1)
+print(Gs)
+# Print Rlocus
+sys = tf([1],[1,21,20,0])
+rvect, kvect = rlocus(sys)
+\end{pythonscript}
+\epigraph{This assignment will contain output from matlab and python.}{David Li}
+\begin{verbatim}
+1/(s**3 + 21*s**2 + 20*s)
+\end{verbatim}
+\begin{figure}
+	\includegraphics[width=0.7\linewidth]{Assignments/A1/ipython_files/qt_img486735758753796}
+	\caption{Root Locus created using matplotlib and python control library}
+	\label{fig:qtimg486735758753796}
+\end{figure}
+\begin{pythonscript}
+	Kv = sympy.limit(s*Gs, s, 0)
+	print('The velocity error Kv is:')
+	print(Kv)
+	mag, phase, omega = bode(sys)
+	real, imag, freq = nyquist(sys,labelFreq=10)
+\end{pythonscript}
+
+\begin{figure}
+	\includegraphics[width=0.7\linewidth]{Assignments/A1/ipython_files/qt_img494204706881540}
+	\caption{Bode Plot}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=0.7\linewidth]{Assignments/A1/ipython_files/qt_img492813137477636}
+	\caption{Nyquist Plot}
+\end{figure}
+
+\subimport*{Assignments/A1/}{A1Reduced.tex}
+\part{Back Matter}
+
+\begin{proof}[This is a proof]
+	Lwarp can solve my problems of creating good quality latex notes in html.
+\end{proof}
+\section*{List of Terms Used}
+\gls{Actuator} \gls{LTI} \gls{MIMO} \gls{SISO} \gls{bodeDia} \gls{closedLoop} \gls{conSys} \gls{controlGain} \gls{cornFreq} \gls{critDamp} 
+% Do not put a foot note at the front page again, a big mistake
+%Some of the material include may be reused from previous courses \footnote{Note that I completed 3A before 3B}.
+
+
+\chapter*{References}\label{references}
+\addcontentsline{toc}{chapter}{References}
+
+\hypertarget{refs}{}
+\hypertarget{ref-book:129711}{}
+{[}1{]} Ogata, \emph{Discrete-time control systems}. {[}Online{]}.
+Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9}
+
+\hypertarget{ref-textbook:niseSolution}{}
+{[}2{]} N. S. Nise, \emph{Control systems engineering - instructor
+	solutions manual}, 6th ed. Wiley, 2010 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd}
+
+\hypertarget{ref-textbook:nise}{}
+{[}3{]} N. S. Nise, \emph{Control systems engineering}, 7th ed. Wiley,
+2015 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba}
+
+\hypertarget{ref-book:DCSphil}{}
+{[}4{]} H. T. P. Chakrabortty Aranya; Nagle, \emph{``Digital control
+	system analysis and design: Global edition''}, 4th edition. Pearson
+Education Limited, 2015 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9}
+
+\hypertarget{ref-book:209199}{}
+{[}5{]} B. Jähne, \emph{Digital control systems: Design, identification
+	and implementation}..
+
+\hypertarget{ref-textbook:ogataSolution}{}
+{[}6{]} K. Ogata, \emph{Solution manual for modern control engineering},
+5th ed. Prentice Hall, 2010 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e}
+
+\hypertarget{ref-textbook:ogata}{}
+{[}7{]} K. Ogata, \emph{Modern control engineering}, 5th ed. Prentice
+Hall, 2010 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79}
+
+\hypertarget{ref-textbook:dorf}{}
+{[}8{]} R. H. B. Richard C. Dorf, \emph{Modern control systems 12th
+	edition}, 12th ed. Prentice Hall, 2011 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D}
+
+\hypertarget{ref-textbook:dorfSolution}{}
+{[}9{]} R. H. B. Richard C. Dorf, \emph{Instructor's solutions manual
+	for modern control systems, 12th edition}, 12th ed. Prentice Hall, 2011
+{[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216}
+
+\hypertarget{ref-textbook:kuo}{}
+{[}10{]} B. C. K. Farid Golnaraghi, \emph{Automatic control systems 9th
+	edition}, 9th ed. Wiley, 2009 {[}Online{]}. Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA}
+
+\hypertarget{ref-textbook:kuoSolutions}{}
+{[}11{]} B. C. K. Farid Golnaraghi, \emph{Automatic control systems, 9th
+	edition - solutions manual}, 9th ed. Wiley, 2009 {[}Online{]}.
+Available:
+\url{http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89}
+
+\hypertarget{ref-essElec360:Online}{}
+{[}12{]} E. S. Society, ``Past exams elec 360 {[}online{]} available.''
+{[}Online{]}. Available: \url{http://ess.uvic.ca/exams/ELEC/}
+
+\hypertarget{ref-megaElec360:Online}{}
+{[}13{]} MEGA, ``Engineering student shared drive {[}online{]}
+available.'' {[}Online{]}. Available:
+\url{https://mega.nz/\#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA}
+
+\hypertarget{ref-wiki:Cauchy}{}
+{[}14{]} Wikipedia, ``Cauchy's integral theorem --- wikipedia, the free
+encyclopedia.'' 2017 {[}Online{]}. Available:
+\url{https://en.wikipedia.org/w/index.php?title=Cauchy\%27s_integral_theorem\&oldid=778695526}
+
+\hypertarget{ref-MatlabCST}{}
+{[}15{]} MATLAB, ``MATLAB control systems toolbox.'' 2016 b.
+
+\hypertarget{ref-MatlabSMT}{}
+{[}16{]} MATLAB, ``MATLAB symbolic math toolbox.'' 2016 b.
+%\printbibliography[heading=none]
+%% generate plain text reference using pandoc conversion to html and copy and past
+
+\addcontentsline{toc}{chapter}{Glossary}
+\printglossaries
+
+%\printindex
 \end{document}

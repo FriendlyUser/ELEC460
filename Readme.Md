@@ -1,6 +1,7 @@
-% Engineering Software Design Exam Prep
-% David Li; Internet
-% December 5, 2017
+#### ELEC 460
+
+For my elec 460 notes, I will make them offline and then upload then to my git repository on a daily basis.
+As for my elec 300 notes, I will gitignore them locally and update the overleaf repo remotely, note that this will be the pandabear account.
 
 ### Useful Links
 

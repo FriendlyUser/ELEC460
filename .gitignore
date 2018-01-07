@@ -36,6 +36,7 @@
 /Textbooks/
 /CourseHero/
 /Reference/
+/Matlab # Remove this line at the end if needed
 
 # Keep lecture slides and other goodies, hmm, maybe manually add
 !/uploads/rubbish/stuff/keep/

@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Control Theory</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h2 id="autosec-12"> Part&nbsp;<span class="sectionnumber">I&#x2001;</span>Control Theory</h2><a
+id="autopage-12"></a>
+<h3 id="autosec-13"> <span class="sectionnumber">1&#x2001;</span>Course Information</h3><a
+id="autopage-13"></a>
+<blockquote>
+
+<p><b>Course Objectives:</b> Introduction in the analysis and design of digital and/or analog control systems.
+Understanding the mathematical tools used in control system analysis and design. Design digital controllers for
+systems in input-output description and/or state-space description.</p>
+
+
+<p><b>Syllabus ELEC 460:</b> Sampling in Control Systems. The z-transform and response between sampling
+instants. Analysis of sampled data systems and stability testing. State-space analysis and design of continuous and
+discrete systems. Controllability, observability and zero input stability analysis. Pole placement techniques.
+(Prerequisite: 360)</p>
+
+
+</blockquote>
+
+<p><b>Description</b> </p>
+
+
+<ul style="list-style-type:none">
+
+<li>
+
+<p>               —   Apply z-Transform to solve difference</p>
+
+</li>
+<li>
+<p>               —   Discuss description of discrete systems using transfer functions and state-space
+description</p>
+
+</li>
+<li>
+<p>               —   Analyse stability, transient and steady state system response</p>
+
+</li>
+<li>
+<p>               —   Demonstrate the digital implementation of lead and lag compensators</p>
+
+</li>
+<li>
+<p>               —   Analyse controllability and observability for systems in state space description</p>
+
+</li>
+<li>
+<p>               —   Design linear state feedback controllers using pole-placement</p>
+
+</li>
+<li>
+<p>               —   Apply state observers for state estimation of linear systems in state-space description</p>
+
+</li>
+</ul>
+
+<p><b>Assessment:</b></p>
+
+
+<figure id="autoid-1" class="table">
+<table>
+
+<tr>
+<td class="tdc">Assignments:</td>
+<td class="tdc">5 %</td>
+</tr>
+<tr>
+<td class="tdc">Mid-term 35 %</td>
+<td class="tdc">Date: Monday, February 5, 2018</td>
+</tr>
+<tr>
+<td class="tdc">Final</td>
+<td class="tdc">60 %</td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-1"></a>Table&nbsp;1.1:&nbsp;Course Assessment</p>
+
+
+
+</figcaption>
+
+</figure>
+
+<dl>
+
+
+                  <dt>Phase Margin</dt>
+<dd>
+<p>                  (PM) — \(\phi _m\), the difference from the phase plot and 180 degrees at the gain cut-off
+point.</p>
+
+</dd>
+                  <dt>Gain Margin</dt>
+<dd>
+<p>                  (GM) — at the frequency cut-off point, the difference from the magnitude plot and 0 is the
+GM, \(K\).</p>
+
+</dd>
+                  <dt>Bode Plot</dt>
+<dd>
+<p>                 — frequency domain plot that contains \(\phi _m\), and \(K\), see <a
+href="index.html#??">bode diagram</a>.</p>
+
+</dd>
+                  <dt>Root Locus</dt>
+<dd>
+<p>                  — Used in assignment 1, to help determine the damping ratio.</p>
+
+</dd>
+</dl>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>

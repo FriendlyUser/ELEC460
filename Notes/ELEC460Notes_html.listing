@@ -1,0 +1,5 @@
+v = sympy.limit(s*Gs, s, 0)
+	print('The velocity error Kv is:')
+	print(Kv)
+	mag, phase, omega = bode(sys)
+	real, imag, freq = nyquist(sys,labelFreq=10)

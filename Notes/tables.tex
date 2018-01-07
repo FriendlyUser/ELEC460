@@ -1,0 +1,117 @@
+
+\paragraph{Z Transforms}
+\begin{center}
+\large
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{\textbf Table of Z Transforms}\\
+\hline
+$ (x_k)_{k=0}^\infty$ &  ${\cal Z}\left[(x_k)_{k=0}^\infty \right]$\\
+\hline
+&\\[1mm]
+$x_k =\delta_k= \left\{ \begin{array}{ll} 1 & k = 0\\
+   				 0 & k > 0
+		\end{array} \right.$              & 1\\
+(unit pulse)                 & \\[8mm]
+$x_k = r^k$  & $\displaystyle\frac{z}{z-r}$\\[8mm]
+
+$x_k = kr^{k-1}$  & $\displaystyle\frac{z}{(z-r)^2}$\\[8mm]
+
+\hline
+\end{tabular}
+\end{center}
+{\textbf First shift theorem} (delaying):  if ${\cal Z}[(x_k)]=X(z)$ then
+\[
+{\cal Z}[(x_{k-k_0})]=\frac{1}{z^{k_0}}X(z)
+\]
+where $x_k=0$ for $k<0$.
+
+\noindent {\textbf Second shift theorem} (advancing): if ${\cal Z}[(x_k)]=X(z)$ then
+\[
+{\cal Z}[(x_{k+1})]=zX(z)-zx_0
+\]
+and
+\[
+{\cal Z}[(x_{k+2})]=z^2X(z)-z^2x_0-zx_1
+\]
+
+\begin{center}
+	\begin{tabular}{|c|c|}
+		\hline
+		\multicolumn{2}{|c|}{\textbf Table of Laplace Transforms}\\
+		\hline
+		$ f(t)$ { for} $t \geq 0$ &  ${\cal L}(f)$\\
+		\hline
+		&\\[1mm]
+		$1$      & $\displaystyle \frac{1}{s}$\\[5mm]
+		$e^{at}$ & $\displaystyle \frac{1}{s-a}$\\[5mm]
+		$t^n$    & $\displaystyle \frac{n!}{s^{n+1}}$ ($n = 0,1, \ldots$)\\[5mm]
+		$\sin at$ & $\displaystyle \frac{a}{s^2 + a^2}$\\[5mm]
+		$\cos at$ & $\displaystyle \frac{s}{s^2 + a^2}$\\[5mm]
+		$\sinh at$ & $\displaystyle \frac{a}{s^2 - a^2}$\\[5mm]
+		$\cosh at$ & $\displaystyle \frac{s}{s^2 - a^2}$\\[5mm]
+		$H_a(t)$ & $\displaystyle \frac{e^{-as}}{s}$\\[5mm]
+		$\delta(t-a)$ & $\displaystyle e^{-as}$\\[5mm]
+		$f'(t)$ & $s{\cal L}(f)-f(0)$\\[5mm]
+		$f''(t)$ & $s^2{\cal L}(f)-sf(0)-f'(0)$
+		\\[6mm]
+		\hline
+	\end{tabular}
+\end{center}
+where 
+\[
+H_a(t)=\left\{\begin{array}{ll}0&t \le a\\1&t>a\end{array}\right.
+\]
+
+\noindent{\textbf First shift theorem:} If ${\cal L}(f(t))=F(s)$ then
+\[ {\cal L}\left(e^{at}f(t)\right)=F(s-a).\]
+{\textbf Third shift theorem:} If ${\cal L}(f(t))=F(s)$ then
+\[ {\cal L}\left(H_a(t)f(t-a)\right)=e^{-as}F(s).\]
+
+\begin{table}[h]
+	\begin{center}
+	\begin{tabular}{c|c|c|c}
+		\toprule 
+		QUANTITY & SYMBOL & UNIT & UNIT ABBERVIATION 	\\
+		Time & t & second & s				\\
+		Frequency (cyclic) & f & hertz & Hz \\
+		Frequency (radian) & $\omega $& radian/sec & rad/s	\\
+		Phase angle &$\theta $, $\varphi $ & degree or radian & $^{\circ}$ or rad \\
+		Energy & w & joule & J 	\\
+		Power & p & watt & W	\\
+		Charge & q  &coulomb & C	\\
+		Current & i & ampere  &A	\\
+		Electric field & E & volt/meter& V/m	\\
+		Voltage & v & volt &V	\\
+		Impedence & Z & ohm & $\varOmega$	\\
+		Admittance &Y &siemen &S	\\
+		Resistance &R &ohm &$\varOmega$	\\
+		Conductance& G &siemen &S	\\
+		Reactance &X &ohm &$\varOmega$	\\
+		Susceptance &B &siemen& S	\\
+		Inductance, self &L &henry& H	\\
+		Inductance, mutual& M &henry& H	\\
+		Capacitance& C& farad &F	\\
+		Magnetic flux& $\phi$& weber &wb	\\
+		Flux linkages& $\lambda$& weber-turns& wb-t	\\
+		Power ratio& $log_{10}\frac{p_2}{p_1}$& Bel &B	\\
+		\bottomrule
+	\end{tabular}
+	\caption{Electric Quantities}
+\end{center}
+\end{table}
+ \begin{table}[h]
+	
+	\begin{center}
+			\begin{tabular}{cccccc}
+				\toprule 
+				\multirow{1}{*}{}	& \multicolumn{2}{c}{\multirow{ 2}{*}{I-V RELATIONSHIPS}} &	\multicolumn{3}{c}{IMPENDENCE}  \\ \cline{4-6}
+				& &	&  PHASOR-DOMAIN & s-DOMAIN & \\ \hline
+				Resistor	& $v_R(t)=i_R(t) \times R=\dfrac{i_R(t)}{G}$& $i_R(t)=\dfrac{v_R(t)}{R}=v_R(t) \times G$& $ Z_R $ & R & R\\ \hline
+				Inductor	& $v_L(t)=L\times \dfrac{ \partial i_L(t)}{\partial t} $& $i_L(t)=\dfrac{1}{L} \int_{0}^{t} v_L(x)dx+ i_L(0)$& $ Z_L $ &$ j\omega L$ & Ls\\ \hline
+				Capacitor	& $v_C(t)=dfrac{1}{C}\int_{0}^{t} i_C(x)dx+ v_C(0)$& $i_C(t)=C\times \dfrac{\partial v_C(t)}{\partial t} $& $ Z_C $ & $ \dfrac{1}{j\omega C} $& $\dfrac{1}{Cs}$\\ 
+				\bottomrule
+			\end{tabular}
+		\caption{Basic Circuit Relations}
+	\end{center}
+\end{table}

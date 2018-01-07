@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Introduction and Review</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-9" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Course-Work.html#autosec-72" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h3 id="autosec-17"> <span class="sectionnumber">2&#x2001;</span>Introduction and Review</h3><a
+id="autopage-17"></a>
+
+<p>For this course, <a href="Back-Matter.html#ref-MatlabCST">Matlab Control Systems</a> will be used
+extensively.</p>
+
+
+<p>For instance I can use the same <sup>1</sup> more <sup>2</sup> than <sup>3</sup> once.
+
+<figure id="autoid-2" class="figure">
+
+<p><span id="lateximage1" class="lateximagesource">
+<!--
+              Digital Controller
+
+Zreal                                              Z
+        A/D        Control         D/A   Process
+    −
+-->
+<img src="lateximages\lateximage-1.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+</figure>
+<div class="footnotes">
+<p><sup>1</sup> <a href="Back-Matter.html#ref-textbook:kuo">Kuo Textbook</a></p>
+
+<p><sup>2</sup> <a href="Back-Matter.html#ref-book:129711">Some Textbook</a></p>
+
+<p><sup>3</sup> <a href="Back-Matter.html#ref-MatlabCST">Control System Toolbox</a></p>
+
+<p><sup>3</sup> footnote with two references</p>
+
+
+</div>
+<p><span class="paragraph" id="autosec-21"> Z Transforms</span><a id="autopage-21"></a> </p>
+<div class="center">
+<table>
+
+<tr class="hline" >
+<td colspan="2" class="tdc tvertbarl tvertbarr"><b>T</b>able of Z Transforms</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">\((x_k)_{k=0}^\infty \)</td>
+<td class="tdc tvertbarr">\({\cal Z}\left [(x_k)_{k=0}^\infty \right ]\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr"></td>
+<td class="tdc tvertbarr"></td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(x_k =\delta _k= \left \{ \begin {array}{ll} 1 &amp; k = 0\\ 0 &amp;
+k &gt; 0 \end {array} \right .\)</td>
+<td class="tdc tvertbarr">1</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">(unit pulse)</td>
+<td class="tdc tvertbarr"></td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(x_k = r^k\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {z}{z-r}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">
+
+\(x_k = kr^{k-1}\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {z}{(z-r)^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">
+
+</td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+</div>
+
+<p><b>F</b>irst shift theorem (delaying): if \({\cal Z}[(x_k)]=X(z)\) then </p>
+
+
+<p>\[ {\cal Z}[(x_{k-k_0})]=\frac {1}{z^{k_0}}X(z) \]</p>
+
+
+<p>where \(x_k=0\) for \(k&lt;0\).</p>
+
+
+<p><b>S</b>econd shift theorem (advancing): if \({\cal Z}[(x_k)]=X(z)\) then </p>
+
+
+<p>\[ {\cal Z}[(x_{k+1})]=zX(z)-zx_0 \]</p>
+
+
+<p>and </p>
+
+
+<p>\[ {\cal Z}[(x_{k+2})]=z^2X(z)-z^2x_0-zx_1 \]</p>
+<div class="center">
+<table>
+
+<tr class="hline" >
+<td colspan="2" class="tdc tvertbarl tvertbarr"><b>T</b>able of Laplace Transforms</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr">\(f(t)\) for \(t \geq 0\)</td>
+<td class="tdc tvertbarr">\({\cal L}(f)\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc tvertbarl tvertbarr"></td>
+<td class="tdc tvertbarr"></td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(1\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {1}{s}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(e^{at}\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {1}{s-a}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(t^n\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {n!}{s^{n+1}}\) (\(n = 0,1, \ldots \))</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\sin at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {a}{s^2 + a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\cos at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {s}{s^2 + a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\sinh at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {a}{s^2 - a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\cosh at\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {s}{s^2 - a^2}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(H_a(t)\)</td>
+<td class="tdc tvertbarr">\(\displaystyle \frac {e^{-as}}{s}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(\delta (t-a)\)</td>
+<td class="tdc tvertbarr">\(\displaystyle e^{-as}\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(f’(t)\)</td>
+<td class="tdc tvertbarr">\(s{\cal L}(f)-f(0)\)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarl tvertbarr">\(f”(t)\)</td>
+<td class="tdc tvertbarr">\(s^2{\cal L}(f)-sf(0)-f’(0)\)</td>
+</tr>
+<tr class="hline" >
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+</div>
+
+<p>where </p>
+
+
+<p>\[ H_a(t)=\left \{\begin {array}{ll}0&amp;t \le a\\1&amp;t&gt;a\end {array}\right . \]</p>
+
+
+<p><b>F</b>irst shift theorem: If \({\cal L}(f(t))=F(s)\) then </p>
+
+
+<p>\[ {\cal L}\left (e^{at}f(t)\right )=F(s-a).\]</p>
+
+
+<p><b>T</b>hird shift theorem: If \({\cal L}(f(t))=F(s)\) then </p>
+
+
+<p>\[ {\cal L}\left (H_a(t)f(t-a)\right )=e^{-as}F(s).\]</p>
+
+
+<figure id="autoid-3" class="table">
+<div class="center">
+<table>
+
+<tr class="tbrule">
+<td class="tdc tvertbarr">QUANTITY</td>
+<td class="tdc tvertbarr">SYMBOL</td>
+<td class="tdc tvertbarr">UNIT</td>
+<td class="tdc">UNIT ABBERVIATION</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Time</td>
+<td class="tdc tvertbarr">t</td>
+<td class="tdc tvertbarr">second</td>
+<td class="tdc">s</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Frequency (cyclic)</td>
+<td class="tdc tvertbarr">f</td>
+<td class="tdc tvertbarr">hertz</td>
+<td class="tdc">Hz</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Frequency (radian)</td>
+<td class="tdc tvertbarr">\(\omega \)</td>
+<td class="tdc tvertbarr">radian/sec</td>
+<td class="tdc">rad/s</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Phase angle</td>
+<td class="tdc tvertbarr">\(\theta \), \(\varphi \)</td>
+<td class="tdc tvertbarr">degree or radian</td>
+<td class="tdc">\(^{\circ }\) or rad</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Energy</td>
+<td class="tdc tvertbarr">w</td>
+<td class="tdc tvertbarr">joule</td>
+<td class="tdc">J</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Power</td>
+<td class="tdc tvertbarr">p</td>
+<td class="tdc tvertbarr">watt</td>
+<td class="tdc">W</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Charge</td>
+<td class="tdc tvertbarr">q</td>
+<td class="tdc tvertbarr">coulomb</td>
+<td class="tdc">C</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Current</td>
+<td class="tdc tvertbarr">i</td>
+<td class="tdc tvertbarr">ampere</td>
+<td class="tdc">A</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Electric field</td>
+<td class="tdc tvertbarr">E</td>
+<td class="tdc tvertbarr">volt/meter</td>
+<td class="tdc">V/m</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Voltage</td>
+<td class="tdc tvertbarr">v</td>
+<td class="tdc tvertbarr">volt</td>
+<td class="tdc">V</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Impedence</td>
+<td class="tdc tvertbarr">Z</td>
+<td class="tdc tvertbarr">ohm</td>
+<td class="tdc">\(\varOmega \)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Admittance</td>
+<td class="tdc tvertbarr">Y</td>
+<td class="tdc tvertbarr">siemen</td>
+<td class="tdc">S</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Resistance</td>
+<td class="tdc tvertbarr">R</td>
+<td class="tdc tvertbarr">ohm</td>
+<td class="tdc">\(\varOmega \)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Conductance</td>
+<td class="tdc tvertbarr">G</td>
+<td class="tdc tvertbarr">siemen</td>
+<td class="tdc">S</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Reactance</td>
+<td class="tdc tvertbarr">X</td>
+<td class="tdc tvertbarr">ohm</td>
+<td class="tdc">\(\varOmega \)</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Susceptance</td>
+<td class="tdc tvertbarr">B</td>
+<td class="tdc tvertbarr">siemen</td>
+<td class="tdc">S</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Inductance, self</td>
+<td class="tdc tvertbarr">L</td>
+<td class="tdc tvertbarr">henry</td>
+<td class="tdc">H</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Inductance, mutual</td>
+<td class="tdc tvertbarr">M</td>
+<td class="tdc tvertbarr">henry</td>
+<td class="tdc">H</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Capacitance</td>
+<td class="tdc tvertbarr">C</td>
+<td class="tdc tvertbarr">farad</td>
+<td class="tdc">F</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Magnetic flux</td>
+<td class="tdc tvertbarr">\(\phi \)</td>
+<td class="tdc tvertbarr">weber</td>
+<td class="tdc">wb</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Flux linkages</td>
+<td class="tdc tvertbarr">\(\lambda \)</td>
+<td class="tdc tvertbarr">weber-turns</td>
+<td class="tdc">wb-t</td>
+</tr>
+<tr>
+<td class="tdc tvertbarr">Power ratio</td>
+<td class="tdc tvertbarr">\(log_{10}\frac {p_2}{p_1}\)</td>
+<td class="tdc tvertbarr">Bel</td>
+<td class="tdc">B</td>
+</tr>
+<tr class="tbrule">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-3"></a>Table&nbsp;2.1:&nbsp;Electric Quantities</p>
+
+
+
+</figcaption>
+
+</div>
+
+</figure>
+
+<figure id="autoid-4" class="table">
+<div class="center">
+<table>
+
+<tr class="tbrule">
+<td rowspan="1" class="tdc"></td>
+<td colspan="2" class="tdc"> <td rowspan=" 2" class="tdc">I-V RELATIONSHIPS</td>
+<td colspan="3" class="tdc">IMPENDENCE</td>
+</tr>
+<tr>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc tdrule">PHASOR-DOMAIN</td>
+<td class="tdc tdrule">s-DOMAIN</td>
+<td class="tdc tdrule"></td>
+</tr>
+<tr class="hline" >
+<td class="tdc">Resistor</td>
+<td class="tdc">\(v_R(t)=i_R(t) \times R=\dfrac {i_R(t)}{G}\)</td>
+<td class="tdc">\(i_R(t)=\dfrac {v_R(t)}{R}=v_R(t) \times G\)</td>
+<td class="tdc">\(Z_R \)</td>
+<td class="tdc">R</td>
+<td class="tdc">R</td>
+</tr>
+<tr class="hline" >
+<td class="tdc">Inductor</td>
+<td class="tdc">\(v_L(t)=L\times \dfrac { \partial i_L(t)}{\partial t} \)</td>
+<td class="tdc">\(i_L(t)=\dfrac {1}{L} \int _{0}^{t} v_L(x)dx+ i_L(0)\)</td>
+<td class="tdc">\(Z_L \)</td>
+<td class="tdc">\(j\omega L\)</td>
+<td class="tdc">Ls</td>
+</tr>
+<tr class="hline" >
+<td class="tdc">Capacitor</td>
+<td class="tdc">\(v_C(t)=dfrac{1}{C}\int _{0}^{t} i_C(x)dx+ v_C(0)\)</td>
+<td class="tdc">\(i_C(t)=C\times \dfrac {\partial v_C(t)}{\partial t} \)</td>
+<td class="tdc">\(Z_C \)</td>
+<td class="tdc">\(\dfrac {1}{j\omega C} \)</td>
+<td class="tdc">\(\dfrac {1}{Cs}\)</td>
+</tr>
+<tr class="tbrule">
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+<td class="tdc"></td>
+</tr>
+
+</table>
+
+<figcaption>
+
+<p><a id="autoid-4"></a>Table&nbsp;2.2:&nbsp;Basic Circuit Relations</p>
+
+
+
+</figcaption>
+
+</div>
+
+</figure>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
