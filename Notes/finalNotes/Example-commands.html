@@ -11,6 +11,8 @@
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Example commands</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -209,7 +211,7 @@ id="autopage-50"></a>
       <p>Matlab Output 4.1</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-matlab">
 
 
            % M - file : prob7_17 . m
@@ -234,7 +236,9 @@ id="autopage-50"></a>
            z_th = (( j * xm ) * ( r1 + j * x1 ) ) / ( r1 + j *( x1 + xm ) ) ;
            r_th = real ( z_th ) ;
            x_th = imag ( z_th ) ;
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                            </p>
 <h4 id="autosec-51"> <span class="sectionnumber">4.2&#x2001;</span>Testing out Python</h4><a
 id="autopage-51"></a>
@@ -244,7 +248,7 @@ id="autopage-51"></a>
       <p>Python Script 4.1</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-python">
 
 
       # -* - coding : utf -8 -* -
@@ -270,7 +274,9 @@ id="autopage-51"></a>
       print ( ' Proceeding to produce : ' + input_name + '. pdf and ' + input_name
             + ' _html ' + '\ n ' )
       else :
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                            </p>
 <h4 id="autosec-52"> <span class="sectionnumber">4.3&#x2001;</span>Testing out Bash</h4><a
 id="autopage-52"></a>
@@ -282,7 +288,7 @@ id="autopage-52"></a>
       <p>Bash Script 4.1</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-bash">
 
 
 
@@ -291,7 +297,9 @@ id="autopage-52"></a>
       lwarpmk limages
       lwarpmk html
       lwarpmk pdftohtml
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                          </p>
 <div class="amsthmbodydefinition">
 
@@ -317,12 +325,14 @@ id="autopage-54"></a>
        <p>Latex Commands 4.1</p>
 
 
-       <pre class="programlisting" >
+       <pre><code class = "language-latex">
 
 
             Testing out latex commands
             Tiks
-       </pre>
+       </code>
+</pre>
+
 <p>                                                                                           </p>
 
 
@@ -335,12 +345,14 @@ id="autopage-55"></a>
       <p>Bash Script 4.2</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-bash">
 
 
            Testing out latex commands
            Tiks
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                          </p>
 <div class="amsthmbodyplain">
 
@@ -389,11 +401,13 @@ id="autopage-58"></a>
 
 
 </figcaption>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 
 
 hmm
+</code>
 </pre>
+
 <figcaption>
 
 </figcaption>
@@ -408,11 +422,13 @@ hmm
 
 
 </figcaption>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 
 
 foo bar = 5;
+</code>
 </pre>
+
 <figcaption>
 
 </figcaption>
@@ -440,7 +456,9 @@ foo bar = 5;
 \draw [->] (h) -| node[pos=0.99] {$-$}   node [near end] {} (sum);
 \end{tikzpicture}
 
+</code>
 </pre>
+
 <blockquote>
 
 <p>Legends will fall</p>

@@ -47,11 +47,12 @@
 \renewenvironment*{boxedverbatim}
 {
 \LWR@forcenewpage
-\LWR@atbeginverbatim{boxedverbatim}\unskip\LWR@origvspace*{-\baselineskip}%
+\LWR@atbeginverbatim{boxedverbatim}\unskip\LWR@origvspace*{-2\baselineskip}%
 \verbatim%
 }
 {
 \endverbatim%
+\unskip%
 \LWR@afterendverbatim%
 }
 

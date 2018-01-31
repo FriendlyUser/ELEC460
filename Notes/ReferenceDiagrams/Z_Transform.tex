@@ -1,0 +1,1134 @@
+\documentstyle[12pt]{article}
+\textheight 9in
+\textwidth 6.5in
+\topmargin 0in
+\oddsidemargin 0in
+\evensidemargin -0.5in
+\usepackage{html}
+\begin{document}
+\begin{center}
+{\LARGE \bf The Z-Transform}
+\end{center}
+
+%{\large
+\section*{From Discrete-Time Fourier Transform to Z-Transform}
+
+{\bf Forward Z-Transform}
+
+The Fourier transform of a discrete signal $x[n]$ is defined as:
+\[ X(e^{j\omega})={\cal F}[x[n]]=\sum_{n=-\infty}^\infty x[n]e^{-j2\pi f n}
+=\sum_{n=-\infty}^\infty x[n]e^{-j\omega n} \]
+provided $x[n]$ is absolutely summable:
+\[ \sum_{n=-\infty}^\infty | x[n] |<\infty \]
+Obviously some signals may not satisfy this condition and their Fourier transform
+do not exist. To overcome this difficulty, we can multiply the given $x[n]$
+by an exponential function $e^{-\sigma n}$ so that $x[n]$ may be forced to be
+summable for certain values of the real parameter $\sigma$. Now the discrete
+time Fourier transform becomes:
+\begin{eqnarray}
+  {\cal F}[x[n]e^{-\sigma n}]&=&\sum_{n=-\infty}^\infty [x[n]e^{-\sigma n}]\;e^{-j\omega n}
+  =\sum_{n=-\infty}^\infty x[n]e^{-(\sigma +j\omega) n}
+  \nonumber \\
+  &=&\sum_{n=-\infty}^\infty x[n]e^{-s n}=\sum_{n=-\infty}^\infty x[n] z^{-n}
+  =X(z)
+  \nonumber 
+\end{eqnarray}
+The result of this summation is a function of a complex variable defined as:
+\[ z=e^s=e^{\sigma+j\omega} \]
+This is the forward Z-transform of the discrete signal $x[n]$:
+\[ X(z)={\cal Z}[x[n]]=\sum_{n=-\infty}^\infty x[n] z^{-n} \]
+
+{\bf Inverse Z-Transform}
+
+Given the Z transform $X(z)$, the original time signal can be obtained by 
+the inverse Z transform, which can be derived from the corresponding Fourier 
+transform. As shown above, we have:
+\[ X(z)=X(e^{\sigma+j\omega})=\sum_{n=-\infty}^\infty [x[n] e^{-\sigma n}] 
+e^{-j\omega n} ={\cal F}[x[n] e^{-\sigma n}]
+\]
+Now $x[n]e^{-\sigma n}$ can be obtained by the inverse Fourier transform:
+\[ x[n] e^{-\sigma n}={\cal F}^{-1}[X(e^{\sigma+j\omega})]
+=\frac{1}{2\pi}\int_0^{2\pi} X(e^{\sigma+j\omega}) e^{j\omega n} d\omega
+\]
+Multiplying both sides by $e^{\sigma n}$, we get:
+\[ 
+x[n]=\frac{1}{2\pi}\int_0^{2\pi} X(e^{\sigma+j\omega}) e^{(\sigma+j\omega) n} d\omega 
+=\frac{1}{2\pi}\int_0^{2\pi} X(z) z^n d\omega 
+\]
+To represent the inverse transform in terms of $z$ (instead of $\omega$), we note
+\[ dz=d(e^{\sigma+j\omega})=e^\sigma j\;e^{j\omega} d\omega=jz\;d\omega,
+ \;\;\;\;\;\mbox{i.e.,}\;\;\;\;\;\;d\omega=\frac{dz}{jz}	\]
+and the inverse Z transform can be obtained as:
+\[ x[n]={\cal Z}^{-1}[X(z)]=\frac{1}{j2\pi}\oint X(z) z^{n-1} dz	\]
+Note that the integral with respect to $\omega$ from $0$ to $2\pi$ becomes
+an integral with respect to $z=e^{\sigma+j\omega}$ in the complex z-plane,
+along a circle with a fixed radius $e^\sigma$ and a varying angle $\omega$ 
+from $0$ to $2\pi$. Now we have the z-transform pair:
+\[	X(z)={\cal Z}[x[n]]=\sum_{n=-\infty}^\infty x[n]z^{-n}	\]
+\[	x[n]={\cal Z}^{-1}[X(z)]=\frac{1}{2\pi j}\oint X(z)z^{n-1} dz	\]
+The forward and inverse z-transform pair can also be represented as
+\[	x[n] \stackrel{ {\cal Z} }{\longleftrightarrow} X(z)	\]
+In particular, if we let $\sigma=0$, i.e., $z=e^{j\omega}$, then the Z
+transform becomes the discrete-time Fourier transform:
+\[ X(z)\bigg|_{z=e^{j\omega}}=\sum_{n=-\infty}^\infty x[n] e^{-j\omega n}=X(e^j\omega) \]
+This is the reason why sometimes the discrete Fourier spectrum is expressed 
+as a function of $e^{j\omega}$.
+
+\htmladdimg{../ZFourier.gif}
+
+Different from the discrete-time Fourier transform which converts a 1-D signal
+$x[n]$ in time domain to a 1-D complex spectrum $X(e^{j\omega})$ in frequency
+domain, the Z transform $X(s)$ converts the 1D signal $x[n]$ to a complex 
+function defined over a 2-D {\em complex plane}, called z-plane, represented
+in polar form by radius $|z|=|e^{\sigma+j\omega}|=e^\sigma$ and angle 
+$\angle z=\angle(e^{\sigma+j\omega})=\omega$. 
+
+In particular, when this 2D function $X(z)=X(e^{\sigma+j\omega})$ is evaluated 
+along the unit circle $|z|=e^0=1$ corresponding to $\sigma=0$, it becomes a 
+1D periodic function $X(e^{j\omega})$, the discrete Fourier transform of $x[n]$. 
+Graphically, the periodic spectrum of the signal can be found as the cross 
+section of the 2D function $X(z)=X(e^{\sigma+j\omega})$ along the unit circle
+$|z|=e^0$.
+
+{\bf Transfer Function of LTI system}
+
+The output $y[n]$ of a discrete LTI system with input $x[n]$ can be found 
+by convolution
+\[ y[n]={\cal O}[x[n]]=h[n]*x[n]=\sum_{k=-\infty}^\infty h[k]x[n-k] 	\]
+where $h[n]$ is the {\em impulse response function} of the system. In 
+particular, if the input is a complex exponential
+\[	x[n]=z^n=(e^s)^n=e^{sn}	\]
+then the output $y[n]$ can be found to be:
+\[	y[n]={\cal O}[z^n]=\sum_{k=-\infty}^\infty h[k]z^{n-k}
+	=z^n \sum_{k=-\infty}^\infty h[k]z^{-k}=H(z) z^n	\]
+This is the eigenequation with the complex exponential $x[n]=z^n=e^{sn}$ being
+the eigenfunction of {\em any} discrete LTI system, corresponding to its 
+eigenvalue defined as:
+\[	H(z)\stackrel{\triangle}{=}\sum_{k=-\infty}^\infty h[k] z^{-k} \]
+which is the {\em z-transform} of its impulse response $h[n]$, called the
+{\em transfer function} of the LTI system. In particular, when $\sigma=0$,
+i.e., $z=e^s=e^{j\omega}$, the transfer function $H(z)$ becomes the 
+{\em frequency response function}, the Fourier transform of the impulse 
+response:
+\[ H(e^{j\omega})\stackrel{\triangle}{=}\sum_{n=-\infty}^\infty h[n] e^{-j\omega n} \]
+
+\newpage
+\section*{Conformal Mapping between S-Plane to Z-Plane}
+
+The s-plane and the z-plane are related by a {\em conformal mapping} specified
+by the analytic complex function 
+\[	z=e^s=e^{\sigma+j\omega}=e^\sigma e^{j\omega}=r e^{j\omega}	\]
+where 
+\[ \left\{ \begin{array}{l} Re[s]=\sigma \\ Im[s]=j\omega \end{array} \right.
+	\;\;\;\;\;\mbox{and}\;\;\;\;
+	\left\{ \begin{array}{l} |z|=r=e^\sigma \\ \angle{z}=\omega 
+	\end{array} \right.
+\]
+The mapping is continuous, i.e., neighboring points in s-plane are mapped
+to neighboring points in z-plane and vice versa. Consider the mapping of these 
+specific features: 
+\begin{itemize}
+\item The origin $s=0$ of s-plane is mapped to $z=e^0=1$ on the real axis in
+	z-plane.
+\item Each vertical line $Re[s]=\sigma_0$ in s-plane is mapped to a circle 
+	$|z|=e^{\sigma_0}$ centered about the origin in z-plane. In particular,
+	\begin{itemize}
+	\item Leftmost vertical line $Re[s]=\sigma=-\infty$ is mapped as the 
+		origin $|z|=e^{-\infty}=0$
+	\item Imaginary axis $Re[s]=0$ is mapped as the unit circle 
+		$|z|=e^0=1$
+	\item Rightmost vertical line $Re[s]=\sigma=\infty$ is mapped as a 
+		circle of infinite radius $|z|=e^{\infty}=\infty$.
+	\end{itemize}
+\item Each horizontal line $Im[s]=j\omega_0$ in s-plane is mapped to 
+	$\angle{z}=\omega_0$, a ray from the origin in z-plane of angle 
+	$\omega_0$ with respect to the positive horizontal direction. 
+\item A right angle formed by a pair vertical and horizontal lines in s-plane
+	is conserved by the mapping, as the corresponding circle and ray in z-plane 
+	also form a right angle. (In fact any angle is conserved, an important
+	property of the conformal mapping.)
+\end{itemize}
+The infinite range $-\infty < \omega < \infty$ for frequency $\omega$ along a 
+vertical line $Re[s]=\sigma_0$ in s-plane is mapped {\em repeatedly} to a finite 
+range $0 \le \omega < 2\pi$ around a circle $|z|=e^{\sigma_0}$ in z-plane, 
+corresponding to the conversion of a continuous signal $x(t)$ with non-periodic 
+spectrum $X(j\omega)$ for $-\infty < \omega < \infty$ to a discrete signal $x[n]$ 
+with periodic spectrum $X(e^{j\omega})$ for $0 \le \omega < 2\pi$.
+
+\htmladdimg{../conformal.gif}
+
+\newpage
+\section*{Region of Convergence and Examples}
+
+Whether the z-transform $X(z)$ of a signal $x[n]$ exists depends on the 
+complex variable $z=e^s$ as well as the signal itself. $X(z)$ exists if 
+and only if the argument $z$ is inside the {\em region of convergence 
+(ROC)} in the z-plane, which is composed of all $z$ values for the
+summation of the Z-transform to converge. The ROC of the Z-transform is 
+determined by $|z|=|e^s|=e^{\sigma}$ (a circle), the magnitude of variable
+$z$, while the ROC for the Laplace transform is determined by $\sigma=Re[s]$,
+(a vertical line), the real part of $s$. This formula is always needed in 
+the examples:
+\[	\sum_{n=0}^\infty x^n=\frac{1}{1-x},\;\;\;\;\mbox{for $|x|<1$} \]
+
+{\bf Example 1:} The Z transform of a right sided signal $x[n]=a^n u[n]$ is
+\[	X(z)=\sum_{n=-\infty}^\infty a^n u[n] z^{-n}
+	=\sum_{n=0}^\infty (az^{-1})^n=\frac{1}{1-az^{-1}}=\frac{z}{z-a} \]
+For this summation to converge, i.e., for $X(z)$ to exist, it is necessary
+to have $| az^{-1} |<1$, i.e., the ROC is $|z| > |a|$. As a special case when
+$a=1$, $x[n]=u[n]$ and we have
+\[	{\cal Z}[u[n]]=\frac{1}{1-z^{-1}}, \;\;\;\;|z|>1	\]
+
+{\bf Example 2:} The Z-transform of a left sided signal $x[n]=-a^nu[-n-1]$ is:
+\begin{eqnarray}
+X(z) &=& -\sum_{n=-\infty}^\infty a^nu[-n-1]z^{-n}=-\sum_{n=-\infty}^{-1} (az^{-1})^n
+	\nonumber \\
+ &=& 1-\sum_{n=0}^\infty (a^{-1}z)^n=1-\frac{1}{1-a^{-1}z}=\frac{z}{z-a}=\frac{1}{1-az^{-1}}
+	\nonumber
+\end{eqnarray}
+For the summation above to converge, it is required that $|a^{-1}z|<1$, i.e.,
+the ROC is $|z|<|a|$. Comparing the two examples above we see that two different
+signals can have identical z-transform, but with different ROCs. 
+
+{\bf Example 3: } Find the inverse of the given z-transform $X(z)=4z^2+2+3z^{-1}$.
+Comparing this with the definition of z-transform:
+\[
+X(z)=\sum_{n=-\infty}^\infty x[n]z^{-n}=x[-2]z^2+x[-1]z^1+x[0]+x[1]z^{-1}+x[2]z^{-2}
+\]
+we get
+\[	x[n]=4\delta[n+2]+2\delta[n]+3\delta[n-1]	\]
+In general, we can use the time shifting property
+\[	{\cal Z}[\delta[n+n_0]]=z^{n_0}	\]
+to inverse transform the $X(z)$ given above to $x[n]$ directly.
+
+{\bf Example 4: } Sometimes the inverse transform of a given $X(z)$ can be
+obtained by long division.
+\[ X(z)=\frac{1}{1-az^{-1}} \]
+By a long division, we get
+\[ 1\div (1-az^{-1})=1+az^{-1}+a^2z^{-2}+\cdots \]
+which converges if the ROC is $|z|>|a|$, i.e., $|az^{-1}|<1$ and we get
+\[ x[n]=a^n u[n] \].
+Alternatively, the long division can also be carried out as:
+\[ 1\div (-az^{-1}+1)=-a^{-1}z-a^{-2}z^2-\cdots \]
+which converges if the ROC is $|z|<|a|$, i.e., $|a^{-1}z|<1$ and we get
+\[ x[n]=-a^n u[-1-n] \]
+
+\newpage
+\section*{Zeros and Poles of Z-Transform}
+
+All z-transforms in the above examples are rational, i.e., they can 
+be written as a ratio of polynomials of variable $z$ in the general form
+\[	
+X(z)=\frac{N(z)}{D(z)}=\frac{\sum_{k=0}^M b_k z^k }{\sum_{k=0}^N a_k z^k}
+=\frac{b_M}{a_N}\frac{\prod_{k=1}^M (z-z_{z_k})}{\prod_{k=1}^N (z-z_{p_k})} 
+\]
+where $N(z)$ is the numerator polynomial of order $M$ with roots $z_{z_k}, (k=1,2, 
+\cdots, M)$, and $D(z)$ is the denominator polynomial of order $N$ with roots 
+$z_{p_k}, (k=1,2, \cdots, N)$. In general, we assume the order of the numerator
+polynomial is lower than that of the denominator polynomial, i.e.,  $M < N$. If 
+this is not the case, we can always expand $X(z)$ into multiple terms so that $M<N$
+is true for each of terms.
+
+The {\em zeros} and {\em poles} of a rational $X(z)=N(z)/D(z)$ are defined as:
+\begin{itemize}
+\item {\bf Zero}: 
+  Each of the roots of the numerator polynomial $z_z$ for which 
+  $X(z)\bigg|_{z=z_z}=X(z_z)=0$ is a {\em zero} of $X(z)$.
+
+  If the order of $D(z)$ exceeds that of $N(z)$ (i.e., $N>M$), then 
+  $X(\infty)=0$, i.e., there is a zero at infinity:
+  \[	\frac{b_1z+b_0}{a_2z^2+a_1z+a_0} \bigg|_{z \rightarrow \infty} =0	\]
+
+\item {\bf Pole}:
+  Each of the roots of the denominator polynomial $z_p$ for which 
+  $X(z)\bigg|_{z=z_p}=X(z_p)=\infty$ is a {\em pole} of $X(z)$.
+
+  If the order of $N(z)$ exceeds that of $D(z)$ (i.e., $M>N$), then 
+  $X(\infty)=\infty$, i.e, there is a pole at infinity: 
+  \[	\frac{b_2z^2+b_1z+b_0}{a_1z+a_0} \bigg|_{z \rightarrow \infty} \rightarrow \infty \]
+
+\end{itemize}
+Most essential behavior properties of an LTI system can be obtained graphically
+from the ROC and the zeros and poles of its transfer function $H(z)$ on the z-plane.
+
+\newpage
+\section*{Properties of ROC}	
+
+Whether the z-transform $X(z)$ of a function $x[n]$ exists depends on whether
+or not the transform summation converges 
+\[ X(z)=\sum_{n=-\infty}^\infty x[n]z^{-n}
+	=\sum_{n=-\infty}^\infty x[n] (e^{\sigma})^{-n} e^{-j\omega n}
+	=\sum_{n=-\infty}^\infty x[n] |z|^{-n} e^{-j\omega n} < \infty \]
+which in turn depends on the duration and magnitude of $x[n]$ as well as the 
+magnitude $|z|=r=e^\sigma$ (the phase of $z$ $\angle{z}=\omega$ determines the 
+frequency of a sinusoid which is bounded and has no effect on the convergence 
+of the integral). 
+
+{\bf Right sided signals: } $x[n]=x[n]u[n-n_0]$ may have infinite duration for 
+$n>0$, and a $z$ value with $|z|=e^{\sigma}>1$ tends to attenuate $x[n]|z|^{-n}$ as 
+$n \rightarrow \infty$. 
+
+{\bf Left sided signals: } $x[n]u[n_0-n]$ may have infinite duration for $n<0$, 
+and a $z$ value with $|z|=e^{\sigma}<1$ tends to attenuate $x[n]|z|^{-n}$ as 
+$n \rightarrow -\infty$.  
+
+Based on these observations, we can get the following properties for the ROC:
+
+\begin{itemize}
+
+\item If $x[n]$ is of finite duration, then the ROC is the entire z-plane (the
+	z-transform summation converges, i.e., $X(z)$ exists, for any $z$) except
+	possibly $z=0$ and/or $z=\infty$.
+
+\item The ROC of $X(z)$ consists of a ring centered about the origin in the z-plane.
+	The inner boundary can extend inward to the origin in some cases, and the 
+	outer can extend to infinity in other cases.
+
+\item If $x[n]$ is right sided and the circle $|z|=r_0$ is in the ROC, then any 
+	finite $z$ for which $|z|>r_0$ is also in the ROC. 
+
+\item If $x[n]$ is left sided and the circle $|z|=r_0$ is in the ROC, then any
+	$z$ for which $0<|z|<r_0$ is also in the ROC.
+
+\item If $x[n]$ is two-sided, then the ROC is the intersection of the two one-sided 
+	ROCs corresponding to the two one-sided parts of $x[n]$. This intersection
+	can be either a ring or an empty set.
+
+\item If $X(z)$ is rational, then its ROC does not contain any poles (by definition 
+	$X(z)\bigg|_{z=z_p}=\infty$ dose not exist). The ROC is bounded by the poles or 
+	extends to infinity.
+
+\item If $X(z)$ is a rational z-transform of a right sided function $x[n]$, then
+	the ROC is the region outside the out-most pole. If $x[n]=0$ for $n<0$
+	(causal), then the ROC includes $z=\infty$. 
+
+\item If $X(z)$ is a rational z-transform of a left sided function $x[n]$, then 
+	the ROC is inside the innermost pole. If $x[n]=0$ for $n \ge 0$ 
+	(anti-causal), then the ROC includes $z=0$. 
+
+\item Fourier transform $X(e^{j\omega})$ of discrete signal $x[n]$ exists if the
+	ROC of the corresponding z-transform $X(z)$ contains the unit circle
+	$|z|=1$ or $z=e^{j\omega}$.
+
+\end{itemize}
+
+\newpage
+{\bf Example 1: } 
+\[	X(z)=\sum_{n=-3}^5 x[n]z^{-n}	\]
+	When $z=0$, $z^{-n}=\infty$ for $n>0$, when $z=\infty$, $z^{-n}=\infty$
+	for $n<0$. Therefore neither $z=0$ nor $|z|=\infty$ are included in the ROC.
+
+
+{\bf Example 2:} 
+\[ x[n]=a^{|n|}=a^n u[n]+a^{-n} u[-n-1] \]
+The Z-transform is linear, and $X(z)$ is the sum of the transforms for the two terms:
+\[ {\cal Z}[a^n u[n]]=\frac{1}{1-az^{-1}},\;\;\;\;\;(|z|>|a|),\;\;\;\;\;\;\;\;\;
+   {\cal Z}[a^{-n}u[-n-1]=\frac{-1}{1-a^{-1}z^{-1}},\;\;\;\;\;(|z|<1/|a|) \]
+If $|a|<1$, i.e., $x[n]$ decays when $|n|\rightarrow\infty$, the intersection of
+the two ROCs is $|a|<|z|<1/|a|$, and we have:
+\[ {\cal Z}[x[n]]=\frac{1}{1-az^{-1}}-\frac{1}{1-a^{-1}z^{-1}}
+=\frac{a^2-1}{a}\frac{z}{(z-a)(z-1/a)} \]
+However, if $|a|>1$, i.e., $x[n]$ grows without a bound when $|n|\rightarrow\infty$,
+the intersection of the two ROCs is a empty set, the Z-transform does not exist.
+
+{\bf Example 3: } Given the following z-transform, find the corresponding signal:
+\[ X(z)=\frac{1}{(1-\frac{1}{3}z^{-1})(1-2z^{-1})}
+	=-\frac{1/5}{1-\frac{1}{3}z^{-1}}+\frac{6/5}{1-2z^{-1}} \]
+The two poles are $z_{p_1}=1/3$ and $z_{p_2}=2$, respectively. The $X(z)$ has 
+three possible ROCs associated with three different time signals $x[n]$:
+\begin{itemize}
+\item The region outside the out-most pole $z_{p_2}=2$, with the corresponding 
+	right sided time function
+\[ x[n]=-\frac{1}{5}(\frac{1}{3})^n u[n]+\frac{6}{5}2^n u[n]	\]
+\item The region inside the innermost pole $z_{p_1}=1/3$, with the corresponding 
+	left sided time function
+\[ x[n]=\frac{1}{5}(\frac{1}{3})^n u[-n-1]-\frac{6}{5}2^n u[-n-1]	\]
+\item The ring between the two poles $1/3 < |z| < 2$, with the corresponding two 
+	sided time function
+\[ x[n]=-\frac{1}{5}(\frac{1}{3})^n u[n]-\frac{6}{5}2^n u[-n-1]	\]
+\end{itemize}
+In particular, note that only the last ROC includes the circle $|z|=1$ and the 
+corresponding time function $x[n]$ has a discrete Fourier transform. Fourier 
+transform of the other two functions do not exist.
+
+\newpage
+\section*{Properties of Z-Transform}
+
+The z-transform has a set of properties in parallel with that of the Fourier 
+transform (and Laplace transform). The difference is that we need to pay 
+special attention to the ROCs. In the following, we always assume
+\[	{\cal Z}[x[n]]=X(z)\;\;\;\;ROC=R_x	\]
+and
+\[	{\cal Z}[y[n]]=Y(z)\;\;\;\;ROC=R_y	\]
+
+\begin{itemize}
+\item {\bf Linearity}
+\[
+{\cal Z}[a x[n]+b y[n]]=aX(z)+bY(z), \;\;\;\;ROC \supseteq (R_x \cap R_y) \]
+While it is obvious that the ROC of the linear combination of $x[n]$ and 
+$y[n]$ should be the intersection of the their individual ROCs $R_x \cap R_y$
+in which both $X(z)$ and $Y(z)$ exist, note that in some cases the ROC of the
+linear combination could be larger than $R_x \cap R_y$. For example, for both 
+$x[n]=a^n u[n]$ and $y[n]=a^n u[n-1]$, the ROC is $|z|>|a|$, but the ROC of 
+their difference $a^n u[n]-a^n u[n-1]=\delta[n]$ is the entire z-plane.
+
+\item {\bf Time Shifting}
+\[	{\cal Z}[x[n-n_0]]=z^{-n_0} X(z),\;\;\;\;ROC=R_x 	\]
+{\bf Proof: }
+\[	{\cal Z}[x[n-n_0]]=\sum_{n=-\infty}^\infty x[n-n_0]z^{-n}	\]
+Define $m=n-n_0$, we have $n=m+n_0$ and
+\[	\sum_{m=-\infty}^\infty x[m]z^{-m}z^{-n_0}=z^{-n_0} X(z)	\]
+The new ROC is the same as the old one except the possible addition/deletion 
+of the origin or infinity as the shift may change the duration of the signal.
+
+\item {\bf Time Expansion (Scaling)}
+
+\[	{\cal Z}[x[n/k]]=X(z^k),\;\;\;\;ROC=R_x^{1/k}	\]
+The discrete signal $x[n]$ cannot be continuously scaled in time as $n$ has 
+to be an integer (for a non-integer $n$ $x[n]$ is zero). Therefore $x[n/k]$ is
+defined as
+\[	x[n/k]\stackrel{\triangle}{=}\left\{ \begin{array}{ll}
+	x[n/k] & \mbox{if $n$ is a multiple of $k$} \\ 0 & \mbox{else}
+	\end{array} \right.
+\]
+{\bf Example: } If $x[n]$ is ramp
+
+\begin{tabular}{c|cccccc} \hline
+ $n$ & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline $x[n]$ & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline 
+\end{tabular}
+
+then the expanded version $x[n/2]$ is 
+
+\begin{tabular}{c|cccccc} \hline
+ $n$ & 1 & 2 & 3 & 4 & 5 & 6 \\ \hline
+ $n/2$ & 0.5 & 1 & 1.5 & 2 & 2.5 & 3 \\ \hline
+ $m$ &	     & 1 &     & 2 &     & 3 \\ \hline
+ $x[n/2]$ & 0 & 1 & 0 & 2 & 0 & 3 \\ \hline 
+\end{tabular}
+
+where $m$ is the integer part of $n/k$. 
+
+{\bf Proof: } The z-transform of such an expanded signal is
+\[	{\cal Z}[x[n/k]]=\sum_{n=-\infty}^\infty x[n/k]z^{-n}	
+	=\sum_{m=-\infty}^\infty x[m]z^{-km}=X(z^k)	\]
+Note that the change of the summation index from $n$ to $m$ has no effect as the 
+terms skipped are all zeros.
+
+\item {\bf Convolution}
+\[	{\cal Z}[x[n]*y[n]]=X(z) Y(z), \;\;\;\;ROC \supseteq (R_x \cap R_y) \]
+The ROC of the convolution could be larger than the intersection of $R_x$ and
+$R_y$, due to the possible pole-zero cancellation caused by the convolution.
+
+\item {\bf Time Difference}
+\[	{\cal Z}[x[n]-x[n-1]]=(1-z^{-1})X(z), \;\;\;\;\;ROC=R_x  	\]
+{\bf Proof: } 
+\[	
+{\cal Z}[x[n]-x[n-1]]=X(z)-z^{-1}X(z)=(1-z^{-1})X(z)=\frac{z-1}{z}X(z)
+\]
+Note that due to the additional zero $z=1$ and pole $z=0$, the resulting ROC 
+is the same as $R_x$ except the possible deletion of $z=0$ caused by the added
+pole and/or addition of $z=1$ caused by the added zero which may cancel an 
+existing pole.
+
+\item {\bf Time Accumulation}
+\[	{\cal Z}[\sum_{k=-\infty}^nx[k]]=\frac{1}{1-z^{-1}}X(z),
+	\;\;\;\;ROC \supseteq [R_x \cap (|z|>1)]	\]	
+{\bf Proof: } The accumulation of $x[n]$ can be written as its convolution with $u[n]$:
+\[
+u[n]*x[n]=\sum_{k=-\infty}^\infty u[n-k]x[k]=\sum_{k=-\infty}^n x[k]
+\]
+Applying the convolution property, we get
+\[
+{\cal Z}[\sum_{k=-\infty}^nx[k]]={\cal Z}[u[n]*x[n]]=\frac{1}{1-z^{-1}}X(z)
+\]
+as ${\cal Z}[u[n]]=1/(1-z^{-1})$.
+
+\item {\bf Time Reversal}
+\[	{\cal Z}[x[-n]]=X(1/z)\;\;\;\;ROC=1/R_x	\]
+{\bf Proof: }
+\[	{\cal Z}[x[-n]]=\sum_{n=-\infty}^\infty x[-n]z^{-n}	
+	=\sum_{m=-\infty}^\infty x[m](\frac{1}{z})^{-m}=X(1/z)
+\]
+where $m=-n$.
+
+\item {\bf Scaling in Z-domain}
+
+\[	{\cal Z}[a^n x[n]]=X\left(\frac{z}{a}\right),\;\;\;\;ROC=|a|R_x	\]
+{\bf Proof: }
+\[	{\cal Z}[a^n x[n]]=\sum_{n=-\infty}^\infty x[n]\left(\frac{z}{a} \right)^{-n}
+	=X\left(\frac{z}{a}\right)
+\]
+In particular, if $a=e^{j\omega_0}$, the above becomes
+\[	{\cal Z}[e^{jn\omega_0} x[n]]=X(e^{-j\omega_0}z)\;\;\;\;ROC=R_x	\]
+The multiplication by $e^{-j\omega_0}$ to $z$ corresponds to a rotation by 
+angle $\omega_0$ in the z-plane, i.e., a frequency shift by $\omega_0$.
+The rotation is either clockwise ($\omega_0>0$) or counter clockwise 
+($\omega_0<0$) corresponding to, respectively, either a left-shift or a
+right shift in frequency domain. The property is essentially the same as 
+the frequency shifting property of discrete Fourier transform. 
+
+\item {\bf Conjugation}
+\[	{\cal Z}[x^*[n]]=X^*(z^*), \;\;\;\;\;ROC=R_x	\]
+{\bf Proof: } Complex conjugate of the z-transform of $x[n]$ is
+\[	X^*(z)=[\sum_{n=-\infty}^\infty x[n]z^{-n}]^*
+	=\sum_{n=-\infty}^\infty x^*[n](z^*)^{-n}	\]
+Replacing $z$ by $z^*$, we get the desired result.
+
+\item {\bf Differentiation in z-Domain}
+\[	{\cal Z}[n x[n]]=-z\;\frac{d}{dz}X(z), \;\;\;\; ROC=R_x	\]
+{\bf Proof: } 
+\[ \frac{d}{dz}X(z)=\sum_{n=-\infty}^\infty x[n] \frac{d}{dz} (z^{-n})
+=\sum_{n=-\infty}^\infty (-n) x[n] z^{-n-1}
+=\frac{-1}{z}\sum_{n=-\infty}^\infty n x[n] z^{-n} \]
+i.e.,
+\[	{\cal Z}[n x[n]]=-z\frac{d}{dz}X(z)	\]
+
+{\bf Example: } Taking derivative with respect to $z$ of the right side of
+\[	{\cal Z}[a^nu[n]]=\frac{1}{1-az^{-1}}\;\;\;\;|z|>|a|	\]
+we get
+\[	\frac{d}{dz}\left[ \frac{1}{1-az^{-1}}\right]=\frac{-az^{-2}}{(1-az^{-1})^2}	\]
+Due to the  property of differentiation in z-domain, we have
+\[	{\cal Z}[n a^n u[n]]=\frac{az^{-1}}{(1-az^{-1})^2}\;\;\;\;|z|>|a|	\]
+Note that for a different ROC $|z|<|a|$, we have
+\[	{\cal Z}[-n a^n u[-n-1]]=\frac{az^{-1}}{(1-az^{-1})^2}\;\;\;\;|z|<|a|	\]
+
+\end{itemize}
+
+%} {\large
+\newpage
+\section*{Z-Transform of Typical Signals}
+\begin{itemize}
+\item $\delta[n]$, $\delta[n-m]$
+\[	{\cal Z}[\delta[n]]=\sum_{n=-\infty}^\infty \delta[n]z^{-n}=1
+	\;\;\;\mbox{for all $z$} \]
+Due to the time shifting property, we also have
+\[	{\cal Z}[\delta[n-m]]=z^{-m}\;\;\;\mbox{for all $z$} \]
+
+\item $u[n]$, $a^n u[n]$, $n a^n u[n]$
+
+\[	{\cal Z}[u[n]]=\sum_{n=0}^\infty z^{-n}=\frac{1}{1-z^{-1}}\;\;\;|z|>1 \]
+Due to the scaling in z-domain property, we have
+\[	{\cal Z}[a^nu[n]]=\frac{1}{1-(z/a)^{-1}}=\frac{1}{1-az^{-1}}\;\;\;|z|>|a| \]
+Applying the property of differentiation in z-Domain to the above, we have
+\[	{\cal Z}[na^nu[n]]=-z\frac{d}{dz}[\frac{1}{1-az^{-1}}]
+	=-z\frac{-az^{-2}}{(1-az^{-1})^2}=\frac{az^{-1}}{(1-az^{-1})^2}
+	\;\;\;\;|z|>|a|	\]
+
+\item $e^{\pm jn\omega_0}u[n]$, $cos[n\omega_0]u[n]$, $sin[n\omega_0]u[n]$
+
+Applying the scaling in z-domain property to ${\cal Z}[u[n]]=1/(1-z^{-1})$, we have
+\[	{\cal Z}[e^{jn\omega_0}u[n]]=\frac{1}{1-(e^{j\omega_0}z)^{-1}}
+	=\frac{1}{1-e^{-j\omega_0} z^{-1}}	\;\;\;|z|>1	\]
+and similarly, we have
+\[	{\cal Z}[e^{-jn\omega_0}u[n]]=\frac{1}{1-e^{j\omega_0} z^{-1}}\;\;\;|z|>1 \]
+Moreover, we have
+\begin{eqnarray}
+{\cal Z}[cos(n\omega_0)u[n]]&=&{\cal Z}[\frac{e^{jn\omega_0}+e^{-jn\omega_0}}{2}u[n]]
+=\frac{1}{2}[\frac{1}{1-e^{j\omega_0} z^{-1}}+\frac{1}{1-e^{-j\omega_0} z^{-1}}]
+	\nonumber \\
+&=&\frac{2-(e^{j\omega_0}+e^{-j\omega_0})z^{-1}}{2[1-(e^{j\omega_0}+e^{-j\omega_0})z^{-1}+z^{-2}]}
+	\nonumber \\
+&=& \frac{1-cos\omega_0 z^{-1}}{1-2cos\omega_0 z^{-1}+z^{-2}}\;\;\;\;|z|>1
+	\nonumber
+\end{eqnarray}
+Similarly we have
+\[	{\cal Z}[sin(n\omega_0)u[n]]=
+\frac{sin\omega_0 z^{-1}}{1-2cos\omega_0 z^{-1}+z^{-2}}	\;\;\;\;|z|>1 \]
+
+\item $r^n cos[n\omega_0]u[n]$, $r^n sin[n\omega_0]u[n]$
+
+Applying the z-domain scaling property to the above, we have
+\[	{\cal Z}[r^n cos(n\omega_0)u[n]]=
+\frac{1-r\;cos\omega_0 z^{-1}}{1-2r\;cos\omega_0 z^{-1}+r^2 z^{-2}} \;\;\;\;|z|>r	\]
+and
+\[	{\cal Z}[r^n sin(n\omega_0)u[n]]=
+\frac{r\;sin\omega_0 z^{-1}}{1-2r\;cos\omega_0 z^{-1}+r^2 z^{-2}} \;\;\;\;|z|>r	\]
+
+\end{itemize}
+
+
+\newpage
+\section*{Analysis of LTI Systems by Z-Transform}
+
+Due to its convolution property, the z-transform is a powerful tool to analyze LTI
+systems 
+\[	y[n]=h[n]*x[n] \stackrel{{\cal Z}}{\longrightarrow} Y(z)=H(z)X(z)	\]
+As discussed before, when the input is the eigenfunction of all LTI system, i.e., 
+$x[n]=e^{sn}=z^n$, the operation on this input by the system can be found by 
+multiplying the system's eigenvalue $H(z)$ to the input:
+\[	y[n]={\cal O}[z^n]=h[n]*z^n=H(z) z^n	\]
+
+\begin{itemize}
+\item {\bf Causal LTI systems}
+
+  An LTI system is {\em causal} if its output $y[n]$ depends only on the current 
+  and past input $x[n]$ (but not the future). Assuming the system is initially at
+  rest with zero output $y[n]\bigg|_{n<0}=0$, then its response $y[n]=h[n]$ to an
+  impulse $x[n]=\delta[n]$ at $n=0$ is at rest for $n<0$, i.e., $h[n]=h[n]u[n]$.
+  Its response to a general input $x(t)$ is:
+  \[ y[n]=h[n]*x[n]=\sum_{m=-\infty}^\infty h[m] x[n-m]=\sum_{m=0}^\infty h[m] x[n-m] \]
+  Due to the properties of the ROC, we know that 
+
+  {\bf If an LTI system is causal (with a right sided impulse response function
+    $h[n]=0$ for $n<0$), then the ROC of its transfer function $H(z)$ is the
+    exterior of a circle including infinity. In particular, when $H(z)$ is rational,
+    then the system is causal if and only if its ROC is the exterior of a circle 
+    outside the out-most pole, and the order of numerator is no greater than the order
+    of the denominator.}
+
+  Note the requirement for the orders of the numerator and denominator guarantees
+  the existence of $H(z)$ even when $z=\infty$.
+
+\item {\bf Stable LTI systems}
+
+  An LTI system is {\em stable} if its response to any bounded input is also 
+  bounded for all $n$:
+  \[  \mbox{if}\;\;|x[n]|<B_x\;\;\;\mbox{then}\;\;\;|y[n]|<\infty  \]
+  As the output and input of an LTI is related by convolution, we have:
+  \[  y[n]=h[n]*x[n]=\sum_{m=-\infty}^\infty h[m] x[n-m]<\infty \]
+  and 
+  \[ |y[n]| &=& |\sum_{m=-\infty}^\infty h[m] x[n-m]| 
+  \le \sum_{m=-\infty}^\infty |h[m] |x[n-m]| 
+  <B_x\;\sum_{m=-\infty}^\infty |h[m]| <\infty	\]
+  which obviously requires:
+  \[  \sum_{m=-\infty}^\infty |h[m]| <\infty	 \]
+  In other words, if the impulse response function $h[m]$ of an LTI system is 
+  absolutely integrable, then the system is stable. We can show that this 
+  condition is also necessary, i.e., all stable LTI systems' impulse response
+  functions are absolutely integrable. Now we have:
+  
+  {\bf An LTI system is stable if and only if its impulse response is absolutely
+    summable, i.e., the frequency response function $H(e^{j\omega})$ exits, i.e. the
+    ROC of its transfer function $H(z)$ includes the unit circle $|z|=1$.}
+  \[ H(z)\bigg|_{z=e^{j\omega}}=H(e^{j\omega})={\cal F}[h[n]] \]
+
+\item {\bf Causal and stable LTI systems}
+
+  From the two properties above, we also see that
+
+  {\bf A causal LTI system with a rational transfer function $H(z)$ is stable 
+    if and only if all poles of $H(z)$ are inside the unit circle of the z-plane, 
+    i.e., the magnitudes of all poles are smaller than 1.}
+  \[ |Re[z_p]|<1\;\;\;\;\;\;\;\mbox{(for all $z_p$)} \]
+
+
+\end{itemize}
+
+{\bf Example: } The transfer function of an LTI is
+\[	H(z)=\frac{1}{1-az^{-1}}	\]
+As shown before, without specifying the ROC, this $H(z)$ could be the z-transform
+of one of the two possible time signals $h[n]$.
+\begin{itemize}
+\item If ROC is $|z|>|a|$, the system $h[n]=a^n u[n]$ is causal.
+	\begin{itemize}
+	\item If $|a|<1$, i.e., unit circle can be included in ROC, the 
+		system is stable;
+	\item If $|a|>1$, i.e., unit circle cannot be included in ROC, the 
+		system is unstable;
+	\end{itemize}
+\item If ROC is $|z|<|a|$, the system $h[n]=-a^n u[-n-1]$ is anti-causal.
+	\begin{itemize}
+	\item If $|a|<1$, i.e., unit circle cannot be included in ROC, the 
+		system is unstable;
+	\item If $|a|>1$, i.e., unit circle can be included in ROC, the 
+		system is stable;
+	\end{itemize}
+\end{itemize}
+
+\vskip 0.2in
+\begin{tabular}{c||c|c} \hline 
+		& $|a|<1$			& $|a|>1$		\\ \hline \hline
+  $|z|>|a|$	& $e^{j\omega}$ inside ROC & $e^{j\omega}$ outside ROC, \\
+  $h[n]=e^a^nu[n]$& causal, stable & causal, unstable  \\ \hline
+  $|z|<|a|$	& $e^{j\omega}$ outside ROC & $e^{j\omega}$ inside ROC, \\
+  $h[n]=-a^nu[-n-1]$ 	& anti-causal, unstable & anti-causal, stable  \\ \hline
+\end{tabular}
+
+\section*{LTI Systems Characterized by LCCDEs}
+
+The first order difference is defined as 
+\[ dx[n]=x[n+1]-x[n],\;\;\;\;\;\mbox{or}\;\;\;\;\;\;dx[n]=x[n]-x[n-1] \]
+The second order difference is defined as 
+\[ d^2 x[n]=dx[n]-dx[n-1]=x[n]-x[n-1]-x[n-1]+x[n-2]=x[n]-2x[n-1]+x[n-2] \]
+In general, the kth order difference will need to involve $x[n-k]$. 
+
+Similar to an LTI continuous system which can be described by an LCCDE 
+(differential equation), a discrete LTI system can be described by an LCCDE 
+(difference equation):
+\[	\sum_{k=0}^N a_k y[n-k]=\sum_{k=0}^M b_k x[n-k]	\]
+where $x[n]$ and $y[n]$ are the discrete input and output, respectively.
+After taking the z-transform on both sides of the LCCDE, we get an algebraic 
+equation in the $z$ domain:
+\[ Y(z)[\sum_{k=0}^N a_k z^{-k}]=X(z)[\sum_{k=0}^M b_k z^{-k}]	\]
+and its transfer function is rational:
+\[
+H(z)=\frac{Y(z)}{X(z)}=\frac{\sum_{k=0}^M b_k z^{-k}}{\sum_{k=0}^N a_k z^{-k}}
+=\frac{b_M}{a_N} \; \frac{\prod_{k=1}^M (z-z_{z_k})}{\prod_{k=1}^N (z-z_{z_k})}
+=K \; \frac{N(z)}{D(z)}	\]
+where $K=b_M/a_N$ is a coefficient and $z_{z_k}, (k=1,2, \cdots, M)$ are the 
+roots of the numerator polynomial and $z_{p_k}, (k=1,2, \cdots, N)$ are the 
+roots of the denominator polynomial. Note that just as the LCCDE alone does 
+not completely specify the relationship between $x[n]$ and $y[n]$ (additional 
+information such as the initial conditions is needed), the transfer function 
+$H(z)$ does not completely specify the system. For example, the same $H(z)$ 
+with different ROCs will represent different systems (e.g., causal or anti-causal). 
+
+{\bf Example:} The input and output of an LTI system are related by
+\[	y[n]-\frac{1}{2}y[n-1]=x[n]+\frac{1}{3}x[n-1]	\]
+Note that without further information such as the initial condition, this
+equation does not uniquely specify $y[n]$ when $x[n]$ is given. Taking 
+z-transform of this equation and using the time shifting property, we get
+\[	Y(z)-\frac{1}{2}z^{-1}Y(z)=X(z)+\frac{1}{3}z^{-1}X(z)	\]
+and the transfer function can be obtained
+\[
+H(z)=\frac{Y(z)}{X(z)}=\frac{1+\frac{1}{3}z^{-1}}{1-\frac{1}{2}z^{-1}}
+=\frac{1}{1-\frac{1}{2}z^{-1}}(1+\frac{1}{3}z^{-1})	\]
+Note that the causality and stability of the system is not provided by this
+equation, unless the ROC of this $H(z)$ is specified. Consider these two 
+possible ROCs:
+\begin{itemize}
+\item If ROC is $|z|>1/2$, it is outside the pole $z_p=1/2$ and includes 
+	the unit circle. The system is causal and stable:
+\[	h[n]=\left(\frac{1}{2}\right)^n u[n]+\frac{1}{3}\left(\frac{1}{2}\right)^{n-1}u[n-1]	\]
+\item If ROC is $z|<1/2$, it is inside the pole $z_p=1/2$ and does not include
+	the unit circle. The system is anti-causal and unstable:
+\[	h[n]=-\left(\frac{1}{2}\right)^n u[-n-1]-\frac{1}{3}\left(\frac{1}{2}\right)^{n-1}u[-n]	\]
+\end{itemize}
+
+\newpage
+\section*{Evaluation of Fourier Transform from Pole-Zero Plot}
+
+Given the pole-zero plot of the transfer function $H(s)$, we can qualitatively 
+learn the system's behavior as the frequency $\omega$ changes.
+
+\subsection*{First order system}
+
+The first order discrete system is described by
+\[	y[n]-ay[n-1]=x[n] 	\]
+The impulse response $h[n]$ can be found by solving the following
+\[	h[n]-ah[n-1]=\delta[n] 	\]
+to be
+\[	h[n]=a^n u[n]	\]
+Alternatively, we can take z-transform of the DE and get
+\[	Y(z)-az^{-1}Y(z)=(1-az^{-1})Y(z)=X(z)	\]
+and the transfer function of the system (assumed causal)
+\[	H(z)=\frac{Y(z)}{X(z)}=\frac{1}{1-az^{-1}} \;\;\;\;\;\;|z|>|a|	\]
+$H(z)$ has a zero at $z=0$ and a pole $z_p=a$ and its ROC is the region 
+$|z|>|a|$ outside the pole. If $|a|<1$, then the unit circle $|z|=r=1$ can be
+included in the ROC, the Fourier transform exists and the system is stable. The 
+impulse response 
+(unit sample response) of the system is
+\[	h[n]={\cal Z}^{-1}[H(z)]=a^nu[n]	\]
+Although $h[n]$ seems to have a form different from the typical impulse response
+in continuous case $h(t)=e^{-t/\tau}u(t)$, they are essentially the same as $h(t)$
+can be rewritten as
+\[	h(t)=e^{-t/\tau}u(t)=(e^{-1/\tau})^t u(t)=a^t u(t)	\]
+where 
+\[	a \stackrel{\triangle}{=}e^{-1/\tau}	\]
+Letting $z=e^{j\omega}$ in $H(z)$, we get the frequency response function of the
+system
+\[	H(e^{j\omega})=\frac{1}{1-ae^{-j\omega}}
+	=\frac{e^{j\omega}}{e^{j\omega}-a}=\frac{e^{j\omega}-0}{e^{j\omega}-a}
+	=\frac{u}{v}		\]
+where $u$ and $v$ are two vectors in z-plane defined as
+\[	u\stackrel{\triangle}{=}e^{j\omega}-0=e^{j\omega},\;\;\;\;
+	v\stackrel{\triangle}{=}e^{j\omega}-a	\]
+For any frequency $-\pi \le\omega\le\pi$ represented by a point $z=e^{j\omega}$
+on the unit circle, the magnitude and phase angle of the frequency response
+function can be represented in the z-plane as
+\[	|H(e^{j\omega})|=\frac{|u|}{|v|}	\]
+and 
+\[	\angle H(e^{j\omega})=\angle u-\angle v	\]
+which can be evaluated graphically in the z-plane as the frequency $\omega$ changes
+in the range $-\pi \le \omega \le\pi$. If we assume $0<a< 1$, then when $\omega=0$,
+the denominator reaches its minimum of $1-a$, and $|H(e^{j\omega})|$ is maximized
+to be $1/(1-a)$; and when $\omega=\pi$, the denominator reaches its maximum of 
+$|(-1-a)|=1+a$, and $|H(e^{j\omega})|$ is minimized to be $1/(1+a)$. 
+The phase angle of $H(e^{j\omega})=\angle u-\angle v$ is zero when $\omega=0$ or
+$\omega=\pi$, and is negative for $0<\omega<\pi$ and positive for $-\pi<\omega<0$.
+
+\newpage
+\subsection*{Second order system}
+
+A second order discrete system is described by
+\[	y[n]+a_1y[n-1]+a_2y[n-2]=x[n]	\]
+The z-transform of this DE is
+\[	Y(z)+a_1z^{-1}Y(z)+a_2z^{-2}Y(z)=(1+a_1z^{-1}+a_2z^{-2})Y(z)=X(z)	\]
+and the transfer function is
+\[	H(z)=\frac{Y(z)}{X(z)}=\frac{1}{1+a_1z^{-1}+a_2z^{-2}}
+	=\frac{z^2}{z^2+a_1z+a_2}=\frac{z^2}{(z-z_{p_1})(z-z_{p_2})}
+\]
+which has two repeated zeros $z=0$ and a pair of complex conjugate poles
+\[	z_{p_1,p_2}=-\frac{a_1}{2}\pm\frac{1}{2}\sqrt{a_1^2-4a_2}
+		=-\frac{a_1}{2}\pm\frac{j}{2}\sqrt{4a_2-a_1^2}	\]
+For convenience, we define
+\[	a_1\stackrel{\triangle}{=}-2r\;cos\theta, \;\;\;\;\mbox{and}
+\;\;\;\; a_2\stackrel{\triangle}{=}r^2\;\;\;\;(0\ge \theta \ge \pi) \]
+and the transfer function becomes
+\[	H(z)=\frac{z^2}{z^2-2r\;cos\theta z+r^2}	\]
+and the poles become
+\[
+z_{p_1,p_2}=r(cos\theta \pm j\;sin\theta)=r\;e^{\pm j\theta}	\]
+For the system to be causal and stable, we have to have $|z_p|=r<1$. 
+When $0<\theta <\pi$, $H(z)$ can be expanded 
+\begin{eqnarray}
+ H(z) &=& \frac{z^2}{(z-z_{p_1})(z-z_{p_2})}=
+	\frac{1}{(1-z_{p_1}z^{-1})(1-z_{p_2}z^{-1})}
+	\nonumber \\
+ &=& \frac{1}{(1-r e^{j\theta}z^{-1})(1-r e^{-j\theta}z^{-1})} 
+ = \frac{A}{1-r e^{j\theta}z^{-1}}+\frac{B}{1-r e^{-j\theta}z^{-1}}	
+	\nonumber
+\end{eqnarray}
+where
+\[
+A=\frac{e^{j\theta}}{2j\;sin\theta},\;\;\;\;B=\frac{-e^{-j\theta}}{2j\;sin\theta}
+\]
+The impulse response of the system can be found by inverse z-transform 
+\begin{eqnarray}
+h[n]&=& [A(re^{j\theta})^n+B(re^{-j\theta})^n]u[n]
+	=\frac{r^n}{2j\;sin\theta}[e^{j\theta(n+1)}-e^{-j\theta(n+1)}]u[n]
+	\nonumber \\
+ &=& r^n\frac{sin[(n+1)\theta]}{sin\theta}u[n]
+	\nonumber 
+\end{eqnarray}
+When $\theta=0$, $H(z)$ has two repeated poles $z_p=r$ and becomes
+\[ H(z)=\frac{1}{(1-rz^{-1})^2}	\]
+and the impulse response becomes
+\[	h[n]=(n+1)r^n u[n]	\]
+When $\theta=\pi$, $H(z)$ has two repeated poles $z_p=-r$ and becomes
+\[ H(z)=\frac{1}{(1+rz^{-1})^2}	\]
+and the impulse response becomes
+\[	h[n]=(n+1)(-r)^n u[n]	\]
+To graphically evaluate the behavior of the system as a function of frequency 
+$\omega$ in the z-plane, we let $z=e^{j\omega}$ in $H(z)$ and get the frequency 
+response function of the system
+\[
+H(e^{j\omega})=\frac{1}{(1-re^{j\theta}e^{-j\omega})(1-re^{-j\theta}e^{-j\omega})}
+=\frac{(e^{j\omega})^2}{(e^{j\omega}-re^{j\theta})(e^{j\omega}-re^{-j\theta})}	
+=\frac{u^2}{v_1 \; v_2}	\]
+where $u$, $v_1$ and $v_2$ are three vectors in z-plane defined as
+\[ 	u\stackrel{\triangle}{=}e^{j\omega}-0=e^{j\omega},
+\;\;\;\;v_1\stackrel{\triangle}{=}e^{j\omega}-re^{j\theta},
+\;\;\;\;v_2\stackrel{\triangle}{=}e^{j\omega}-re^{-j\theta}
+\]
+For any frequency $-\pi \le\omega\le\pi$ represented by a point $z=e^{j\omega}$
+on the unit circle, the magnitude and phase angle of the frequency response
+function can be represented in the z-plane as
+\[	|H(e^{j\omega})|=\frac{|u|^2}{|v_1||v_2|}	\]
+and
+\[	\angle{H(e^{j\omega})}=2\angle u-\angle v_1-\angle v_2	\]
+When $\omega=\pm \pi$, $v_1$ and $v_2$ are maximized and thereby 
+$|H(e^{j\omega})|$ is minimized. In particular, when $r$ is close to 1, 
+$|v_1|=1-|r|$ is minimized when $\omega=\theta$, i.e., $|H(e^{j\omega})|$ 
+has a peak.
+
+\newpage
+\section*{System Algebra and Block Diagram}
+
+Z-transform converts time-domain operations such as difference and convolution
+into algebraic operations in z-domain. Moreover, the behavior of complex systems
+composed of a set of interconnected LTI systems can also be easily analyzed in 
+z-domain. Some simple interconnections of LTI systems are listed below.
+\begin{itemize}
+\item {\bf Parallel systems: } If the system is composed of two LTI systems
+with $h_1[n]$ and $h_2[n]$ connected in parallel, its impulse response is
+\[ h[n]=h_1[n]+h_2[n]	\]
+or in s-domain
+\[ H(z)=H_1(z)+H_2(z)	\]
+
+\item {\bf Serial or cascade system: } If the system is composed of two LTI 
+systems with $h_1[n]$ and $h_2[n]$ connected in series, its impulse response is
+\[ h[n]=h_1[n]*h_2[n]=h_2[n]*h_1[n]	\]
+or in s-domain
+\[ H(z)=H_1(z)H_2(z)=H_2(z)H_1(z)	\]
+
+\htmladdimg{../Zdiagram0.gif}
+
+\item {\bf Feedback system: } If the system is composed of an LTI system
+with $h_1[n]$ in a forward path and another LTI system $h_2[n]$ in a 
+feedback path, its output $y[n]$ can be implicitly found in time domain 
+\[ y[n]=h_1[n]*e[n]=h_1[n]*[x[n]+h_2[n]*y[n]]	\]
+or in s-domain 
+\[ Y(z)=H_1(z)E(z)=H_1(z)[X(z)+H_2(z)Y(z)]	\]
+While it is difficult to solve the equation in time domain to find an
+explicit expression for output $y[n]=h[n]*x[n]$, it is easy to solve the
+algebraic equation in z-domain to find $Y(z)$
+\[	Y(z)[1-H_1(z)H_2(z)]=H_1(z) X(z)	\]
+and the transfer function can be obtained
+\[	H(z)=\frac{Y(z)}{X(z)}=\frac{H_1(z)}{1-H_1(z)H_2(z)}	\]
+The feedback could be either positive or negative. For the latter, there will 
+be a negative sign in front of $h_2(t)$ and $H_2(s)$ of the feedback path so that
+$e[n]=x[n]-h_2[n]*y[n]$ and 
+\[	H(z)=\frac{Y(z)}{X(z)}=\frac{H_1(z)}{1+H_1(z)H_2(z)}	\]
+\end{itemize}
+
+{\bf Example 0: } The transfer function of a first order LTI system
+\[ y[n]-\frac{1}{4}y[n-1]=x[n],\;\;\;\;\;Y(z)[1-\frac{1}{4}z^{-1}]=X(z)	\]
+is
+\[	H(z)=\frac{1}{1-\frac{1}{4}z^{-1}}	\]
+Comparing this $H(z)$ with the transfer function of the feedback system, we
+see that a first order system can be represented as a feedback system with
+$H_1(z)=1$ in the forward path, and $H_2(z)$ for the product of $1/4$ and 
+$z^{-1}$ (a delay element with input $x[n]$ and output $y[n]=x[n-1]$) in the
+negative feedback path.
+
+\htmladdimg{../Zdiagram1.gif}
+
+{\bf Example 1: } 
+\[ H(z)=\frac{Y(z)}{X(z)}=\frac{1-2z^{-1}}{1-\frac{1}{4}z^{-1}} \]
+This equation can be rewritten as:
+\[ Y(z)=(1-2z^{-1}) \frac{1}{1-\frac{1}{4}z^{-1}}X(z)=(1-2z^{-1})W(z) \]
+where 
+\[ W(z)=\frac{1}{1-\frac{1}{4}z^{-1}}X(z) \]
+can be obtained the same way as in previous example. Once $W(z)$ and
+$W(z)z^{-1}$ are available, we can easily obtain $Y(z)$:
+
+\htmladdimg{../Zdiagram2.gif}
+
+{\bf Example 2: } Consider a second order system with transfer function
+\[
+H(z)=\frac{1}{1+\frac{1}{4}z^{-1}-\frac{1}{8}z^{-2}}
+	=\frac{1}{(1+\frac{1}{2}z^{-1})(1-\frac{1}{4}z^{-1})}
+	=\frac{2/3}{1+\frac{1}{2}z^{-1}}+\frac{1/3}{1-\frac{1}{4}z^{-1}}
+\]
+These three expressions of this $H(z)$ correspond to three different block
+diagram representations of the system. The last two expressions are, 
+respectively, the cascade and the parallel representations (same as the
+corresponding cases in Laplace transform), while the first one is the 
+direct representation, as shown below. We first consider a general 2nd order
+system
+\[	Y(z)+asY(z)z^{-1}+bY(z)z^{-2}=X(z),\;\;\;\;\;\mbox{or}\;\;\;\;\;\;
+	Y(z)=X(z)-aY(z)z^{-1}-bY(z)z^{-2}	\]
+We see that $Y(z)$ is the linear combination of the delayed versions of 
+itself and the input $X(z)$ which can be represented as a feedback system with
+two feedback paths of $-az^{-1}$ and $-bz^{-2}$. In this particular system,
+$a=-1/4$ and $b=1/8$.
+
+\htmladdimg{../Zdiagram3.gif}
+
+\htmladdimg{../Zdiagram4.gif}
+
+\htmladdimg{../Zdiagram5.gif}
+
+
+{\bf Example 3: } A second order system with transfer function
+\[	H(z)=K \frac{1+cz^{-1}+dz^{-2}}{1+az^{-1}+bz^{-2}}
+	=\frac{K}{1+az^{-1}+bz^{-2}}(1+cz^{-1}+dz^{-2})
+\]
+This system can be represented as a cascade of two systems
+\[	W(z)=H_1(z)X(z)=\frac{K}{1+az^{-1}+bz^{-2}}X(z)	\]
+and 
+\[	Y(z)=H_2(z)W(z)=(1+cz^{-1}+dz^{-2})W(z)	\]
+The first system $H_1(z)$ can be implemented by two delay elements with proper 
+feedback paths as shown in the previous example, and the second system is a 
+linear combination of $W(z)$, $W(z)z^{-1}$ and $W(z)z^{-2}$, all of which are
+available along the feedback path of the first system. The over all system can
+therefore be represented as shown. Obviously the block diagram of this example 
+can be generalized to represent any system with a rational transfer function
+\[
+H(z)=\frac{\sum_{k=0}^M b_k z^{-k}}{\sum_{k=0}^N a_k z^{-k}}\;\;\;\;(M \le N)	
+\]
+
+\htmladdimg{../Zdiagram6.gif}
+
+\section*{Unilateral Z-Transform}
+
+The {\em unilateral} z-transform of an arbitrary signal $x[n]$ is defined as
+\[	{\cal UZ}[x[n]]=X(z)\stackrel{\triangle}{=}
+\sum_{n=-\infty}^\infty x[n]u[n] z^{-n}=\sum_{n=0}^\infty x[n] z^{-n}
+\]
+When the unilateral z-transform is applied to find the transfer function 
+$H(z)={\cal UZ}[h[n]]$ of an LTI system, it is always assumed to be causal, 
+and the ROC is always the exterior of a circle. The unilateral z-transform
+of any signal $x[n]=x[n]u[n]$ is identical to its bilateral Laplace transform.
+However, if $x[n] \ne x[n]u[n]$, the two z-transforms are different. Some of 
+the properties of the unilateral z-transform different from the bilateral 
+z-transform are listed below.
+
+\begin{itemize}
+\item {\bf Time Advance}
+\begin{eqnarray}
+  {\cal UZ}\left[x[n+1]\right]&=&\sum_{n=0}^\infty x[n+1]z^{-n}
+  =z\sum_{m=1}^\infty x[m]z^{-m}
+  \nonumber \\
+  &=&z\left[\sum_{m=0}^\infty x[m]z^{-m}-x[0]\right]=zX(z)-zx[0] 
+  \nonumber \end{eqnarray}
+where we have assumed $m=n+1$.
+
+\item {\bf Time Delay}
+\begin{eqnarray}
+  {\cal UZ}\left[x[n-1]\right]&=&\sum_{n=0}^\infty x[n-1]z^{-n}
+  =z^{-1}\sum_{m=-1}^\infty x[m]z^{-m}
+  \nonumber \\
+  &=& z^{-1}\left[ \sum_{m=0}^\infty x[m]z^{-m}+zx[-1]\right]=z^{-1}X(z)+x[-1]
+  \nonumber
+\end{eqnarray}
+where $m=n-1$. Similarly, we have
+\begin{eqnarray}
+  {\cal UZ}[x[n-2]] &=& \sum_{n=0}^\infty x[n-2]z^{-n}
+  =z^{-2}\sum_{m=-2}^\infty x[m]z^{-m}
+  \nonumber \\
+  &=& z^{-2}\left[\sum_{m=0}^\infty x[m]z^{-m}+zx[-1]+z^2 x[-2]\right]
+  \nonumber \\
+  &=&z^{-2}X(z)+x[-1]z^{-1}+x[-2]
+  \nonumber
+\end{eqnarray}
+where $m=n-2$. In general, we have
+\[ {\cal UZ}[x[n-n_0]] = z^{-n_0}X(z)+\sum_{k=0}^{n_0-1} z^{-k} x[k-n_0] \]
+
+\item {\bf Convolution}
+\[	{\cal UZ}[x[n]*y[n]]=X(z)Y(z)	\]
+If both $x[n]$ and $y[n]$ are causal, i.e., $x[n]=y[n]=0$ for $n<0$, the
+unilateral and bilateral z-transforms are identical.
+
+\item {\bf Time Difference}
+\[	{\cal UZ}[x[n]-x[n-1]]=(1-z^{-1})X(z) \;\;\;\;\;ROC=R_x  	\]
+{\bf Proof: } 
+\[	
+{\cal UZ}[x[n]-x[n-1]]=X(z)-z^{-1}X(z)-x[-1]=(1-z^{-1})X(z)-x[-1]
+\]
+
+\item {\bf Time Accumulation}
+\[	{\cal UZ}[\sum_{k=0}^nx[k]]=\frac{1}{1-z^{-1}}X(z)	\]
+
+\item {\bf Initial Value Theorem}
+
+If $x[n]=x[n]u[n]$, i.e., $x[n]=0$ for $n<0$, then
+\[	x[0]=\lim_{z\rightarrow \infty} X(z)	\]
+{\bf Proof: }
+\[	\lim_{z\rightarrow \infty} X(z)=\lim_{z\rightarrow \infty} 
+	\left[\sum_{n=0}^\infty x[n]z^{-n}\right]=x[0]
+\]
+All terms with $n>0$ become zero as $z^{-n}=1/z^n \rightarrow 0$ as 
+$z \rightarrow \infty$, except the first one which is always $x[0]$.
+
+\item {\bf Final Value Theorem}
+
+If $x[n]=x[n]u[n]$, i.e., $x[n]=0$ for $n<0$, then
+\[ \lim_{n\rightarrow \infty}x[n]=x[\infty]
+=\lim_{z\rightarrow 1}(1-z^{-1}) X(z)	\]
+{\bf Proof: } 
+\[ {\cal Z}\left[ x[n]-x[n-1]\right]=X(z)-X(z)z^{-1}
+=\sum_{n=0}^\infty \left[ x[n]-x[n-1] \right]z^{-n} \]
+i.e.
+\[ (1-z^{-1})X(z)=\lim_{N\rightarrow \infty}\sum_{n=0}^N \left[ x[n]-x[n-1]\right]z^{-n}\]
+Letting $z\rightarrow 1$ in the above, we get
+\begin{eqnarray}
+  \lim_{z\rightarrow 1}(1-z^{-1})X(z)
+  &=&\lim_{N\rightarrow \infty}\left[ \sum_{n=0}^N [x[n]-x[n-1]\right]
+    \lim_{N\rightarrow \infty}\left[ x[N]-x[-1]\right]
+  &=&\lim_{N\rightarrow \infty} x[N]=x[\infty]
+  \nonumber
+\end{eqnarray}
+where $x[-1]=0$.
+
+\end{itemize}
+
+{\bf Example:}
+\[	x[n]=a^{n+1}u[n+1] 	\]
+This signal is right sided starting at $n=-1$ (i.e., $x[n] \ne x[n]u[n]$).
+By definition, the bilateral z-transform of $x[n]$ is
+\[	{\cal Z}[x[n]]=\sum_{n=-1}^\infty a^{n+1}z^{-n}
+	=z+a\sum_{n=0}^\infty a^n z^{-n}=z+\frac{a}{1-az^{-1}}
+	=\frac{z}{1-az^{-1}}
+\]
+It was assumed that $|z|>|a|$. The unilateral z-transform of this signal is
+\[ {\cal UZ}[x[n]]=\sum_{n=0}^\infty a^{n+1}z^{-n}
+	=a\sum_{n=0}^\infty a^n z^{-n}=\frac{a}{1-az^{-1}}
+\]
+
+If we assume zero initial condition $y[-1]=0$, 
+
+\newpage
+\section*{Solving LCCDEs by Unilateral Z-Transform}
+
+Due to its time delay property, the unilateral z-transform is a powerful 
+tool for solving LCCDEs with arbitrary initial conditions. 
+
+{\bf Example: } A system is described by this LCCDE
+\[	y[n]+3y[n-1]=x[n]=\alpha u[n]	\]
+Taking unilateral z-transform of the DE, we get
+\[	Y(z)+3Y(z)z^{-1}+3y[-1]=X(z)=\frac{\alpha}{1-z^{-1}}	\]
+\begin{itemize}
+\item {\bf The particular (zero-state) solution}
+
+If the system is initially at rest, i.e., $y[-1]=0$, the above equation can 
+be solved for the output $Y(z)$ to get
+\[	Y(z)=H(z)X(z)=\frac{1}{1+3z^{-1}}\;\frac{\alpha}{1-z^{-1}}
+	=\frac{3\alpha/4}{1+3z^{-1}}+\frac{\alpha/4}{1-z^{-1}}	\]	
+where $H(z)=1/(1+3z^{-1})$ is the system's transfer function. In time domain
+this is the particular (or zero-state) solution (caused by the input with 
+zero initial condition):
+\[ y_p[n]=\alpha[\frac{1}{4}+\frac{3}{4}(-3)^n]u[n]	\]
+
+\item {\bf The homogeneous (zero-input) solution}
+
+When the initial condition is nonzero 
+\[	y[-1]=\beta	\]
+but the input is zero $x[n]=0$, the z-transform of the difference equation 
+becomes
+\[	Y(z)+3Y(z)z^{-1}+3\beta=0	\]
+which can be solved for $Y(z)$ 
+\[	Y(z)=\frac{-3\beta}{1+3z^{-1}}	\]
+In time domain, this is the homogeneous (or zero-input) solution (caused by the
+initial condition with zero input):
+\[	y_h[n]=-3\beta (-3)^n u[n]	\]
+\end{itemize}
+When neither $y[-1]$ nor $x[n]$ is zero, we have
+\[	Y(z)+3Y(z)z^{-1}+3\beta=X(z)=\frac{\alpha}{1-z^{-1}}	\]
+Solving this algebraic equation in z-domain for $Y(z)$ we get
+\[	Y(z)=\frac{\alpha}{(1+3z^{-1})(1-z^{-1})}-\frac{3\beta}{1+3z^{-1}} \]
+The first term is the particular solution caused by the input alone and the 
+second term is the homogeneous solution caused by the initial condition alone.
+The $Y(z)$ can be further written as
+\[	Y(z)=\frac{1}{1+3z^{-1}}(\frac{3}{4}\alpha-3\beta)
+	+\frac{\alpha}{4}\frac{1}{1-z^{-1}}
+\]
+and in time domain, we have the general solution
+\[	y_g[n]=[(\frac{3}{4}\alpha-3\beta)(-3)^n+\frac{\alpha}{4}]u[n]
+	=y_h[n]+y_p[n]	\]
+which is the sum of both the homogeneous and particular solutions.
+
+Note that bilateral z-transform can also be used to solve LCCDEs. However,
+as bilateral z-transform does not take initial condition into account, it is
+always implicitly assumed that the system is initially at rest. If this is not 
+the case, unilateral z-transform has to be used.
+%}
+\end{document}
+
+\[	\sum_{n=0}^\infty a^n=\frac{1}{1-a}\;\;\;\;\mbox{for $|a|<1$} \]
+{\bf Proof:}
+First consider
+\[	S_N\stackrel{\triangle}{=}\sum_{n=0}^N a^n=1+a+a^2+\cdots+a^N \]
+multiplying both sides by $a$, we get
+\[	aS_N=a+a^2+\cdots+a^N+a^{N+1} \]
+subtracting the second expression from the first, we have
+\[	(1-a)S_N=1-a^{N+1}	\]
+or
+\[	S_N=\frac{1-a^{N+1}}{1-a}	\]
+If $|a|<1$, $\lim_{n\rightarrow \infty}a^{N+1}=0$, and
+\[	\lim_{n\rightarrow \infty}S_N=\sum_{n=0}^\infty a^n=\frac{1}{1-a} \]
+
+
+
+\begin{itemize}
+\item {\bf Right sided:}
+\[	x[n]=a^n u[n],\;\;\;\;\;(|a|>1)	\]
+Its discrete Fourier transform does not exist as the signal grows without
+a bound when $n\rightarrow \infty$, i.e., the transform summation does not 
+converge. However, its z-transform $X(z)$ exists if $|z|=e^\sigma>|a|$ 
+(i.e., $|a/z|<1$), as the modified signal 
+$a^n e^{-\sigma n} u[n]=(a/e^\sigma)^n u[n]$ will converge when 
+$n\rightarrow -\infty$.
+
+\item {\bf Left sided:}
+\[	x[n]=a^n u[-n],\;\;\;\;\;(|a|<1)	\]
+Again the discrete Fourier transform does not exist as the signal grows when
+$n\rightarrow -\infty$, i.e., the transform summation does not converge (not
+summable). However, its z-transform exists if $|z|=e^\sigma<|a|$ (i.e., 
+$|a/z|>1$), as the modified signal 
+$a^n e^{-\sigma n} u[-n]=(a/e^\sigma)^n u[-n]$ will converge when 
+$n\rightarrow -\infty$.
+\end{itemize}
+
+\newpage

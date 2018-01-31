@@ -62,6 +62,7 @@ if len(sys.argv) > 2:
 latexmk_cmd = ' '.join(['latexmk',
                        '-pdf',
                        '-time',
+					   '-f',
                     lwarpHTMLFile])
 try:
     #subprocess.check_call(cmd_str2)

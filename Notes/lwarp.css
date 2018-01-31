@@ -1,6 +1,6 @@
 /*
   CSS stylesheet for the LaTeX lwarp package
-  Copyright 2016-2017 Brian Dunn — BD Tech Concepts LLC
+  Copyright 2016-2018 Brian Dunn — BD Tech Concepts LLC
 */
 
 /* a fix for older browsers: */
@@ -45,6 +45,7 @@ body {
 }
 
 p {margin: 1.5ex 0em 1.5ex 0em ;}
+table p {margin: .5ex 0em .5ex 0em ;}
 
 /* Holds a section number to add space between it and the name */
 span.sectionnumber { margin-right: 0em }
@@ -415,7 +416,7 @@ ol {
 }
 
 ul, body dir, body menu {
-  margin: 1ex 1em 1ex 0em;
+  margin: 3ex 1em 3ex 0em;
   line-height: 1.2;
 }
 
@@ -605,7 +606,8 @@ div.wpminipage { border: 1px solid green ; margin: .5ex ; padding: .5ex ;}
 .mdframedtitle {
     padding: .5em ;
     display: block ;
-    font-size: 130%
+    font-size: 130% ;
+    margin-bottom: 1ex ;
 }
 
 .mdframedsubtitle {
@@ -632,6 +634,12 @@ div.wpminipage { border: 1px solid green ; margin: .5ex ; padding: .5ex ;}
      border-radius: 0px ;
     padding: .3ex 1em 0ex 1em ;
   display: block ;
+}
+
+.shaded {
+    margin: 3ex 0em 3ex 0em ;
+    padding: .3ex 1em .3ex 1em ;
+    display: block ;
 }
 
 .snugframed {

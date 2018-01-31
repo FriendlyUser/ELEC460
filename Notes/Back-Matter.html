@@ -11,10 +11,7 @@
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Back Matter</title>
-<link rel="stylesheet" href="prism.css" type="text/css">
-<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
-
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
 <script type="text/x-mathjax-config">
@@ -86,7 +83,10 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
  MathJax.Hub.Config({
       extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
       jax: ["input/TeX","output/HTML-CSS"],
-      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
       TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
  });
  MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
@@ -117,6 +117,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 </script>
 -->
 
+
 </head>
 <body>
 
@@ -144,47 +145,51 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 >Home</a></p>
 
 
-<p><a href="index.html#autosec-9" class="tocchapter"
+<p><a href="index.html#autosec-10" class="tocchapter"
 >Index</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-12" class="tocpart"
+<p><a href="Control-Theory.html#autosec-13" class="tocpart"
 ><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-13" class="tocchapter"
+<p><a href="Control-Theory.html#autosec-14" class="tocchapter"
 ><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
 
 
-<p><a href="Introduction-Review.html#autosec-17" class="tocchapter"
+<p><a href="Introduction-Review.html#autosec-18" class="tocchapter"
 ><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
 
 
-<p><a href="Other-Useful-Concepts.html#autosec-31" class="tocchapter"
+<p><a href="Other-Useful-Concepts.html#autosec-32" class="tocchapter"
 ><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
 
 
-<p><a href="Example-commands.html#autosec-48" class="tocchapter"
+<p><a href="Example-commands.html#autosec-49" class="tocchapter"
 ><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
 
 
-<p><a href="Course-Work.html#autosec-72" class="tocpart"
+<p><a href="Z-transform.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
+
+
+<p><a href="Course-Work.html#autosec-80" class="tocpart"
 ><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
 
 
-<p><a href="Course-Work.html#autosec-73" class="tocchapter"
-><span class="sectionnumber">5</span>&#x2001;Assignments</a></p>
+<p><a href="Course-Work.html#autosec-81" class="tocchapter"
+><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-94" class="tocpart"
+<p><a href="Back-Matter.html#autosec-109" class="tocpart"
 ><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+<p><a href="Back-Matter.html#autosec-112" class="tocchapter"
 >References</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-97" class="tocchapter"
+<p><a href="Back-Matter.html#autosec-112" class="tocchapter"
 >Glossary</a></p>
 
 
@@ -194,8 +199,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 
 <section class="textbody">
 
-<h2 id="autosec-94"> Part&nbsp;<span class="sectionnumber">III&#x2001;</span>Back Matter</h2><a
-id="autopage-94"></a>
+<h2 id="autosec-109"> Part&nbsp;<span class="sectionnumber">III&#x2001;</span>Back Matter</h2><a
+id="autopage-109"></a>
 <div class="amsthmproof">
 
 <ul style="list-style-type:none">
@@ -203,8 +208,8 @@ id="autopage-94"></a>
 
 <li>
 
-<p>        <span class="amsthmproofname">This is a proof.</span> Lwarp can solve my problems of creating good
-quality latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x2001;&#x220E;</span></p>
+<p><span class="amsthmproofname">This is a proof.</span> Lwarp can solve my problems of creating good quality
+latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x2001;&#x220E;</span></p>
 
 
 </li>
@@ -212,132 +217,110 @@ quality latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x200
 </ul>
 
 </div>
-<h4 id="autosec-96"> List of Terms Used</h4><a id="autopage-96"></a>
+<h4 id="autosec-111"> List of Terms Used</h4><a id="autopage-111"></a>
 
 <p> <a href="index.html#??">Actuator</a> <a href="index.html#??">linear time-invariant</a> <a
 href="index.html#??">Multiple Input Multiple Output</a> <a href="index.html#??">Single Input Single
 Output</a> <a href="index.html#??">bode diagram</a> <a href="index.html#??">closed-loop control
 system</a> <a href="index.html#??">Control System</a> <a href="index.html#??">Controller Gain</a> <a
 href="index.html#??">Corner Frequency</a> <a href="index.html#??">critically-damped</a></p>
-<h3 id="autosec-97"> References</h3><a id="autopage-97"></a>
+<h3 id="autosec-112"> References</h3><a id="autopage-112"></a>
 
 <a id="references"></a>
 
-<a id="refs"></a>
+<ul style="list-style-type:none">
 
-<a id="ref-book:129711"></a>
+<li>
+<p>[1] MATLAB. <em>MATLAB Control Systems Toolbox</em>. The MathWorks, Natick, MA, USA. 2016 b.</p>
 
-<p>[1] Ogata, <em>Discrete-time control systems</em>. [Online]. Available: <a
-href="http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9" target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9</a></p>
+</li>
+<li>
+<p>[2] MATLAB. <em>MATLAB Symbolic Math Toolbox</em>. The MathWorks, Natick, MA, USA. 2016 b.</p>
 
+</li>
+<li>
+<p>[3] Katsuhiko Ogata. <em>Modern Control Engineering</em>. 5th&nbsp;ed. Prentice Hall, 2010. <span
+class="textsc">isbn</span>: 0-13-615673-8,978-0-13-615673-4. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79.</p>
 
-<a id="ref-textbook:niseSolution"></a>
+</li>
+<li>
+<p>[4] Ogata. <em>Discrete-Time Control Systems</em>. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9.</p>
 
-<p>[2] N. S. Nise, <em>Control systems engineering - instructor solutions manual</em>, 6th ed. Wiley, 2010 [Online].
-Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd"
-target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd</a></p>
+</li>
+<li>
+<p>[5] Norman S. Nise. <em>Control Systems Engineering - Instructor Solutions Manual</em>. 6th. Wiley, 2010.
+<span class="textsc">isbn</span>: 0470547561, 9780470547564. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd.</p>
 
+</li>
+<li>
+<p>[6] Norman S. Nise. <em>Control Systems Engineering</em>. 7th&nbsp;ed. Wiley, 2015. <span
+class="textsc">isbn</span>: 1118170512,9781118170519. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba.</p>
 
-<a id="ref-textbook:nise"></a>
+</li>
+<li>
+<p>[7] H. Troy; Phillips Charles L Chakrabortty Aranya; Nagle. <em>"Digital Control System Analysis and Design:
+Global Edition"</em>. 4th edition. Always Learning. Pearson Education Limited, 2015. <span
+class="textsc">isbn</span>: 1-292-06122-7,978-1-292-06122-1,978-1-292-06188-7. <span
+class="textsc">url</span>: http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9.</p>
 
-<p>[3] N. S. Nise, <em>Control systems engineering</em>, 7th ed. Wiley, 2015 [Online]. Available: <a
-href="http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba" target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba</a></p>
+</li>
+<li>
+<p>[8] Bernd Jähne. <em>Digital Control Systems: Design, Identification and Implementation</em>.</p>
 
+</li>
+<li>
+<p>[9] Katsuhiko Ogata. <em>Solution Manual for Modern Control Engineering</em>. 5th&nbsp;ed. Prentice Hall,
+2010. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e.</p>
 
-<a id="ref-book:DCSphil"></a>
+</li>
+<li>
+<p>[10] Robert H. Bishop Richard C. Dorf. <em>Modern Control Systems 12th edition</em>. 12th&nbsp;ed. Prentice
+Hall, 2011. <span class="textsc">isbn</span>: 013602498X,7801360249. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D.</p>
 
-<p>[4] H. T. P. Chakrabortty Aranya; Nagle, <em>“Digital control system analysis and design: Global edition”</em>,
-4th edition. Pearson Education Limited, 2015 [Online]. Available: <a
-href="http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9" target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9</a></p>
+</li>
+<li>
+<p>[11] Robert H. Bishop Richard C. Dorf. <em>Instructor’s Solutions Manual for Modern Control Systems, 12th
+Edition</em>. 12th&nbsp;ed. Prentice Hall, 2011. <span class="textsc">isbn</span>: 013602498X,7801360249.
+<span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216.</p>
 
+</li>
+<li>
+<p>[12] Benjamin C. Kuo Farid Golnaraghi. <em>Automatic Control Systems 9th edition</em>. 9th. Wiley, 2009.
+<span class="textsc">isbn</span>: 0470048964,9780470048962. <span class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA.</p>
 
-<a id="ref-book:209199"></a>
+</li>
+<li>
+<p>[13] Benjamin C. Kuo Farid Golnaraghi. <em>Automatic Control Systems, 9th Edition - Solutions Manual</em>.
+9th. Wiley, 2009. <span class="textsc">isbn</span>: 0470048964,9780470048962. <span
+class="textsc">url</span>:
+http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89.</p>
 
-<p>[5] B. Jähne, <em>Digital control systems: Design, identification and implementation</em>..</p>
+</li>
+<li>
+<p>[14] Engineering Student Society. <em>Past Exams ELEC 360 [Online] Available</em>. Accessed September 7,
+2017. <span class="textsc">url</span>: http://ess.uvic.ca/exams/ELEC/.</p>
 
+</li>
+<li>
+<p>[15] MEGA. <em>Engineering Student Shared Drive [Online] Available</em>. Accessed September 7, 2017. <span
+class="textsc">url</span>: https://mega.nz/#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA.</p>
 
-<a id="ref-textbook:ogataSolution"></a>
+</li>
+<li>
+<p>[16] Wikipedia. <em>Cauchy’s integral theorem — Wikipedia, The Free Encyclopedia</em>. Online; accessed
+8-September-2017. 2017. <span class="textsc">url</span>:
+https://en.wikipedia.org/w/index.php?title=Cauchy%27s_integral_theorem&oldid=778695526.</p>
 
-<p>[6] K. Ogata, <em>Solution manual for modern control engineering</em>, 5th ed. Prentice Hall, 2010 [Online].
-Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e"
-target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e</a></p>
-
-
-<a id="ref-textbook:ogata"></a>
-
-<p>[7] K. Ogata, <em>Modern control engineering</em>, 5th ed. Prentice Hall, 2010 [Online]. Available: <a
-href="http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79" target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79</a></p>
-
-
-<a id="ref-textbook:dorf"></a>
-
-<p>[8] R. H. B. Richard C. Dorf, <em>Modern control systems 12th edition</em>, 12th ed. Prentice Hall, 2011
-[Online]. Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D"
-target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D</a></p>
-
-
-<a id="ref-textbook:dorfSolution"></a>
-
-<p>[9] R. H. B. Richard C. Dorf, <em>Instructor’s solutions manual for modern control systems, 12th edition</em>,
-12th ed. Prentice Hall, 2011 [Online]. Available: <a
-href="http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216" target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216</a></p>
-
-
-<a id="ref-textbook:kuo"></a>
-
-<p>[10] B. C. K. Farid Golnaraghi, <em>Automatic control systems 9th edition</em>, 9th ed. Wiley, 2009 [Online].
-Available: <a href="http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA"
-target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA</a></p>
-
-
-<a id="ref-textbook:kuoSolutions"></a>
-
-<p>[11] B. C. K. Farid Golnaraghi, <em>Automatic control systems, 9th edition - solutions manual</em>, 9th ed.
-Wiley, 2009 [Online]. Available: <a
-href="http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89" target="_blank"
->http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89</a></p>
-
-
-<a id="ref-essElec360:Online"></a>
-
-<p>[12] E. S. Society, “Past exams elec 360 [online] available.” [Online]. Available: <a
-href="http://ess.uvic.ca/exams/ELEC/" target="_blank"
->http://ess.uvic.ca/exams/ELEC/</a></p>
-
-
-<a id="ref-megaElec360:Online"></a>
-
-<p>[13] MEGA, “Engineering student shared drive [online] available.” [Online]. Available: <a
-href="https://mega.nz/#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA" target="_blank"
->https://mega.nz/#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA</a></p>
-
-
-<a id="ref-wiki:Cauchy"></a>
-
-<p>[14] Wikipedia, “Cauchy’s integral theorem — wikipedia, the free encyclopedia.” 2017 [Online]. Available: <a
-href="https://en.wikipedia.org/w/index.php?title=Cauchy%27s_integral_theorem&amp;oldid=778695526"
-target="_blank"
->https://en.wikipedia.org/w/index.php?title=Cauchy%27s_integral_theorem&amp;oldid=778695526</a></p>
-
-
-<a id="ref-MatlabCST"></a>
-
-<p>[15] MATLAB, “MATLAB control systems toolbox.” 2016 b.</p>
-
-
-<a id="ref-MatlabSMT"></a>
-
-<p>[16] MATLAB, “MATLAB symbolic math toolbox.” 2016 b.</p>
-
+</li>
+</ul>
 
 
 </section>

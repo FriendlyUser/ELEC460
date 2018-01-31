@@ -10,6 +10,8 @@
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -454,6 +456,8 @@ different inputs.</a></p>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Control Theory</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -776,6 +780,8 @@ diagram</a>.</p>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Introduction and Review</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -1357,6 +1363,8 @@ id="autopage-26"></a>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Other Useful Concepts</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -1861,6 +1869,8 @@ R       K      1    C
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Example commands</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -2059,7 +2069,7 @@ id="autopage-50"></a>
       <p>Matlab Output 4.1</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-matlab">
 
 
            % M - file : prob7_17 . m
@@ -2084,7 +2094,9 @@ id="autopage-50"></a>
            z_th = (( j * xm ) * ( r1 + j * x1 ) ) / ( r1 + j *( x1 + xm ) ) ;
            r_th = real ( z_th ) ;
            x_th = imag ( z_th ) ;
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                            </p>
 <h4 id="autosec-51"> <span class="sectionnumber">4.2&#x2001;</span>Testing out Python</h4><a
 id="autopage-51"></a>
@@ -2094,7 +2106,7 @@ id="autopage-51"></a>
       <p>Python Script 4.1</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-python">
 
 
       # -* - coding : utf -8 -* -
@@ -2120,7 +2132,9 @@ id="autopage-51"></a>
       print ( ' Proceeding to produce : ' + input_name + '. pdf and ' + input_name
             + ' _html ' + '\ n ' )
       else :
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                            </p>
 <h4 id="autosec-52"> <span class="sectionnumber">4.3&#x2001;</span>Testing out Bash</h4><a
 id="autopage-52"></a>
@@ -2132,7 +2146,7 @@ id="autopage-52"></a>
       <p>Bash Script 4.1</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-bash">
 
 
 
@@ -2141,7 +2155,9 @@ id="autopage-52"></a>
       lwarpmk limages
       lwarpmk html
       lwarpmk pdftohtml
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                          </p>
 <div class="amsthmbodydefinition">
 
@@ -2167,12 +2183,14 @@ id="autopage-54"></a>
        <p>Latex Commands 4.1</p>
 
 
-       <pre class="programlisting" >
+       <pre><code class = "language-latex">
 
 
             Testing out latex commands
             Tiks
-       </pre>
+       </code>
+</pre>
+
 <p>                                                                                           </p>
 
 
@@ -2185,12 +2203,14 @@ id="autopage-55"></a>
       <p>Bash Script 4.2</p>
 
 
-      <pre class="programlisting" >
+      <pre><code class = "language-bash">
 
 
            Testing out latex commands
            Tiks
-      </pre>
+      </code>
+</pre>
+
 <p>                                                                                          </p>
 <div class="amsthmbodyplain">
 
@@ -2239,11 +2259,13 @@ id="autopage-58"></a>
 
 
 </figcaption>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 
 
 hmm
+</code>
 </pre>
+
 <figcaption>
 
 </figcaption>
@@ -2258,11 +2280,13 @@ hmm
 
 
 </figcaption>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 
 
 foo bar = 5;
+</code>
 </pre>
+
 <figcaption>
 
 </figcaption>
@@ -2290,7 +2314,9 @@ foo bar = 5;
 \draw [->] (h) -| node[pos=0.99] {$-$}   node [near end] {} (sum);
 \end{tikzpicture}
 
+</code>
 </pre>
+
 <blockquote>
 
 <p>Legends will fall</p>
@@ -2517,6 +2543,8 @@ latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x2001;&#x220
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Z-transform</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -3513,6 +3541,8 @@ spectrum \(X(e^{j\omega })\) for \(0 \le \omega &lt; 2\pi \).</p>
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Course Work</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->
@@ -3719,7 +3749,7 @@ id="autopage-82"></a>
          <p>Python Script 6.1</p>
 
 
-         <pre class="programlisting" >
+         <pre><code class = "language-python">
 
 
          rom numpy import *
@@ -3739,7 +3769,9 @@ id="autopage-82"></a>
          # Print Rlocus
          sys = tf ([1] ,[1 ,21 ,20 ,0])
          rvect , kvect = rlocus ( sys )
-         </pre>
+         </code>
+</pre>
+
 <p>                                                                                             </p>
 
 
@@ -3764,7 +3796,9 @@ id="autopage-82"></a>
 <pre    + 21*s**2 + 20*s)
      class="verbatim" >
 
+</code>
 </pre>
+
 
 <figure id="autoid-12" class="figure">
 
@@ -3793,7 +3827,7 @@ class="inlineimage"
          <p>Python Script 6.2</p>
 
 
-         <pre class="programlisting" >
+         <pre><code class = "language-python">
 
 
          v = sympy . limit ( s * Gs , s , 0)
@@ -3801,7 +3835,9 @@ class="inlineimage"
               print ( Kv )
               mag , phase , omega = bode ( sys )
               real , imag , freq = nyquist ( sys , labelFreq =10)
-         </pre>
+         </code>
+</pre>
+
 <p>                                                                                           </p>
 
 
@@ -3870,10 +3906,12 @@ style="width:16.99585pt; display:inline-block"></span> <b>Assignment:</b> Number
 
 </figcaption>
 <p></p>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 G1 = zpk ([] ,[0 , -1 , -20] ,20) % create transfer function
 figure (1); rlocus ( G1 ) % Plot root locus
+</code>
 </pre>
+
 <p></p>
 
 <figcaption>
@@ -3911,9 +3949,11 @@ class="inlineimage"
 
 </figcaption>
 <p></p>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 syms s ; Kv = limit ( s *20/( s *( s +1)*( s +20)) , s ,0) % compute Kv using limits
+</code>
 </pre>
+
 <p></p>
 
 <figcaption>
@@ -3926,10 +3966,12 @@ syms s ; Kv = limit ( s *20/( s *( s +1)*( s +20)) , s ,0) % compute Kv using li
 
 </figcaption>
 <p></p>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 figure (2); bode ( G1 )
 figure (3); nyquist ( G1 )
+</code>
 </pre>
+
 <p></p>
 
 <figcaption>
@@ -3994,10 +4036,12 @@ id="autopage-95"></a>
 
 </figcaption>
 <p></p>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 G1new = zpk ([] ,[0 , -1 , -20] ,20* K )
 figure (5); margin ( G1new )
+</code>
 </pre>
+
 <p></p>
 
 <figcaption>
@@ -4031,12 +4075,14 @@ id="autopage-98"></a>
 
 </figcaption>
 <p></p>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 G1tfnew = tf ( G1new )
 subplot (2 ,1 ,1); step ( G1tfnew ); % % create subplot for step function
 ramps = tf ([1 ,0] ,[1]);
 subplot (2 ,1 ,2); step ( G1tfnew / ramps ); % % create subplot for ramp function
+</code>
 </pre>
+
 <p></p>
 
 <figcaption>
@@ -4342,7 +4388,7 @@ x(k) = 4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
 
 
 </figcaption>
-<pre class="programlisting" >
+<pre><code class = "language-matlab">
 
 
 numerator = [1 0 0]; % z ^3
@@ -4355,7 +4401,9 @@ v = [0 50 0 5]; axis ( v );
 xlabel ( 'k ' ); ylabel ( 'x ( k ) ')
 title ( ' Unit - Step ␣ Response ' );
 print ( 'B -2 -17 - matlab . png ' , ' - dpng ' , ' - r300 ')
+</code>
 </pre>
+
 <figcaption>
 
 </figcaption>
@@ -4407,6 +4455,8 @@ class="inlineimage"
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 <title>ELEC 460 Course Notes — Back Matter</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
 <!-- https://groups.google.com/forum/#!topic/
                                       mathjax-users/jUtewUcE2bY -->

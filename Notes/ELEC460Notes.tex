@@ -116,14 +116,17 @@ innerrightmargin=0pt
 %\newtheorem{definition}{Definition}[section]
 %% Added for bibilography and title page
 % Using pandoc approach, convert to html and copy and paste back in
-% \usepackage[backend=bibtex,sorting=none]{biblatex}	% Sort by citation order
-% \addbibresource{../textbooks.bib}		% Load bibliography
+\usepackage[backend=bibtex,sorting=none]{biblatex}	% Sort by citation order
+\addbibresource{../textbooks.bib}		% Load bibliography
 
 \usepackage{marginnote}
 
 \usepackage{algorithmicx}
 
-\usepackage{glossaries}
+%%% New package that I didn't know worked with lwarp
+%\usepackage{changebar}
+%\setlength{\changebarsep}{2ex}
+\usepackage[xindy]{glossaries}
 %\setglossarystyle{mcolalttree}
 \input{glossary.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -241,11 +244,12 @@ Final &  60 \%
 	\item[Root Locus] --- Used in assignment 1, to help determine the damping ratio.
 \end{description}
 \chapter{Introduction and Review}
-For this course, \hyperlink{ref-MatlabCST}{Matlab Control Systems} will be used extensively.
+For this course, %\hyperlink{ref-MatlabCST}{Matlab Control Systems} 
+\cite{MatlabCST} and \cite{MatlabSMT} will be used extensively.
 
 
-For instance I can use the same \footnote{\hyperlink{ref-textbook:kuo}{Kuo Textbook}} more \footnote{\hyperlink{ref-book:129711}{Some Textbook}} than  \footnote{\hyperlink{ref-MatlabCST}{Control System Toolbox}}
-once.
+%For instance I can use the same \footnote{\hyperlink{ref-textbook:kuo}{Kuo Textbook}} more \footnote{\hyperlink{ref-book:129711}{Some Textbook}} than  \footnote{\hyperlink{ref-MatlabCST}{Control System Toolbox}}
+% once.
 
 \footnotetext{footnote with two references}
 \begin{figure}
@@ -287,7 +291,7 @@ once.
 
 \subsection{Definition}
 
-Consider a feedback system as in Fig.~\ref{fig:sse}.
+Consider a feedback system as in Fig.~ \ref{fig:sse}.
 
 %% Consider adding ELEC460Notes-figure0.png, .. ELEC460Notes-figuren.png by using an if, else statement so I can get native html output using pandoc.
 \begin{figure}
@@ -319,16 +323,14 @@ Consider a feedback system as in Fig.~\ref{fig:sse}.
 \label{fig:sse}
 \end{figure}
 The steady-state error (if it exists) is defined by
-\begin{equation}
-	\label{eq:sse}
+\begin{align*}
 	e_{ss} := \lim_{t\to\infty} e(t).
-\end{equation}
+\end{align*}
 
 If the system is stable, one can apply the Finaly Value Theorem to obtain
 \[
 \lim_{t\to\infty} e(t) = \lim_{s\to 0} sE(s).
 \]
-
 In general, one would like the steady-state error to be as small as
 possible, ideally zero.
 
@@ -336,7 +338,7 @@ possible, ideally zero.
 
  \marginnote{This is a margin note using the geometry package, set at 3cm vertical offset to the line it is typeseted.}[3cm]
 In general, to calculate the steady-state error, one uses the FVT as
-in equation~(\ref{eq:sse}).
+in equation~ %(\ref{eq:sse}).
 
 \reversemarginpar
 \marginnote{This is a margin note using the geometry package, set at 5cm 
@@ -766,11 +768,248 @@ This is an example of a corollary.
 	The concepts presented here are now in conventional employment in mathematics. Vector spaces are taken over the field $\mathbb{K}=\mathbb{R}$, however, established properties are easily extended to $\mathbb{K}=\mathbb{C}$.
 \end{corollary}
 
+%\begin{changebar{Testing}{#1}
+%
+%\changebar{	transform takes a func
+%	is a tranform for sequences. Just like the Laplace
+%	transform takes a func
+%	is a tranform for sequences. Just like the Laplace
+%	transform takes a func
+%	is a tranform for sequences. Just like the Laplace
+%	transform takes a func}{#2}
+%
+%\end{changebar}%
+
 
 \begin{proof}[This is a proof]
 	Lwarp can solve my problems of creating good quality latex notes in html.
 \end{proof}
 
+
+\chapter{Z-transform}
+The Z-transform is a tranform for sequences. Just like the Laplace
+transform takes a function of $t$ and replaces it with $z$.
+
+\section{Review of Sequences}
+A sequence is a list of numbers, sequences can be finite, like
+$(2,2,3,4)$ or infinite, like $(1,2,3,4,5,\ldots)$. We are interested
+in infinite sequences. These all have the general 
+form $(x_0,x_1,x_3,\ldots)$ with the $x_k$s standing for the numbers in the sequence. We use the short hand
+\begin{equation}
+(x_k)_{k=0}^\infty=(x_0,x_1,x_2,\ldots)
+\end{equation}
+In otherwords, on the righthand side, we are saying the sequence is
+formed by writing out the $x_k$s with $k$ put equal to zero, then one
+and so on up to infinity. Often we are lazy and just write $(x_k)$ when we mean$(x_k)_{k=0}^\infty$. 
+
+The sequence
+\begin{equation}
+(2,5,8,11,14,\ldots)
+\end{equation}
+is an arithmetic sequence, each term is calculated by adding three to the term before it. In fact, you can write a formula telling you what the $k$th term is
+\begin{equation}
+x_k=2+3k
+\end{equation}
+and so
+\begin{equation}
+(2+3k)_{k=0}^\infty=(2,5,8,11,14,\ldots)
+\end{equation}
+This is really the most you can know about the sequence, if you have a
+formula saying $x_k$ is such and such a thing involving $k$ then you
+have solved the sequence and you can easily work out $x_k$ for any
+$k$, for example, we know that $x_{1000}=3002$ in the example
+above. Another way of writing down the information in the sequence is to say
+\begin{eqnarray}
+x_{k+1}&=&x_{k}+3\cr
+x_0&=&2
+\end{eqnarray}
+This tells you how to find the next term in the sequence in terms of
+the previous one and it tells you where to start, at $x_0=2$. This is
+a difference equation.\footnote{There is another name also used for a
+	difference equation, it can be called an induction step, the
+	difference usually is that you called it a difference equation if you
+	intend to solve it and an induction step if you intend to use it as it
+	is to work out the sequence term by term.}  
+
+It allows you to work out
+the sequence, but only step by step. To calculate $x_{1000}$ you would
+first of all have to know $x_{999}$ and to work this out you need
+$x_{998}$ and so on and so on. We will see later how to use Z-tranforms to solve a sequence when we only know the difference equation.
+
+Another common sort of sequence is a geometric sequence, an example is 
+\begin{equation}
+(3,15,75,375,\ldots)
+\end{equation}
+Here, each term is given by multiplying the previous term by five, so,
+the difference equation is
+\begin{eqnarray}
+x_{k+1}&=&5x_k\cr
+x_0&=&3
+\end{eqnarray}
+We also know the solution in this case,
+\begin{equation}
+x_k=3\times 5^k
+\end{equation}
+That is 
+\begin{equation}
+(3\times 5^k)_{k=0}^\infty=(3,15,75,375,\ldots)
+\end{equation}
+More generally, a geometric sequence has the form
+\begin{equation}
+(ar^k)_{k=0}^\infty=(a,ar,ar^2,ar^3,\ldots)
+\end{equation}
+and $x_0=a$ and $r$ is called the ratio. Thus,
+\begin{equation}
+\left(60,30,15,\frac{15}{2},\frac{15}{4},\ldots\right)
+\end{equation}
+is a geometrical sequence with $a=60$ and $r=1/2$. The sequence
+\begin{equation}
+\left(1,1,1,1,1,\ldots\right)
+\end{equation}
+is a geometrical sequence with $a=1$ and $r=1$.
+
+A series is what you get when you sum up all the terms in a
+sequence. Consider the sequence 
+\begin{equation}
+\left(\frac{1}{2^k}\right)_{k=0}^\infty=\left(1,\frac{1}{2},\frac{1}{4},\frac{1}{8},\ldots\right)
+\end{equation}
+The corresponding sum is
+\begin{equation}
+S=\sum_{k=0}^\infty\frac{1}{2^k}=1+\frac{1}{2}+\frac{1}{4}+\frac{1}{8}+\ldots
+\end{equation}
+
+\begin{equation}
+S=\sum_{k=0}^\infty ar^k=a\sum_{k=0}^\infty r^k
+\end{equation}
+Next, we remember the formula that
+\begin{equation}
+\frac{1}{1-r}=\sum_{k=0}^\infty r^k
+\end{equation}
+for $|r|<1$. You can check this formula either using the Taylor series or the binomial expansion. Hence
+\begin{equation}
+S=\frac{a}{1-r}
+\end{equation}
+If the ratio is bigger than or equal to one then the corresponding
+series diverges, that is, it doesn't sum up to finite amount.
+
+\section{The Z-transform}
+The Z-transform of a sequence $(x_k)$ is defined as
+\begin{equation}
+{\cal Z}[(x_k)_{k=0}^\infty]=\sum_{k=0}^{infty}\frac{x_k}{z^k}
+\end{equation}
+We often write
+\begin{equation}
+X(z)={\cal Z}[(x_k)_{k=0}^\infty]
+\end{equation}
+
+Lets find the Z-transform of a geometric sequence $(r^k)$. We have
+\begin{equation}
+{\cal Z}[(r^k)_{k=0}^\infty]=\sum_{k=0}^{infty}\frac{r^k}{z^k}=\sum_{k=0}^{infty}\left(\frac{r}{z}\right)^k=\frac{1}{1-\frac{r}{z}}=\frac{z}{z-r}
+\end{equation}
+In particular, this means that 
+\begin{equation}
+{\cal Z}[(1,1,1,\ldots)]=\frac{z}{z-1}
+\end{equation}
+Another Z-transform can be derived from this by differentiating with respect to $r$. ,
+\begin{eqnarray}
+{\cal Z}[(r^k)_{k=0}^\infty]&=&\frac{z}{z-r}\cr
+\frac{d}{dr}{\cal Z}[(r^k)_{k=0}^\infty]&=&\frac{d}{dr}\frac{z}{z-r}\cr
+{\cal Z}\left[\frac{d}{dr}(r^k)_{k=0}^\infty\right]&=&\frac{z}{(z-r)^2}\cr
+{\cal Z}[(kr^{k-1})_{k=0}^\infty]&=&\frac{z}{(z-r)^2}
+\end{eqnarray}
+and, in particular, this means
+\begin{equation}
+{\cal Z}[(0,1,2,3,\ldots)]=\frac{z}{(z-1)^2}
+\end{equation}
+
+\begin{eqnarray}
+{\cal Z}[(r^k)_{k=0}^\infty]&=&\frac{z}{z-r}\cr
+{\cal Z}[(kr^{k-1})_{k=0}^\infty]&=&\frac{z}{(z-r)^2}
+\end{eqnarray}
+\begin{theorem}[Sampling Theorem]
+If a signal x(t) contains no frequency higher or equal than $\omega_c$ radians, then it is completely characterized by the values of the
+signal measured at instants of time separated by $T= 0.5\frac{2\pi}{\omega_c}; \quad \omega_s=2\omega_c$ the signal x(t) can be reconstructed completely from the sampled signal
+$x^\ast(t) = x(kT)$.
+\end{theorem}
+
+
+{\textbf{Inverse Z-Transform}}
+
+Given the Z transform $X(z)$, the original time signal can be obtained by 
+the inverse Z transform, which can be derived from the corresponding Fourier 
+transform. As shown above, we have:
+\[ X(z)=X(e^{\sigma+j\omega})=\sum_{n=-\infty}^\infty [x[n] e^{-\sigma n}] 
+e^{-j\omega n} ={\cal F}[x[n] e^{-\sigma n}]
+\]
+Now $x[n]e^{-\sigma n}$ can be obtained by the inverse Fourier transform:
+\[ x[n] e^{-\sigma n}={\cal F}^{-1}[X(e^{\sigma+j\omega})]
+=\frac{1}{2\pi}\int_0^{2\pi} X(e^{\sigma+j\omega}) e^{j\omega n} d\omega
+\]
+Multiplying both sides by $e^{\sigma n}$, we get:
+\[ 
+x[n]=\frac{1}{2\pi}\int_0^{2\pi} X(e^{\sigma+j\omega}) e^{(\sigma+j\omega) n} d\omega 
+=\frac{1}{2\pi}\int_0^{2\pi} X(z) z^n d\omega 
+\]
+To represent the inverse transform in terms of $z$ (instead of $\omega$), we note
+\[ dz=d(e^{\sigma+j\omega})=e^\sigma j\;e^{j\omega} d\omega=jz\;d\omega,
+\;\;\;\;\;\mbox{i.e.,}\;\;\;\;\;\;d\omega=\frac{dz}{jz}	\]
+and the inverse Z transform can be obtained as:
+\[ x[n]={\cal Z}^{-1}[X(z)]=\frac{1}{j2\pi}\oint X(z) z^{n-1} dz	\]
+Note that the integral with respect to $\omega$ from $0$ to $2\pi$ becomes
+an integral with respect to $z=e^{\sigma+j\omega}$ in the complex z-plane,
+along a circle with a fixed radius $e^\sigma$ and a varying angle $\omega$ 
+from $0$ to $2\pi$. Now we have the z-transform pair:
+\[	X(z)={\cal Z}[x[n]]=\sum_{n=-\infty}^\infty x[n]z^{-n}	\]
+\[	x[n]={\cal Z}^{-1}[X(z)]=\frac{1}{2\pi j}\oint X(z)z^{n-1} dz	\]
+The forward and inverse z-transform pair can also be represented as
+\[	x[n] \stackrel{ {\cal Z} }{\longleftrightarrow} X(z)	\]
+In particular, if we let $\sigma=0$, i.e., $z=e^{j\omega}$, then the Z
+transform becomes the discrete-time Fourier transform:
+\[ X(z)\bigg|_{z=e^{j\omega}}=\sum_{n=-\infty}^\infty x[n] e^{-j\omega n}=X(e^j\omega) \]
+This is the reason why sometimes the discrete Fourier spectrum is expressed 
+as a function of $e^{j\omega}$.
+
+\section*{Conformal Mapping between S-Plane to Z-Plane}
+
+The s-plane and the z-plane are related by a {\em conformal mapping} specified
+by the analytic complex function 
+\[	z=e^s=e^{\sigma+j\omega}=e^\sigma e^{j\omega}=r e^{j\omega}	\]
+where 
+\[ \left\{ \begin{array}{l} Re[s]=\sigma \\ Im[s]=j\omega \end{array} \right.
+\;\;\;\;\;\mbox{and}\;\;\;\;
+\left\{ \begin{array}{l} |z|=r=e^\sigma \\ \angle{z}=\omega 
+\end{array} \right.
+\]
+The mapping is continuous, i.e., neighboring points in s-plane are mapped
+to neighboring points in z-plane and vice versa. Consider the mapping of these 
+specific features: 
+\begin{itemize}
+	\item The origin $s=0$ of s-plane is mapped to $z=e^0=1$ on the real axis in
+	z-plane.
+	\item Each vertical line $Re[s]=\sigma_0$ in s-plane is mapped to a circle 
+	$|z|=e^{\sigma_0}$ centered about the origin in z-plane. In particular,
+	\begin{itemize}
+		\item Leftmost vertical line $Re[s]=\sigma=-\infty$ is mapped as the 
+		origin $|z|=e^{-\infty}=0$
+		\item Imaginary axis $Re[s]=0$ is mapped as the unit circle 
+		$|z|=e^0=1$
+		\item Rightmost vertical line $Re[s]=\sigma=\infty$ is mapped as a 
+		circle of infinite radius $|z|=e^{\infty}=\infty$.
+	\end{itemize}
+	\item Each horizontal line $Im[s]=j\omega_0$ in s-plane is mapped to 
+	$\angle{z}=\omega_0$, a ray from the origin in z-plane of angle 
+	$\omega_0$ with respect to the positive horizontal direction. 
+	\item A right angle formed by a pair vertical and horizontal lines in s-plane
+	is conserved by the mapping, as the corresponding circle and ray in z-plane 
+	also form a right angle. (In fact any angle is conserved, an important
+	property of the conformal mapping.)
+\end{itemize}
+The infinite range $-\infty < \omega < \infty$ for frequency $\omega$ along a 
+vertical line $Re[s]=\sigma_0$ in s-plane is mapped {\em repeatedly} to a finite 
+range $0 \le \omega < 2\pi$ around a circle $|z|=e^{\sigma_0}$ in z-plane, 
+corresponding to the conversion of a continuous signal $x(t)$ with non-periodic 
+spectrum $X(j\omega)$ for $-\infty < \omega < \infty$ to a discrete signal $x[n]$ 
+with periodic spectrum $X(e^{j\omega})$ for $0 \le \omega < 2\pi$.
 \part{Course Work}
 
 
@@ -827,6 +1066,7 @@ rvect, kvect = rlocus(sys)
 \end{figure}
 
 \subimport*{Assignments/A1/}{A1Reduced.tex}
+\subimport*{Assignments/A2/}{ELEC460A2Content.tex}
 \part{Back Matter}
 
 \begin{proof}[This is a proof]
@@ -841,84 +1081,88 @@ rvect, kvect = rlocus(sys)
 \chapter*{References}\label{references}
 \addcontentsline{toc}{chapter}{References}
 
-\hypertarget{refs}{}
-\hypertarget{ref-book:129711}{}
-{[}1{]} Ogata, \emph{Discrete-time control systems}. {[}Online{]}.
-Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9}
+%\hypertarget{refs}{}
+%\hypertarget{ref-book:129711}{}
+%{[}1{]} Ogata, \emph{Discrete-time control systems}. {[}Online{]}.
+%Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=18291B9E47990BD700872FE29FB417B9}
+%
+%\hypertarget{ref-textbook:niseSolution}{}
+%{[}2{]} N. S. Nise, \emph{Control systems engineering - instructor
+%	solutions manual}, 6th ed. Wiley, 2010 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd}
+%
+%\hypertarget{ref-textbook:nise}{}
+%{[}3{]} N. S. Nise, \emph{Control systems engineering}, 7th ed. Wiley,
+%2015 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba}
+%
+%\hypertarget{ref-book:DCSphil}{}
+%{[}4{]} H. T. P. Chakrabortty Aranya; Nagle, \emph{``Digital control
+%	system analysis and design: Global edition''}, 4th edition. Pearson
+%Education Limited, 2015 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9}
+%
+%\hypertarget{ref-book:209199}{}
+%{[}5{]} B. Jähne, \emph{Digital control systems: Design, identification
+%	and implementation}..
+%
+%\hypertarget{ref-textbook:ogataSolution}{}
+%{[}6{]} K. Ogata, \emph{Solution manual for modern control engineering},
+%5th ed. Prentice Hall, 2010 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e}
+%
+%\hypertarget{ref-textbook:ogata}{}
+%{[}7{]} K. Ogata, \emph{Modern control engineering}, 5th ed. Prentice
+%Hall, 2010 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79}
+%
+%\hypertarget{ref-textbook:dorf}{}
+%{[}8{]} R. H. B. Richard C. Dorf, \emph{Modern control systems 12th
+%	edition}, 12th ed. Prentice Hall, 2011 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D}
+%
+%\hypertarget{ref-textbook:dorfSolution}{}
+%{[}9{]} R. H. B. Richard C. Dorf, \emph{Instructor's solutions manual
+%	for modern control systems, 12th edition}, 12th ed. Prentice Hall, 2011
+%{[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216}
+%
+%\hypertarget{ref-textbook:kuo}{}
+%{[}10{]} B. C. K. Farid Golnaraghi, \emph{Automatic control systems 9th
+%	edition}, 9th ed. Wiley, 2009 {[}Online{]}. Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA}
+%
+%\hypertarget{ref-textbook:kuoSolutions}{}
+%{[}11{]} B. C. K. Farid Golnaraghi, \emph{Automatic control systems, 9th
+%	edition - solutions manual}, 9th ed. Wiley, 2009 {[}Online{]}.
+%Available:
+%\url{http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89}
+%
+%\hypertarget{ref-essElec360:Online}{}
+%{[}12{]} E. S. Society, ``Past exams elec 360 {[}online{]} available.''
+%{[}Online{]}. Available: \url{http://ess.uvic.ca/exams/ELEC/}
+%
+%\hypertarget{ref-megaElec360:Online}{}
+%{[}13{]} MEGA, ``Engineering student shared drive {[}online{]}
+%available.'' {[}Online{]}. Available:
+%\url{https://mega.nz/\#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA}
+%
+%\hypertarget{ref-wiki:Cauchy}{}
+%{[}14{]} Wikipedia, ``Cauchy's integral theorem --- wikipedia, the free
+%encyclopedia.'' 2017 {[}Online{]}. Available:
+%\url{https://en.wikipedia.org/w/index.php?title=Cauchy\%27s_integral_theorem\&oldid=778695526}
+%
+%\hypertarget{ref-MatlabCST}{}
+%{[}15{]} MATLAB, ``MATLAB control systems toolbox.'' 2016 b.
+%
+%\hypertarget{ref-MatlabSMT}{}
+%{[}16{]} MATLAB, ``MATLAB symbolic math toolbox.'' 2016 b.
 
-\hypertarget{ref-textbook:niseSolution}{}
-{[}2{]} N. S. Nise, \emph{Control systems engineering - instructor
-	solutions manual}, 6th ed. Wiley, 2010 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=27a8107743faac0058228c0056a291fd}
+% Works with lwarp 0.46, perhaps lwarp is the best approach to use now ahaha.
+\nocite{*}
+\printbibliography[heading=none]
 
-\hypertarget{ref-textbook:nise}{}
-{[}3{]} N. S. Nise, \emph{Control systems engineering}, 7th ed. Wiley,
-2015 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=d89ffd2789223fd1b3d1811615d1b3ba}
-
-\hypertarget{ref-book:DCSphil}{}
-{[}4{]} H. T. P. Chakrabortty Aranya; Nagle, \emph{``Digital control
-	system analysis and design: Global edition''}, 4th edition. Pearson
-Education Limited, 2015 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=9f61bcd95c74c37b4e0223ed7ef60ba9}
-
-\hypertarget{ref-book:209199}{}
-{[}5{]} B. Jähne, \emph{Digital control systems: Design, identification
-	and implementation}..
-
-\hypertarget{ref-textbook:ogataSolution}{}
-{[}6{]} K. Ogata, \emph{Solution manual for modern control engineering},
-5th ed. Prentice Hall, 2010 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=9b555958bb6c026c7c3387f13688f75e}
-
-\hypertarget{ref-textbook:ogata}{}
-{[}7{]} K. Ogata, \emph{Modern control engineering}, 5th ed. Prentice
-Hall, 2010 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=db54fc25ee52e896aa3a6c01592d1a79}
-
-\hypertarget{ref-textbook:dorf}{}
-{[}8{]} R. H. B. Richard C. Dorf, \emph{Modern control systems 12th
-	edition}, 12th ed. Prentice Hall, 2011 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=E61353006A43C7B8823A8F3012E9267D}
-
-\hypertarget{ref-textbook:dorfSolution}{}
-{[}9{]} R. H. B. Richard C. Dorf, \emph{Instructor's solutions manual
-	for modern control systems, 12th edition}, 12th ed. Prentice Hall, 2011
-{[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=814F498D384A3FC0B40F96FE5E213216}
-
-\hypertarget{ref-textbook:kuo}{}
-{[}10{]} B. C. K. Farid Golnaraghi, \emph{Automatic control systems 9th
-	edition}, 9th ed. Wiley, 2009 {[}Online{]}. Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=3A772763652D32CD43EAAB2D211BBCBA}
-
-\hypertarget{ref-textbook:kuoSolutions}{}
-{[}11{]} B. C. K. Farid Golnaraghi, \emph{Automatic control systems, 9th
-	edition - solutions manual}, 9th ed. Wiley, 2009 {[}Online{]}.
-Available:
-\url{http://gen.lib.rus.ec/book/index.php?md5=5E86FF471500C5E31E8A4655D62F0A89}
-
-\hypertarget{ref-essElec360:Online}{}
-{[}12{]} E. S. Society, ``Past exams elec 360 {[}online{]} available.''
-{[}Online{]}. Available: \url{http://ess.uvic.ca/exams/ELEC/}
-
-\hypertarget{ref-megaElec360:Online}{}
-{[}13{]} MEGA, ``Engineering student shared drive {[}online{]}
-available.'' {[}Online{]}. Available:
-\url{https://mega.nz/\#F!eJN1XLoI!cLb7ZYON1q53OeUFHShrJg!XcllnAhA}
-
-\hypertarget{ref-wiki:Cauchy}{}
-{[}14{]} Wikipedia, ``Cauchy's integral theorem --- wikipedia, the free
-encyclopedia.'' 2017 {[}Online{]}. Available:
-\url{https://en.wikipedia.org/w/index.php?title=Cauchy\%27s_integral_theorem\&oldid=778695526}
-
-\hypertarget{ref-MatlabCST}{}
-{[}15{]} MATLAB, ``MATLAB control systems toolbox.'' 2016 b.
-
-\hypertarget{ref-MatlabSMT}{}
-{[}16{]} MATLAB, ``MATLAB symbolic math toolbox.'' 2016 b.
-%\printbibliography[heading=none]
 %% generate plain text reference using pandoc conversion to html and copy and past
 
 \addcontentsline{toc}{chapter}{Glossary}

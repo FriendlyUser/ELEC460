@@ -1,0 +1,997 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<meta name="author" content="David Li" />
+<meta name="generator" content="LaTeX lwarp package" />
+<meta name="description" content="Control Theory Notes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<title>ELEC 460 Course Notes — Z-transform</title>
+<link rel="stylesheet" href="prism.css" type="text/css">
+<script src="prism.js" type="text/javascript"> </script>
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+<!-- https://groups.google.com/forum/#!topic/
+                                      mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                 seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                 n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                 TEX.Error
+                 ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                 n = (seteqsection.name+'.'+n).replace
+                        (/[:"'<>&]/g,"").replace(/^\./,"");
+                 return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+
+</head>
+<body>
+
+
+<nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p><a href="index.html#autosec-10" class="tocchapter"
+>Index</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-13" class="tocpart"
+><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
+
+
+<p><a href="Control-Theory.html#autosec-14" class="tocchapter"
+><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
+
+
+<p><a href="Introduction-Review.html#autosec-18" class="tocchapter"
+><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
+
+
+<p><a href="Other-Useful-Concepts.html#autosec-32" class="tocchapter"
+><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
+
+
+<p><a href="Example-commands.html#autosec-49" class="tocchapter"
+><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
+
+
+<p><a href="Z-transform.html#autosec-73" class="tocchapter"
+><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
+
+
+<p><a href="Course-Work.html#autosec-80" class="tocpart"
+><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
+
+
+<p><a href="Course-Work.html#autosec-81" class="tocchapter"
+><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-109" class="tocpart"
+><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-112" class="tocchapter"
+>References</a></p>
+
+
+<p><a href="Back-Matter.html#autosec-112" class="tocchapter"
+>Glossary</a></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h3 id="autosec-73"> <span class="sectionnumber">5&#x2001;</span>Z-transform</h3><a
+id="autopage-73"></a>
+
+<p>The Z-transform is a tranform for sequences. Just like the Laplace transform takes a function of \(t\) and
+replaces it with \(z\).</p>
+<h4 id="autosec-74"> <span class="sectionnumber">5.1&#x2001;</span>Review of Sequences</h4><a
+id="autopage-74"></a>
+
+<p>A sequence is a list of numbers, sequences can be finite, like \((2,2,3,4)\) or infinite, like \((1,2,3,4,5,\ldots )\).
+We are interested in infinite sequences. These all have the general form \((x_0,x_1,x_3,\ldots )\) with the
+\(x_k\)s standing for the numbers in the sequence. We use the short hand</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span></p>
+
+
+<!--
+
+
+
+(5.1)                                             (xk )∞
+                                                       k=0 = (x0 , x1 , x2 , . . .)
+
+
+
+
+-->
+
+<p>
+\begin{equation} (x_k)_{k=0}^\infty =(x_0,x_1,x_2,\ldots ) \end{equation}
+</p>
+
+
+<p>In otherwords, on the righthand side, we are saying the sequence is formed by writing out the \(x_k\)s with
+\(k\) put equal to zero, then one and so on up to infinity. Often we are lazy and just write \((x_k)\) when we
+mean\((x_k)_{k=0}^\infty \).</p>
+
+
+<p>The sequence</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {2} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.2)                                                   (2, 5, 8, 11, 14, . . .)
+
+
+
+-->
+
+<p>
+\begin{equation} (2,5,8,11,14,\ldots ) \end{equation}
+</p>
+
+
+<p>is an arithmetic sequence, each term is calculated by adding three to the term before it. In fact, you can write a
+formula telling you what the \(k\)th term is</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {3} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.3)                                                       xk = 2 + 3k
+
+
+
+-->
+
+<p>
+\begin{equation} x_k=2+3k \end{equation}
+</p>
+
+
+<p>and so</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {4} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.4)                                       (2 + 3k)∞
+                                                    k=0 = (2, 5, 8, 11, 14, . . .)
+
+
+
+
+-->
+
+<p>
+\begin{equation} (2+3k)_{k=0}^\infty =(2,5,8,11,14,\ldots ) \end{equation}
+</p>
+
+
+<p>This is really the most you can know about the sequence, if you have a formula saying \(x_k\) is such and such
+a thing involving \(k\) then you have solved the sequence and you can easily work out \(x_k\) for any \(k\), for
+example, we know that \(x_{1000}=3002\) in the example above. Another way of writing down the information in
+the sequence is to say</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {5} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                        xk+1       =     xk + 3
+(5.5)                                                     x0       =     2
+
+
+
+-->
+
+
+<p>
+\begin{eqnarray} x_{k+1}&amp;=&amp;x_{k}+3\cr x_0&amp;=&amp;2 \end{eqnarray}
+</p>
+
+
+<p>This tells you how to find the next term in the sequence in terms of the previous one and it tells you where to
+start, at \(x_0=2\). This is a difference equation.<sup>1</sup>
+
+<p>It allows you to work out the sequence, but only step by step. To calculate \(x_{1000}\) you would first of all
+have to know \(x_{999}\) and to work this out you need \(x_{998}\) and so on and so on. We will see later how
+to use Z-tranforms to solve a sequence when we only know the difference equation.</p>
+
+
+<p>Another common sort of sequence is a geometric sequence, an example is</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {6} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.6)                                                   (3, 15, 75, 375, . . .)
+
+
+
+-->
+
+<p>
+\begin{equation} (3,15,75,375,\ldots ) \end{equation}
+</p>
+
+
+<p>Here, each term is given by multiplying the previous term by five, so, the difference equation is</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {7} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                         xk+1        =     5xk
+(5.7)                                                      x0        =     3
+
+
+
+-->
+
+
+<p>
+\begin{eqnarray} x_{k+1}&amp;=&amp;5x_k\cr x_0&amp;=&amp;3 \end{eqnarray}
+</p>
+
+
+<p>We also know the solution in this case,</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {8} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.8)                                                       xk = 3 × 5k
+
+
+
+-->
+
+<p>
+\begin{equation} x_k=3\times 5^k \end{equation}
+</p>
+
+
+<p>That is</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {9} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.9)                                       (3 × 5k )∞
+                                                     k=0 = (3, 15, 75, 375, . . .)
+
+
+
+
+-->
+
+<p>
+\begin{equation} (3\times 5^k)_{k=0}^\infty =(3,15,75,375,\ldots ) \end{equation}
+</p>
+
+
+<p>More generally, a geometric sequence has the form</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {10} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.10)                                       (ark )∞               2    3
+                                                   k=0 = (a, ar, ar , ar , . . .)
+
+
+
+
+-->
+
+<p>
+\begin{equation} (ar^k)_{k=0}^\infty =(a,ar,ar^2,ar^3,\ldots ) \end{equation}
+</p>
+
+
+<p>and \(x_0=a\) and \(r\) is called the ratio. Thus,</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {11} \)
+</span></p>
+
+
+<!--
+
+
+                                                                                  
+                                                                     15 15
+(5.11)                                                 60, 30, 15,     ,   ,...
+                                                                     2 4
+
+
+-->
+
+<p>
+\begin{equation} \left (60,30,15,\frac {15}{2},\frac {15}{4},\ldots \right ) \end{equation}
+</p>
+
+
+<p>is a geometrical sequence with \(a=60\) and \(r=1/2\). The sequence</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {12} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.12)                                                    (1, 1, 1, 1, 1, . . .)
+
+
+
+-->
+
+<p>
+\begin{equation} \left (1,1,1,1,1,\ldots \right ) \end{equation}
+</p>
+
+
+<p>is a geometrical sequence with \(a=1\) and \(r=1\).</p>
+
+
+<p>A series is what you get when you sum up all the terms in a sequence. Consider the sequence</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {13} \)
+</span></p>
+
+
+<!--
+
+
+                                                      ∞                         
+                                                   1                  1 1 1
+(5.13)                                                         =    1, , , , . . .
+                                                  2k     k=0          2 4 8
+
+
+-->
+
+<p>
+\begin{equation} \left (\frac {1}{2^k}\right )_{k=0}^\infty =\left (1,\frac {1}{2},\frac {1}{4},\frac
+{1}{8},\ldots \right ) \end{equation}
+</p>
+
+
+<p>The corresponding sum is</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {14} \)
+</span></p>
+
+
+<!--
+
+
+                                                   ∞
+                                                  X    1      1 1 1
+(5.14)                                     S=          k
+                                                         = 1 + + + + ...
+                                                  k=0
+                                                      2       2 4 8
+
+
+
+-->
+
+<p>
+\begin{equation} S=\sum _{k=0}^\infty \frac {1}{2^k}=1+\frac {1}{2}+\frac {1}{4}+\frac {1}{8}+\ldots
+\end{equation}
+</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {15} \)
+</span></p>
+
+
+<!--
+
+
+                                                           ∞
+                                                           X                ∞
+                                                                            X
+(5.15)                                             S=           ark = a            rk
+                                                          k=0               k=0
+
+
+
+-->
+
+<p>
+\begin{equation} S=\sum _{k=0}^\infty ar^k=a\sum _{k=0}^\infty r^k \end{equation}
+</p>
+
+
+<p>Next, we remember the formula that</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {16} \)
+</span></p>
+
+
+<!--
+
+
+                                                                 ∞
+                                                           1    X
+(5.16)                                                        =     rk
+                                                          1−r   k=0
+
+
+
+-->
+
+<p>
+\begin{equation} \frac {1}{1-r}=\sum _{k=0}^\infty r^k \end{equation}
+</p>
+
+
+<p>for \(|r|&lt;1\). You can check this formula either using the Taylor series or the binomial expansion. Hence</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                   <span class="hidden"> \( \seteqnumber {17} \)
+</span></p>
+
+
+<!--
+
+
+                                                                      a
+(5.17)                                                       S=
+                                                                     1−r
+
+
+-->
+
+<p>
+\begin{equation} S=\frac {a}{1-r} \end{equation}
+</p>
+
+
+<p>If the ratio is bigger than or equal to one then the corresponding series diverges, that is, it doesn’t sum up to
+finite amount.</p>
+<div class="footnotes">
+<p><sup>1</sup>&nbsp;There is another name also used for a difference equation, it can be called an induction step,
+the difference usually is that you called it a difference equation if you intend to solve it and an induction step if you
+intend to use it as it is to work out the sequence term by term.</p>
+
+
+</div>
+<h4 id="autosec-76"> <span class="sectionnumber">5.2&#x2001;</span>The Z-transform</h4><a
+id="autopage-76"></a>
+
+<p>The Z-transform of a sequence \((x_k)\) is defined as</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {18} \)
+</span></p>
+
+
+<!--
+
+
+
+                                                                     Xty
+                                                                    inf
+                                                                            xk
+(5.18)                                            Z[(xk )∞
+                                                         k=0 ] =
+                                                                     k=0
+                                                                            zk
+
+
+
+-->
+
+<p>
+\begin{equation} {\cal Z}[(x_k)_{k=0}^\infty ]=\sum _{k=0}^{infty}\frac {x_k}{z^k} \end{equation}
+</p>
+
+
+<p>We often write</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {19} \)
+</span></p>
+
+
+<!--
+
+
+
+(5.19)                                              X(z) = Z[(xk )∞
+                                                                  k=0 ]
+
+
+
+
+-->
+
+<p>
+\begin{equation} X(z)={\cal Z}[(x_k)_{k=0}^\infty ] \end{equation}
+</p>
+
+
+<p>Lets find the Z-transform of a geometric sequence \((r^k)\). We have</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {20} \)
+</span></p>
+
+
+<!--
+
+
+
+                                                Xty
+                                               inf           Xty  r k
+                                                            inf
+                                                       rk                   1                  z
+(5.20)                        Z[(rk )∞
+                                     k=0 ] =              =             =             r   =
+                                                k=0
+                                                       zk    k=0
+                                                                   z      1 −         z
+                                                                                              z−r
+
+
+
+-->
+
+<p>
+\begin{equation} {\cal Z}[(r^k)_{k=0}^\infty ]=\sum _{k=0}^{infty}\frac {r^k}{z^k}=\sum
+_{k=0}^{infty}\left (\frac {r}{z}\right )^k=\frac {1}{1-\frac {r}{z}}=\frac {z}{z-r} \end{equation}
+</p>
+
+
+<p>In particular, this means that</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {21} \)
+</span></p>
+
+
+<!--
+
+
+                                                                           z
+(5.21)                                            Z[(1, 1, 1, . . .)] =
+                                                                          z−1
+
+
+-->
+
+<p>
+\begin{equation} {\cal Z}[(1,1,1,\ldots )]=\frac {z}{z-1} \end{equation}
+</p>
+
+
+<p>Another Z-transform can be derived from this by differentiating with respect to \(r\). ,</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {22} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                             z
+                                                  Z[(rk )∞
+                                                         k=0 ]      =
+                                                                           z−r
+                                            d                               d z
+                                               Z[(rk )∞
+                                                      k=0 ]         =
+                                            dr
+                                                                         dr z − r
+                                               d k ∞                           z
+                                          Z      (r )k=0            =
+                                              dr                           (z − r)2
+                                                                               z
+(5.22)                                     Z[(krk−1 )∞
+                                                     k=0 ]          =
+                                                                           (z − r)2
+
+
+-->
+
+
+<p>
+\begin{eqnarray} {\cal Z}[(r^k)_{k=0}^\infty ]&amp;=&amp;\frac {z}{z-r}\cr \frac {d}{dr}{\cal
+Z}[(r^k)_{k=0}^\infty ]&amp;=&amp;\frac {d}{dr}\frac {z}{z-r}\cr {\cal Z}\left [\frac
+{d}{dr}(r^k)_{k=0}^\infty \right ]&amp;=&amp;\frac {z}{(z-r)^2}\cr {\cal Z}[(kr^{k-1})_{k=0}^\infty
+]&amp;=&amp;\frac {z}{(z-r)^2} \end{eqnarray}
+</p>
+
+
+<p>and, in particular, this means</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {23} \)
+</span></p>
+
+
+<!--
+
+
+                                                                             z
+(5.23)                                         Z[(0, 1, 2, 3, . . .)] =
+                                                                          (z − 1)2
+
+
+-->
+
+<p>
+\begin{equation} {\cal Z}[(0,1,2,3,\ldots )]=\frac {z}{(z-1)^2} \end{equation}
+</p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>                <span class="hidden"> \( \seteqnumber {24} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                             z
+                                                  Z[(rk )∞
+                                                         k=0 ]     =
+                                                                           z−r
+                                                                               z
+(5.24)                                    Z[(krk−1 )∞
+                                                    k=0 ]          =
+                                                                           (z − r)2
+
+
+-->
+
+
+<p>
+\begin{eqnarray} {\cal Z}[(r^k)_{k=0}^\infty ]&amp;=&amp;\frac {z}{z-r}\cr {\cal
+Z}[(kr^{k-1})_{k=0}^\infty ]&amp;=&amp;\frac {z}{(z-r)^2} \end{eqnarray}
+</p>
+<div class="amsthmbodyplain">
+
+<ul style="list-style-type:none">
+
+
+<li>
+
+<p><span class="amsthmnameplain">Theorem</span><span class="amsthmnumberplain"> <span
+class="textup">5.2.1</span></span><span class="amsthmnoteplain"> (Sampling Theorem)</span>.&nbsp; If a
+signal x(t) contains no frequency higher or equal than \(\omega _c\) radians, then it is completely characterized by
+the values of the signal measured at instants of time separated by \(T= 0.5\frac {2\pi }{\omega _c}; \quad
+\omega _s=2\omega _c\) the signal x(t) can be reconstructed completely from the sampled signal \(x^\ast (t) =
+x(kT)\).</p>
+
+
+</li>
+
+</ul>
+
+</div>
+
+<p><b>Inverse Z-Transform</b></p>
+
+
+<p>Given the Z transform \(X(z)\), the original time signal can be obtained by the inverse Z transform, which can
+be derived from the corresponding Fourier transform. As shown above, we have: </p>
+
+
+<p>\[ X(z)=X(e^{\sigma +j\omega })=\sum _{n=-\infty }^\infty [x[n] e^{-\sigma n}] e^{-j\omega n} ={\cal
+F}[x[n] e^{-\sigma n}] \]</p>
+
+
+<p>Now \(x[n]e^{-\sigma n}\) can be obtained by the inverse Fourier transform: </p>
+
+
+<p>\[ x[n] e^{-\sigma n}={\cal F}^{-1}[X(e^{\sigma +j\omega })] =\frac {1}{2\pi }\int _0^{2\pi }
+X(e^{\sigma +j\omega }) e^{j\omega n} d\omega \]</p>
+
+
+<p>Multiplying both sides by \(e^{\sigma n}\), we get: </p>
+
+
+<p>\[ x[n]=\frac {1}{2\pi }\int _0^{2\pi } X(e^{\sigma +j\omega }) e^{(\sigma +j\omega ) n} d\omega =\frac
+{1}{2\pi }\int _0^{2\pi } X(z) z^n d\omega \]</p>
+
+
+<p>To represent the inverse transform in terms of \(z\) (instead of \(\omega \)), we note </p>
+
+
+<p>\[ dz=d(e^{\sigma +j\omega })=e^\sigma j\;e^{j\omega } d\omega =jz\;d\omega , \;\;\;\;\;\mbox
+{i.e.,}\;\;\;\;\;\;d\omega =\frac {dz}{jz} \]</p>
+
+
+<p>and the inverse Z transform can be obtained as: </p>
+
+
+<p>\[ x[n]={\cal Z}^{-1}[X(z)]=\frac {1}{j2\pi }\oint X(z) z^{n-1} dz \]</p>
+
+
+<p>Note that the integral with respect to \(\omega \) from \(0\) to \(2\pi \) becomes an integral with respect to
+\(z=e^{\sigma +j\omega }\) in the complex z-plane, along a circle with a fixed radius \(e^\sigma \) and a varying
+angle \(\omega \) from \(0\) to \(2\pi \). Now we have the z-transform pair: </p>
+
+
+<p>\[ X(z)={\cal Z}[x[n]]=\sum _{n=-\infty }^\infty x[n]z^{-n} \]</p>
+
+
+<p>\[ x[n]={\cal Z}^{-1}[X(z)]=\frac {1}{2\pi j}\oint X(z)z^{n-1} dz \]</p>
+
+
+<p>The forward and inverse z-transform pair can also be represented as </p>
+
+
+<p>\[ x[n] \stackrel { {\cal Z} }{\longleftrightarrow } X(z) \]</p>
+
+
+<p>In particular, if we let \(\sigma =0\), i.e., \(z=e^{j\omega }\), then the Z transform becomes the discrete-time
+Fourier transform: </p>
+
+
+<p>\[ X(z)\bigg |_{z=e^{j\omega }}=\sum _{n=-\infty }^\infty x[n] e^{-j\omega n}=X(e^j\omega ) \]</p>
+
+
+<p>This is the reason why sometimes the discrete Fourier spectrum is expressed as a function of \(e^{j\omega
+}\).</p>
+<h4 id="autosec-78"> Conformal Mapping between S-Plane to Z-Plane</h4><a id="autopage-78"></a>
+
+<p>The s-plane and the z-plane are related by a conformal mapping specified by the analytic complex function </p>
+
+
+<p>\[ z=e^s=e^{\sigma +j\omega }=e^\sigma e^{j\omega }=r e^{j\omega } \]</p>
+
+
+<p>where </p>
+
+
+<p>\[ \left \{ \begin {array}{l} Re[s]=\sigma \\ Im[s]=j\omega \end {array} \right . \;\;\;\;\;\mbox {and}\;\;\;\;
+\left \{ \begin {array}{l} |z|=r=e^\sigma \\ \angle {z}=\omega \end {array} \right . \]</p>
+
+
+<p>The mapping is continuous, i.e., neighboring points in s-plane are mapped to neighboring points in z-plane and
+vice versa. Consider the mapping of these specific features: </p>
+
+
+<ul style="list-style-type:none">
+
+<li>
+<p>• The origin \(s=0\) of s-plane is mapped to \(z=e^0=1\) on the real axis in z-plane.</p>
+
+</li>
+<li>
+<p>• Each vertical line \(Re[s]=\sigma _0\) in s-plane is mapped to a circle \(|z|=e^{\sigma _0}\) centered about
+the origin in z-plane. In particular, </p>
+
+<ul style="list-style-type:none">
+
+<li>
+<p>– Leftmost vertical line \(Re[s]=\sigma =-\infty \) is mapped as the origin \(|z|=e^{-\infty }=0\)</p>
+
+</li>
+<li>
+<p>– Imaginary axis \(Re[s]=0\) is mapped as the unit circle \(|z|=e^0=1\)</p>
+
+</li>
+<li>
+<p>– Rightmost vertical line \(Re[s]=\sigma =\infty \) is mapped as a circle of infinite radius \(|z|=e^{\infty
+}=\infty \).</p>
+
+</li>
+</ul>
+</li>
+<li>
+<p>• Each horizontal line \(Im[s]=j\omega _0\) in s-plane is mapped to \(\angle {z}=\omega _0\), a ray from the
+origin in z-plane of angle \(\omega _0\) with respect to the positive horizontal direction.</p>
+
+</li>
+<li>
+<p>• A right angle formed by a pair vertical and horizontal lines in s-plane is conserved by the mapping, as the
+corresponding circle and ray in z-plane also form a right angle. (In fact any angle is conserved, an important
+property of the conformal mapping.)</p>
+
+</li>
+</ul>
+
+<p>The infinite range \(-\infty &lt; \omega &lt; \infty \) for frequency \(\omega \) along a vertical line
+\(Re[s]=\sigma _0\) in s-plane is mapped repeatedly to a finite range \(0 \le \omega &lt; 2\pi \) around a circle
+\(|z|=e^{\sigma _0}\) in z-plane, corresponding to the conversion of a continuous signal \(x(t)\) with non-periodic
+spectrum \(X(j\omega )\) for \(-\infty &lt; \omega &lt; \infty \) to a discrete signal \(x[n]\) with periodic
+spectrum \(X(e^{j\omega })\) for \(0 \le \omega &lt; 2\pi \).</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>

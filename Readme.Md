@@ -1,25 +1,4 @@
 #### ELEC 460
-
-For my elec 460 notes, I will make them offline and then upload then to my git repository on a daily basis.
-As for my elec 300 notes, I will gitignore them locally and update the overleaf repo remotely, note that this will be the pandabear account.
-
-### Useful Links
-
-* (http://www.engr.usask.ca/classes/EE/480/)
-
-For example the textbook [@book:129711] is used.
-
-* [@book:129711]
-* [@textbook:niseSolution]
-
-```latex
-pandoc Readme.Md --template=OtherFiles/poole/poole.html5 -c OtherFiles/poole/poole.css  --mathjax --toc --highlight-style zenburn --csl=ieee.csl  --bibliography=textbooks.bib  -o Readme.html 
-```
-
-```bash
-pandoc Readme.Md --template=OtherFiles/bootswatch.html5 -c   --mathjax --csl=ieee.csl  --bibliography=textbooks.bib  -o Readme.html
-```
-
 <details><summary>Course	Objectives</summary>
 • To	apply	software	requirement	and	design	processes	in	the	implementation	of	software	
 components	in	electrical	and	computer	engineering	systems	 <br>
@@ -40,6 +19,104 @@ and	computer	engineering	problems	in	various	domains	(e.g.,	mechatronics,	signal
 engineering	systems	and	situations	<br>
 </details>
 
+### Useful Links
+
+* (http://www.engr.usask.ca/classes/EE/480/)
+
+For example the textbook [@book:129711] is used.
+
+* [@book:129711]
+* [@textbook:niseSolution]
+
+```latex
+pandoc Readme.Md --template=OtherFiles/poole/poole.html5 -c OtherFiles/poole/poole.css  --mathjax --toc --highlight-style zenburn --csl=ieee.csl  --bibliography=textbooks.bib  -o Readme.html 
+```
+
+```bash
+pandoc Readme.Md --template=OtherFiles/bootswatch.html5 -c   --mathjax --csl=ieee.csl  --bibliography=textbooks.bib  -o Readme.html
+```
+
+###### Interesting Note
+Some of my work involves creating figures:
+
+!(samplerTesting.png)
+```latex
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes,arrows,calc} 
+\usetikzlibrary{decorations.text}
+\tikzset{add/.style n args={4}{
+		minimum width=6mm,
+		path picture={
+			\draw[black] 
+			(path picture bounding box.south east) -- (path picture bounding box.north west)
+			(path picture bounding box.south west) -- (path picture bounding box.north east);
+			\node at ($(path picture bounding box.south)+(0,0.13)$)     {\tiny #1};
+			\node at ($(path picture bounding box.west)+(0.13,0)$)      {\tiny #2};
+			\node at ($(path picture bounding box.north)+(0,-0.13)$)        {\tiny #3};
+			\node at ($(path picture bounding box.east)+(-0.13,0)$)     {\tiny #4};
+		}
+	}
+}
+\begin{document}
+	
+%\begin{figure}
+%\centering
+	\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
+	\tikzstyle{controller} = [draw, fill=red!20, rectangle, minimum height=3em, minimum width=4em]
+	\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+	\tikzstyle{input} = [coordinate]
+	\tikzstyle{output} = [coordinate]
+	\tikzstyle{sampleSP} = [coordinate]
+	\tikzstyle{sampleEP} = [coordinate]
+	\tikzstyle{otherPoint} = [coordinate]
+	\begin{tikzpicture}[auto, >=latex']
+	% Nodes
+	\node [input] (input) {};
+	%\node [sum, right = 1cm of input] (sum) {};
+	\node[draw,circle,add={--}{+}{}{},right of= input](sum){}; 
+	\node [sampleSP, right = 1cm of sum] (sumSP) {};
+	\node [sampleEP, right = 1cm of sumSP] (sumEP) {};
+	\node [sampleEP, above = 1cm of sumEP] (sumEPTOP) {};
+	\node [controller, right = 2cm of sumEP] (system) {$G(s)$};
+	\node [otherPoint,right = 1cm of system] (branchPoint) {};
+	\node [otherPoint,below = 1 cm of system] (belowsystem) {}; %{$\frac{1}{Ts+1}$};
+	%\node [block, right = 1cm of system] (system2) {$\frac{1}{Ts+1}$};
+	\node [output, right = 2cm of branchPoint] (output) {};
+	%\node [input, below = 0.5cm of system] (m) {};
+	\node [block, right = 0.75 of belowsystem] (systemH) {$H_1(s)$};
+	
+	% Second Sampler Point
+	\node [sampleSP, left = 1cm of systemH] (sysHSP2) {};
+	\node [sampleEP, left = 1cm of sysHSP2] (sysHEP2) {};
+	\node [sampleEP, above = 1cm of sysHEP2] (sumEPTOP2) {};
+	
+	% Second block 
+	\node [block, left = 1.5cm of sysHEP2] (systemH2) {$H_2(s)$};
+	% Arrows
+	\draw [draw,->] (input) -- node {$R$} (sum);
+	% Arrows for first sampler
+	\draw [-] (sum) -- node {$E(s)$} (sumSP);
+	\draw [o-,thick] (sumEPTOP) -- node {$\delta_\tau$} (sumSP);
+	\draw [->] (sumEP) -- node {$E^\ast(s)$} (system);
+	%Arrows for second sampler (bottom)
+	\draw [-]  (sysHSP2)-- node {$M(s)$} (systemH);  
+	\draw [-o,thick] (sysHSP2) -- node {$\delta_\tau$} (sumEPTOP2);
+	%\draw [->] (sumEP) -- node {$M^\ast(s)$} (systemH);
+	% \draw [->] (system) --  (system2);
+	\draw [-] (system) --  (branchPoint);
+	\draw [->] (branchPoint) -- node (y) {$C(s)$}(output);
+	\draw [-] (y) |- (systemH) {};
+	%\draw [-] (y) |- (m) {} ;
+	\draw [<-] (systemH2) -- node {$M^\ast(s)$} (sysHEP2);
+	\draw [->] (systemH2) -| (sum); %{$-$}  node [near end] {} (sum);
+	%\draw [->] (m) -| node[pos=0.99] {} node [near end] {} (sum); %{$-$}  node [near end] {} (sum);
+	\end{tikzpicture}
+	
+%\end{figure}
+\end{document}
+```
 <br>
 
 <blockquote class ="info">Some questions from software engineering, and the assigments, also the textbook operating system contains a lot of question that were on the exam.</blockquote>
