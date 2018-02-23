@@ -1,0 +1,278 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ELEC460midterm</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-02"><meta name="DC.source" content="ELEC460midterm.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">ELEC 460 Midterms</a></li><li><a href="#2">Nise Chapter 13 -- Digital Control Systems</a></li><li><a href="#6">Nise Examples Matlab</a></li></ul></div><h2 id="1">ELEC 460 Midterms</h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+format <span class="string">compact</span>
+format <span class="string">short</span>
+</pre><h2 id="2">Nise Chapter 13 -- Digital Control Systems</h2><pre class="codeinput">syms <span class="string">z</span> <span class="string">k</span>
+<span class="comment">% 3 a)</span>
+Q3aF = z*(z+3)*(z+5)/((z-0.1)*(z-0.5)*(z-0.7))
+Q3af = iztrans(Q3aF,k)
+<span class="comment">% 3 b)</span>
+Q3bF = (z+0.2)*(z+0.4)/((z-0.1)*(z-0.5)*(z-0.9))
+Q3bf = iztrans(Q3bF,k)
+<span class="comment">% 3 c)</span>
+Q3cF = (z+1)*(z+0.3)*(z+0.4)/(z*(z-0.2)*(z-0.5)*(z-0.7))
+Q3cf = iztrans(Q3cF,k)
+</pre><pre class="codeoutput">Q3aF =
+(z*(z + 3)*(z + 5))/((z - 1/2)*(z - 1/10)*(z - 7/10))
+Q3af =
+(527*(1/10)^k)/8 - (1925*(1/2)^k)/8 + (703*(7/10)^k)/4
+Q3bF =
+((z + 1/5)*(z + 2/5))/((z - 1/2)*(z - 1/10)*(z - 9/10))
+Q3bf =
+(75*(1/10)^k)/16 - (63*(1/2)^k)/8 + (715*(9/10)^k)/144 - (16*kroneckerDelta(k, 0))/9
+Q3cF =
+((z + 1)*(z + 2/5)*(z + 3/10))/(z*(z - 1/2)*(z - 1/5)*(z - 7/10))
+Q3cf =
+60*(1/5)^k - 72*(1/2)^k - (12*kroneckerDelta(k - 1, 0))/7 + (1870*(7/10)^k)/49 - (1282*kroneckerDelta(k, 0))/49
+</pre><p>Question 6, Nise The general format to solve these questions in matlab is to:    1. symbolically enter the given expression in the laplace domain    2. use partial fraction expansion.    3. inverse laplace transform to the time domain,    4. transform to z-domain</p><p><span class="MathJax_Preview"><img src="ELEC460midterm_eq05036212881533058595.png" alt="$$\frac{s+4}{\left(s+2\right)\,\left(s+5\right)}$$"></span><script type="math/tex; mode=display">\frac{s+4}{\left(s+2\right)\,\left(s+5\right)}</script></p><p>a)</p><pre class="codeinput">syms <span class="string">s</span>
+Q6a = (s+4)/((s+2)*(s+5))
+Q6afrac = partfrac(Q6a)
+Q6atime = ilaplace(Q6afrac)
+Q6azdo = ztrans(Q6atime)
+</pre><pre class="codeoutput">Q6a =
+(s + 4)/((s + 2)*(s + 5))
+Q6afrac =
+2/(3*(s + 2)) + 1/(3*(s + 5))
+Q6atime =
+(2*exp(-2*t))/3 + exp(-5*t)/3
+Q6azdo =
+(2*z)/(3*(z - exp(-2))) + z/(3*(z - exp(-5)))
+</pre><p><span class="MathJax_Preview"><img src="ELEC460midterm_eq00399821853903250194.png" alt="$$\frac{\left(s+1\right)\,\left(s+2\right)}{s\,\left(s+3\right)\,\left(s+4\right)}$$"></span><script type="math/tex; mode=display">\frac{\left(s+1\right)\,\left(s+2\right)}{s\,\left(s+3\right)\,\left(s+4\right)}</script></p><p>b)</p><pre class="codeinput">Q6b = (s+1)*(s+2)/(s*(s+3)*(s+4))
+Q6bfrac = partfrac(Q6b)
+Q6btime = ilaplace(Q6bfrac)
+Q6azdo = ztrans(Q6btime)
+</pre><pre class="codeoutput">Q6b =
+((s + 1)*(s + 2))/(s*(s + 3)*(s + 4))
+Q6bfrac =
+3/(2*(s + 4)) - 2/(3*(s + 3)) + 1/(6*s)
+Q6btime =
+(3*exp(-4*t))/2 - (2*exp(-3*t))/3 + 1/6
+Q6azdo =
+z/(6*(z - 1)) - (2*z)/(3*(z - exp(-3))) + (3*z)/(2*(z - exp(-4)))
+</pre><h2 id="6">Nise Examples Matlab</h2><pre class="codeinput"><span class="string">'(ch13p7) Example 13.10'</span> <span class="comment">% Display label.</span>
+clf <span class="comment">% Clear graph.</span>
+numgz=[11]; <span class="comment">% Define numerator of G(z).</span>
+dengz=poly([1 0.5]); <span class="comment">% Define denominator of G(z).</span>
+<span class="string">'G(z)'</span> <span class="comment">% Display label.</span>
+Gz=tf(numgz,dengz,[]); <span class="comment">% Create and display G(z).</span>
+rlocus(Gz) <span class="comment">% Plot root locus.</span>
+zgrid([],[]) <span class="comment">% Add unit circle to root locus.</span>
+title ([<span class="string">'z-Plane Root Locus '</span>]) <span class="comment">% Add title to root locus.</span>
+[K,p]=rlocfind(Gz) <span class="comment">% Allows input of K by selecting</span>
+<span class="comment">% point on graphic.</span>
+figure
+
+<span class="string">'(ch13p8) Example 13.11'</span> <span class="comment">% Display label.</span>
+clf <span class="comment">% Clear graph.</span>
+numgz=[11]; <span class="comment">% Define numerator of G(z).</span>
+dengz=poly([1 0.5]); <span class="comment">% Define denominator of G(z).</span>
+<span class="string">'G(z)'</span> <span class="comment">% Display label.</span>
+Gz=tf(numgz,dengz,[]);  <span class="comment">% Create and display G(z).</span>
+rlocus(Gz) <span class="comment">% Plot root locus.</span>
+axis([0,1,-1,1]) <span class="comment">% Create close-up view.</span>
+zgrid <span class="comment">% Add damping ratio curves to root</span>
+<span class="comment">% locus.</span>
+title([<span class="string">'z-Plane Root Locus'</span>]) <span class="comment">% Add title to root locus.</span>
+[K,p]=rlocfind(Gz) <span class="comment">% Allows input of K by selecting</span>
+<span class="comment">% point on graphic.</span>
+figure
+<span class="string">'T(z)'</span> <span class="comment">% Display label.</span>
+Tz=feedback(K*Gz,1) <span class="comment">% Find T(z).</span>
+step(Tz) <span class="comment">% Find step response of gain-</span>
+<span class="comment">% compensated system.</span>
+title ([<span class="string">'Gain Compensated Step Response '</span>])
+<span class="comment">% Add title to step response of</span>
+<span class="comment">% gain-compensated system.</span>
+</pre><pre class="codeoutput">ans =
+    '(ch13p7) Example 13.10'
+ans =
+    'G(z)'
+Select a point in the graphics window
+selected_point =
+   0.7506 + 0.2786i
+K =
+    0.0127
+p =
+   0.7500 + 0.2786i
+   0.7500 - 0.2786i
+ans =
+    '(ch13p8) Example 13.11'
+ans =
+    'G(z)'
+Select a point in the graphics window
+selected_point =
+   0.7524 + 0.3034i
+K =
+    0.0141
+p =
+   0.7500 + 0.3034i
+   0.7500 - 0.3034i
+ans =
+    'T(z)'
+
+Tz =
+ 
+         0.1546
+  --------------------
+  z^2 - 1.5 z + 0.6546
+ 
+Sample time: unspecified
+Discrete-time transfer function.
+
+</pre><img vspace="5" hspace="5" src="ELEC460midterm_01.png" alt=""> <img vspace="5" hspace="5" src="ELEC460midterm_02.png" alt=""> <img vspace="5" hspace="5" src="ELEC460midterm_03.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ELEC 460 Midterms
+clear all
+close all
+format compact
+format short
+%% Nise Chapter 13 REPLACE_WITH_DASH_DASH Digital Control Systems
+%
+syms z k
+% 3 a)
+Q3aF = z*(z+3)*(z+5)/((z-0.1)*(z-0.5)*(z-0.7))
+Q3af = iztrans(Q3aF,k)
+% 3 b)
+Q3bF = (z+0.2)*(z+0.4)/((z-0.1)*(z-0.5)*(z-0.9))
+Q3bf = iztrans(Q3bF,k)
+% 3 c)
+Q3cF = (z+1)*(z+0.3)*(z+0.4)/(z*(z-0.2)*(z-0.5)*(z-0.7))
+Q3cf = iztrans(Q3cF,k)
+
+%% 
+% Question 6, Nise
+% The general format to solve these questions in matlab is
+% to:
+%    1. symbolically enter the given expression in the laplace domain
+%    2. use partial fraction expansion.
+%    3. inverse laplace transform to the time domain, 
+%    4. transform to z-domain
+%%
+% 
+% $$\frac{s+4}{\left(s+2\right)\,\left(s+5\right)}$$
+% 
+% a)
+
+syms s 
+Q6a = (s+4)/((s+2)*(s+5))
+Q6afrac = partfrac(Q6a)
+Q6atime = ilaplace(Q6afrac)
+Q6azdo = ztrans(Q6atime)
+
+%%
+% 
+% $$\frac{\left(s+1\right)\,\left(s+2\right)}{s\,\left(s+3\right)\,\left(s+4\right)}$$
+% 
+% b)
+
+Q6b = (s+1)*(s+2)/(s*(s+3)*(s+4))
+Q6bfrac = partfrac(Q6b)
+Q6btime = ilaplace(Q6bfrac)
+Q6azdo = ztrans(Q6btime)
+%% Nise Examples Matlab
+
+
+'(ch13p7) Example 13.10' % Display label.
+clf % Clear graph.
+numgz=[11]; % Define numerator of G(z).
+dengz=poly([1 0.5]); % Define denominator of G(z).
+'G(z)' % Display label.
+Gz=tf(numgz,dengz,[]); % Create and display G(z).
+rlocus(Gz) % Plot root locus.
+zgrid([],[]) % Add unit circle to root locus.
+title (['z-Plane Root Locus ']) % Add title to root locus.
+[K,p]=rlocfind(Gz) % Allows input of K by selecting
+% point on graphic.
+figure
+
+'(ch13p8) Example 13.11' % Display label.
+clf % Clear graph.
+numgz=[11]; % Define numerator of G(z).
+dengz=poly([1 0.5]); % Define denominator of G(z).
+'G(z)' % Display label.
+Gz=tf(numgz,dengz,[]);  % Create and display G(z).
+rlocus(Gz) % Plot root locus.
+axis([0,1,-1,1]) % Create close-up view.
+zgrid % Add damping ratio curves to root
+% locus.
+title(['z-Plane Root Locus']) % Add title to root locus.
+[K,p]=rlocfind(Gz) % Allows input of K by selecting
+% point on graphic.
+figure
+'T(z)' % Display label.
+Tz=feedback(K*Gz,1) % Find T(z).
+step(Tz) % Find step response of gain-
+% compensated system.
+title (['Gain Compensated Step Response '])
+% Add title to step response of
+% gain-compensated system.
+##### SOURCE END #####
+--></body></html>

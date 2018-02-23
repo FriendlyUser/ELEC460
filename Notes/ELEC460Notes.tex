@@ -140,6 +140,8 @@ innerrightmargin=0pt
 \usepackage{epigraph}
 \usepackage{csquotes}
 \usepackage{makeidx}\makeindex
+\usepackage{pgfplots}
+\usepackage{steinmetz}
 \begin{document}
 %% Print Title Page
 \makeatletter
@@ -287,6 +289,7 @@ For this course, %\hyperlink{ref-MatlabCST}{Matlab Control Systems}
 
 \input{tables.tex}
 \chapter{Other Useful Concepts}
+
 \section{Steady-state error}
 
 \subsection{Definition}
@@ -1011,12 +1014,17 @@ corresponding to the conversion of a continuous signal $x(t)$ with non-periodic
 spectrum $X(j\omega)$ for $-\infty < \omega < \infty$ to a discrete signal $x[n]$ 
 with periodic spectrum $X(e^{j\omega})$ for $0 \le \omega < 2\pi$.
 \part{Course Work}
-
+The derivative controllers in z-domain are very similar to the s-domain versions.
+\begin{align}
+K_p = K- \frac{KT}{2T_i}=K-\frac{K_i}{2}=\text{proportional gain} \\
+K_i = \frac{KT}{T_i}=\text{integral gain} \\
+K_D = \frac{KT_d}{T}=\text{derivative gain}
+\end{align}
 
 \chapter{Assignments}
 This assignments will contain python and matlab code as well as latex code (creating diagrams).
 
-I will look into creating classic bode plots using python libariries such as matplotlib. Other diagrams will be produced by either inkscape or tikz.
+I will look into creating classic bode plots using python libraries such as matplotlib. Other diagrams will be produced by either inkscape or tikz.
 \section{Assignment 1}
 
 \begin{pythonscript}
@@ -1065,8 +1073,13 @@ rvect, kvect = rlocus(sys)
 	\caption{Nyquist Plot}
 \end{figure}
 
+\section{Assignment 1 Reduced}
 \subimport*{Assignments/A1/}{A1Reduced.tex}
 \subimport*{Assignments/A2/}{ELEC460A2Content.tex}
+\section{Assignment 4}
+\subimport*{Assignments/A4/}{ELEC460A4.tex}
+\section{Assignment 3}
+\subimport*{Assignments/A3/}{ELEC460A3Work.tex}
 \part{Back Matter}
 
 \begin{proof}[This is a proof]

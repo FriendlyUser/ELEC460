@@ -86,34 +86,9 @@ and
 \end{table}
 
 
-\begin{table}
-	\begin{tabular}{|c|c|}
-		\hline
-		\multicolumn{2}{|c|}{\textbf Table of Laplace Transforms} \\
-		\hline
-		$ f(t)$ for  $t \geq 0$ &  ${\mathcal{L}}(f)$ \\
-		$1$      & $ \frac{1}{s}$\\
-		$e^{at}$ & $ \frac{1}{s-a}$\\
-		$t^n$    & $ \frac{n!}{s^{n+1}}$ ($n = 0,1, \ldots$)\\
-		$\sin at$ & $ \frac{a}{s^2 + a^2}$\\
-		$\cos at$ & $ \frac{s}{s^2 + a^2}$\\
-		$\sinh at$ & $ \frac{a}{s^2 - a^2}$\\
-		$\cosh at$ & $ \frac{s}{s^2 - a^2}$\\[
-		$H_a(t)$ & $\displaystyle \frac{e^{-as}}{s}$\\
-		$\delta(t-a)$ & $\displaystyle e^{-as}$\\
-		$f'(t)$ & $s{\mathcal{L}}(f)-f(0)$\\
-		$f''(t)$ & $s^2{\mathcal{L}}(f)-sf(0)-f'(0)$\\ \hline
-	\end{tabular}
-	\caption{Laplace Transform Table}
-\end{table}
-
-
 where 
-\[
-H_a(t)=\left\{\begin{array}{ll}0&t \le a\\1&t>a\end{array}\right.
-\]
 
 \noindent{\textbf First shift theorem:} If $L(f(t))=F(s)$ then
-\[ {\cal L}\left(e^{at}f(t)\right)=F(s-a).\]
+$$ {\mathcal L}\left(e^{at}f(t)\right)=F(s-a).$$
 {\textbf Third shift theorem:} If ${L}(f(t))=F(s)$ then
-\[ {\cal L}\left(H_a(t)f(t-a)\right)=e^{-as}F(s).\]
+$$ {\mathcal L}\left(H_a(t)f(t-a)\right)=e^{-as}F(s).$$

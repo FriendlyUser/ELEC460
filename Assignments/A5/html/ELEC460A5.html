@@ -1,0 +1,306 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ELEC460A5</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-22"><meta name="DC.source" content="ELEC460A5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Ogata Digital Control Systems B-4-10</a></li><li><a href="#9">Compute angle defiency</a></li></ul></div><h2 id="1">Ogata Digital Control Systems B-4-10</h2><p>eta = 0.5, at least eight samples per cycle of damped sinusoidal oscillation T = 0.2</p><pre class="codeinput">pid(1,1,1,0,1) <span class="comment">% showing how to use pid command in matlab</span>
+</pre><pre class="codeoutput">
+ans =
+ 
+              Ts            z-1 
+  Kp + Ki * ------ + Kd * ------
+              z-1           Ts  
+
+  with Kp = 1, Ki = 1, Kd = 1, Ts = 1
+ 
+Sample time: 1 seconds
+Discrete-time PID controller in parallel form.
+
+</pre><p><img vspace="5" hspace="5" src="Ogata410Sol.png" alt=""> </p><p><img vspace="5" hspace="5" src="Ogata410.png" alt=""> </p><pre class="codeinput">wdOws = 1/10; <span class="comment">% samples per cycle</span>
+T = 0.2 <span class="comment">% sampling period</span>
+zeta = 0.5 <span class="comment">% damping ratio</span>
+G1 = zpk([],[-1,-5],10)
+G1dsc = c2d(G1,T,<span class="string">'ZOH'</span>)
+polezMag = exp(-2*pi*zeta/sqrt(1-zeta^2)*wdOws)
+polezPhase = 360*wdOws
+[x,y] = pol2cart(deg2rad(polezPhase),polezMag)
+zeval=x+j*y
+</pre><pre class="codeoutput">
+T =
+
+    0.2000
+
+
+zeta =
+
+    0.5000
+
+
+G1 =
+ 
+      10
+  -----------
+  (s+1) (s+5)
+ 
+Continuous-time zero/pole/gain model.
+
+
+G1dsc =
+ 
+   0.13711 (z+0.6714)
+  ---------------------
+  (z-0.8187) (z-0.3679)
+ 
+Sample time: 0.2 seconds
+Discrete-time zero/pole/gain model.
+
+
+polezMag =
+
+    0.6958
+
+
+polezPhase =
+
+    36
+
+
+x =
+
+    0.5629
+
+
+y =
+
+    0.4090
+
+
+zeval =
+
+   0.5629 + 0.4090i
+
+</pre><pre class="codeinput">picontroller = pid(1,1,0,0,0.2)
+syms <span class="string">Ki</span> <span class="string">Kp</span> <span class="string">z</span>
+Gz = 0.13711*(z+0.6714)/ ((z-0.8187)*(z-0.3679))
+PIsym = (Kp + Ki)*(z-Kp/(Kp+Ki))/(z-1)
+Gtot = Gz*PIsym
+subs(Gtot,z,zeval)
+</pre><pre class="codeoutput">
+picontroller =
+ 
+              Ts  
+  Kp + Ki * ------
+              z-1 
+
+  with Kp = 1, Ki = 1, Ts = 0.2
+ 
+Sample time: 0.2 seconds
+Discrete-time PI controller in parallel form.
+
+ 
+Gz =
+ 
+((13711*z)/100000 + 46027827/500000000)/((z - 3679/10000)*(z - 8187/10000))
+ 
+ 
+PIsym =
+ 
+((z - Kp/(Ki + Kp))*(Ki + Kp))/(z - 1)
+ 
+ 
+Gtot =
+ 
+(((13711*z)/100000 + 46027827/500000000)*(z - Kp/(Ki + Kp))*(Ki + Kp))/((z - 1)*(z - 3679/10000)*(z - 8187/10000))
+ 
+ 
+ans =
+ 
+(Kp/(Ki + Kp) - (5069939813455067/9007199254740992 + 7367053777805345i/18014398509481984))*(Ki + Kp)*(- 13991296674578045982507313170081663146999271915019268585238652171803844347909245403343854092504801963147264/17849138812784708883680177920827911560263445680877974927611724636642837639412230156582242731700586400204345 - 99488983890961827975732109900261916751577575855066149263417015503119745812659546960602670455858298601078784i/89245694063923544418400889604139557801317228404389874638058623183214188197061150782911213658502932001021725)
+ 
+</pre><p><span class="MathJax_Preview"><img src="ELEC460A5_eq09455880455252281865.png" alt="$$\frac{402 \pi \left(z + \frac{240 \pi}{1123}\right)}{9211 \left(z - \frac{547 \pi}{2099}\right) \left(z - \frac{484 \pi}{4133}\right)}$$"></span><script type="math/tex; mode=display">\frac{402 \pi \left(z + \frac{240 \pi}{1123}\right)}{9211 \left(z - \frac{547 \pi}{2099}\right) \left(z - \frac{484 \pi}{4133}\right)}</script></p><p><span class="MathJax_Preview"><img src="ELEC460A5_eq15194687570232604381.png" alt="$$\frac{1}{z - 1} \left(Ki + Kp\right) \left(- \frac{Kp}{Ki + Kp} + z\right)$$"></span><script type="math/tex; mode=display">\frac{1}{z - 1} \left(Ki + Kp\right) \left(- \frac{Kp}{Ki + Kp} + z\right)</script></p><p>Find angle defiency compute angle for pole z+0.6714 at z of interest</p><pre class="codeinput">zero1 = subs(z+0.6714,z,zeval);
+angle1 = angle(zero1)
+vpa(rad2deg(angle1),10)
+rad2deg(vpa(angle1,10))
+<span class="comment">% compute angle for pole 1/(z-0.8187) at z of interest</span>
+pole1 = subs(1/(z-0.8187),z,zeval);
+angle2 = angle(pole1)
+vpa(rad2deg(angle2),10)
+<span class="comment">% compute angle for pole 1/(z-0.3679) at z of interest</span>
+rad2deg(vpa(angle2,10))
+pole2  = subs(1/(z-0.3679),z,zeval);
+angle3 = angle(pole2)
+vpa(rad2deg(angle3),10)
+rad2deg(vpa(angle3,10))
+pole3  = subs(1/(z-1),z,zeval);
+<span class="comment">% compute angle for pole 1/(z-1) at z of interest</span>
+angle4 =angle(pole3)
+rad2deg(vpa(angle4,10))
+</pre><pre class="codeoutput"> 
+angle1 =
+ 
+atan(4604408611128340625/13896716741360211286)
+ 
+</pre><pre class="codeoutput error">Error using rad2deg (line 13)
+Input must be single or double.
+
+Error in ELEC460A5 (line 50)
+vpa(rad2deg(angle1),10)
+</pre><h2 id="9">Compute angle defiency</h2><p>octave:36&gt; vpa(angle1,10) ans = (sym) 0.3199752649 octave:37&gt; vpa(angle2,10) ans = (sym) -2.129703542 octave:38&gt; vpa(angle3,10) ans = (sym) -1.125903183 octave:39&gt; vpa(angle4,10) ans = (sym) -2.389393736</p><pre class="codeinput">phi = pi +0.3199752649 -2.129703542 -1.125903183 -2.389393736;
+angleContribution = rad2deg(phi);
+<span class="comment">% the angle should contriubtion 125.1015 degrees</span>
+<span class="comment">% https://www.wolframalpha.com/input/?i=tan(0.4090%2F(0.5629%2Bw))%3D+125.1015%5Eo,</span>
+<span class="comment">% evalulating the expression when n = 0</span>
+<span class="comment">% 0.0001*(-2334.4566)/(1.1413140294029025)</span>
+<span class="comment">% -0.2045</span>
+</pre><p>know that kp/(kp+ki)=0.2045</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Ogata Digital Control Systems B-4-10
+% eta = 0.5, at least eight samples per cycle of damped sinusoidal
+% oscillation
+% T = 0.2
+pid(1,1,1,0,1) % showing how to use pid command in matlab
+%%
+% 
+% 
+% <<Ogata410Sol.png>>
+% 
+%%
+% 
+% 
+% <<Ogata410.png>>
+% 
+%%
+wdOws = 1/10; % samples per cycle
+T = 0.2 % sampling period
+zeta = 0.5 % damping ratio
+G1 = zpk([],[-1,-5],10)
+G1dsc = c2d(G1,T,'ZOH')
+polezMag = exp(-2*pi*zeta/sqrt(1-zeta^2)*wdOws)
+polezPhase = 360*wdOws
+[x,y] = pol2cart(deg2rad(polezPhase),polezMag)
+zeval=x+j*y
+%%
+%
+
+picontroller = pid(1,1,0,0,0.2)
+syms Ki Kp z
+Gz = 0.13711*(z+0.6714)/ ((z-0.8187)*(z-0.3679))
+PIsym = (Kp + Ki)*(z-Kp/(Kp+Ki))/(z-1) 
+Gtot = Gz*PIsym
+subs(Gtot,z,zeval)
+%%
+% 
+% 
+% $$\frac{402 \pi \left(z + \frac{240 \pi}{1123}\right)}{9211 \left(z - \frac{547 \pi}{2099}\right) \left(z - \frac{484 \pi}{4133}\right)}$$
+% 
+%%
+% 
+% $$\frac{1}{z - 1} \left(Ki + Kp\right) \left(- \frac{Kp}{Ki + Kp} + z\right)$$
+% 
+
+%%
+% Find angle defiency
+% compute angle for pole z+0.6714 at z of interest
+zero1 = subs(z+0.6714,z,zeval);
+angle1 = angle(zero1)
+vpa(rad2deg(angle1),10)
+rad2deg(vpa(angle1,10))
+% compute angle for pole 1/(z-0.8187) at z of interest
+pole1 = subs(1/(z-0.8187),z,zeval);
+angle2 = angle(pole1)
+vpa(rad2deg(angle2),10)
+% compute angle for pole 1/(z-0.3679) at z of interest
+rad2deg(vpa(angle2,10))
+pole2  = subs(1/(z-0.3679),z,zeval);
+angle3 = angle(pole2)
+vpa(rad2deg(angle3),10)
+rad2deg(vpa(angle3,10))
+pole3  = subs(1/(z-1),z,zeval);
+% compute angle for pole 1/(z-1) at z of interest
+angle4 =angle(pole3)
+rad2deg(vpa(angle4,10))
+
+%% Compute angle defiency
+% octave:36> vpa(angle1,10)
+% ans = (sym) 0.3199752649
+% octave:37> vpa(angle2,10)
+% ans = (sym) -2.129703542
+% octave:38> vpa(angle3,10)
+% ans = (sym) -1.125903183
+% octave:39> vpa(angle4,10)
+% ans = (sym) -2.389393736
+phi = pi +0.3199752649 -2.129703542 -1.125903183 -2.389393736;
+angleContribution = rad2deg(phi);
+% the angle should contriubtion 125.1015 degrees
+% https://www.wolframalpha.com/input/?i=tan(0.4090%2F(0.5629%2Bw))%3D+125.1015%5Eo,
+% evalulating the expression when n = 0
+% 0.0001*(-2334.4566)/(1.1413140294029025)
+% -0.2045
+
+%%
+% know that kp/(kp+ki)=0.2045
+##### SOURCE END #####
+--></body></html>

@@ -161,35 +161,35 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 ><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
 
 
-<p><a href="Other-Useful-Concepts.html#autosec-32" class="tocchapter"
+<p><a href="Other-Useful-Concepts.html#autosec-30" class="tocchapter"
 ><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
 
 
-<p><a href="Example-commands.html#autosec-49" class="tocchapter"
+<p><a href="Example-commands.html#autosec-47" class="tocchapter"
 ><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
 
 
-<p><a href="Z-transform.html#autosec-73" class="tocchapter"
+<p><a href="Z-transform.html#autosec-71" class="tocchapter"
 ><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
 
 
-<p><a href="Course-Work.html#autosec-80" class="tocpart"
+<p><a href="Course-Work.html#autosec-78" class="tocpart"
 ><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
 
 
-<p><a href="Course-Work.html#autosec-81" class="tocchapter"
+<p><a href="Course-Work.html#autosec-79" class="tocchapter"
 ><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-109" class="tocpart"
+<p><a href="Back-Matter.html#autosec-133" class="tocpart"
 ><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-112" class="tocchapter"
+<p><a href="Back-Matter.html#autosec-136" class="tocchapter"
 >References</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-112" class="tocchapter"
+<p><a href="index.html#autosec-137" class="tocchapter"
 >Glossary</a></p>
 
 
@@ -199,18 +199,49 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 
 <section class="textbody">
 
-<h2 id="autosec-80"> Part&nbsp;<span class="sectionnumber">II&#x2001;</span>Course Work</h2><a
-id="autopage-80"></a>
-<h3 id="autosec-81"> <span class="sectionnumber">6&#x2001;</span>Assignments</h3><a
-id="autopage-81"></a>
+<h2 id="autosec-78"> Part&nbsp;<span class="sectionnumber">II&#x2001;</span>Course Work</h2><a
+id="autopage-78"></a>
+
+<p>The derivative controllers in z-domain are very similar to the s-domain versions. </p>
+
+
+<p><span class="hidden"> \( \seteqsection {5} \) </span>      <span class="hidden"> \( \seteqnumber {25} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                             KT        Ki
+(5.25)                            Kp = K −       =K−        = proportional gain
+                                             2Ti        2
+                                                            KT
+(5.26)                                               Ki =        = integral gain
+                                                             Ti
+                                                        KTd
+(5.27)                                            KD =         = derivative gain
+                                                          T
+
+
+-->
+
+
+<p>
+\begin{align} K_p = K- \frac {KT}{2T_i}=K-\frac {K_i}{2}=\text {proportional gain} \\ K_i = \frac
+{KT}{T_i}=\text {integral gain} \\ K_D = \frac {KT_d}{T}=\text {derivative gain} \end{align}
+</p>
+<h3 id="autosec-79"> <span class="sectionnumber">6&#x2001;</span>Assignments</h3><a
+id="autopage-79"></a>
 
 <p>This assignments will contain python and matlab code as well as latex code (creating diagrams).</p>
 
 
-<p>I will look into creating classic bode plots using python libariries such as matplotlib. Other diagrams will be
+<p>I will look into creating classic bode plots using python libraries such as matplotlib. Other diagrams will be
 produced by either inkscape or tikz. </p>
-<h4 id="autosec-82"> <span class="sectionnumber">6.1&#x2001;</span>Assignment 1</h4><a
-id="autopage-82"></a>
+<h4 id="autosec-80"> <span class="sectionnumber">6.1&#x2001;</span>Assignment 1</h4><a
+id="autopage-80"></a>
 
 <p></p>
 
@@ -264,7 +295,7 @@ id="autopage-82"></a>
 
 </pre>
 
-<figure id="autoid-12" class="figure">
+<figure id="autoid-13" class="figure">
 
 <p>
 <a href="Assignments/A1/ipython_files/qt_img486735758753796.png" target="_blank"
@@ -303,7 +334,7 @@ class="inlineimage"
 <p>                                                                                           </p>
 
 
-<figure id="autoid-13" class="figure">
+<figure id="autoid-14" class="figure">
 
 <p>
 <a href="Assignments/A1/ipython_files/qt_img494204706881540.png" target="_blank"
@@ -323,7 +354,7 @@ class="inlineimage"
 
 </figure>
 
-<figure id="autoid-14" class="figure">
+<figure id="autoid-15" class="figure">
 
 <p>
 <a href="Assignments/A1/ipython_files/qt_img492813137477636.png" target="_blank"
@@ -342,6 +373,8 @@ class="inlineimage"
 </figcaption>
 
 </figure>
+<h4 id="autosec-82"> <span class="sectionnumber">6.2&#x2001;</span>Assignment 1 Reduced</h4><a
+id="autopage-82"></a>
 <div class="center">
 <p><b> ELEC 460 — Control Theory II</b></p>
 
@@ -349,19 +382,12 @@ class="inlineimage"
 </div>
 
 <p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
-Number:</b> V00818631</td>
-</tr>
-<tr>
-<td class="tdc tvertbarl tvertbarr"><b>Due Date:</b> Thursday, 11 January 2018, 11:30 AM <span
-style="width:16.99585pt; display:inline-block"></span> <b>Assignment:</b> Number 1</td>
-<td class="tdc"></td>
-<td class="td"></td>
-<td class="td"></td>
-</tr>
-<tr>
-<td class="tdc tvertbarl tvertbarr"></p>
-<h5 id="autosec-85"> 1. Sketch the root locus</h5><a id="autopage-85"></a>
-<h4 id="autosec-86"> </h4><a id="autopage-86"></a>
+Number:</b> V00818631<br />
+<b>Due Date:</b> Thursday, 11 January 2018, 11:30 AM <span style="width:16.99585pt;
+display:inline-block"></span> <b>Assignment:</b> Number 1<br />
+</p>
+<h5 id="autosec-84"> 1. Sketch the root locus</h5><a id="autopage-84"></a>
+<h4 id="autosec-85"> </h4><a id="autopage-85"></a>
 
 <figcaption>
 
@@ -378,7 +404,7 @@ figure (1); rlocus ( G1 ) % Plot root locus
 
 </figcaption>
 
-<figure id="autoid-15" class="figure">
+<figure id="autoid-16" class="figure">
 
 <p>
 <a href="Assignments/A1/ELEC460A1_01.png" target="_blank"
@@ -397,8 +423,8 @@ class="inlineimage"
 </figcaption>
 
 </figure>
-<h5 id="autosec-88"> 2. Find Kv.</h5><a id="autopage-88"></a>
-<h4 id="autosec-89"> </h4><a id="autopage-89"></a>
+<h5 id="autosec-87"> 2. Find Kv.</h5><a id="autopage-87"></a>
+<h4 id="autosec-88"> </h4><a id="autopage-88"></a>
 
 <p>Using the final value theorem: \(x(\infty ) = \mathop {\lim }\limits _{s \to 0} sX(s)\)<br />
 </p>
@@ -417,7 +443,7 @@ syms s ; Kv = limit ( s *20/( s *( s +1)*( s +20)) , s ,0) % compute Kv using li
 <figcaption>
 
 </figcaption>
-<h5 id="autosec-91"> 3. Sketch Bode and Nyquist plots.</h5><a id="autopage-91"></a>
+<h5 id="autosec-90"> 3. Sketch Bode and Nyquist plots.</h5><a id="autopage-90"></a>
 
 <figcaption>
 
@@ -434,7 +460,7 @@ figure (3); nyquist ( G1 )
 
 </figcaption>
 
-<figure id="autoid-16" class="figure">
+<figure id="autoid-17" class="figure">
 <div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:231pt ; ">
 
 <p>
@@ -481,11 +507,11 @@ class="inlineimage"
 
 
 </figure>
-<h5 id="autosec-95"> 4. Find K so that \(\zeta =\sqrt (2)/2\) for the closed loop system.</h5><a
-id="autopage-95"></a>
+<h5 id="autosec-94"> 4. Find K so that \(\zeta =\sqrt (2)/2\) for the closed loop system.</h5><a
+id="autopage-94"></a>
 
 <p>Using the root locus the value K at which \(\zeta \) is 0.7071 is: 0.476.</p>
-<h5 id="autosec-96"> 5. Find phase and gain margins for this K.</h5><a id="autopage-96"></a>
+<h5 id="autosec-95"> 5. Find phase and gain margins for this K.</h5><a id="autopage-95"></a>
 
 <figcaption>
 
@@ -502,7 +528,7 @@ figure (5); margin ( G1new )
 
 </figcaption>
 
-<figure id="autoid-17" class="figure">
+<figure id="autoid-18" class="figure">
 
 <p>
 <a href="Assignments/A1/ELEC460A1_05.png" target="_blank"
@@ -521,8 +547,8 @@ class="inlineimage"
 </figcaption>
 
 </figure>
-<h5 id="autosec-98"> 6. Sketch the step and ramp responses of the closed loop system for this K</h5><a
-id="autopage-98"></a>
+<h5 id="autosec-97"> 6. Sketch the step and ramp responses of the closed loop system for this K</h5><a
+id="autopage-97"></a>
 
 <figcaption>
 
@@ -541,7 +567,7 @@ subplot (2 ,1 ,2); step ( G1tfnew / ramps ); % % create subplot for ramp functio
 
 </figcaption>
 
-<figure id="autoid-18" class="figure">
+<figure id="autoid-19" class="figure">
 
 <p>
 <a href="Assignments/A1/ELEC460A1_06.png" target="_blank"
@@ -560,8 +586,8 @@ class="inlineimage"
 </figcaption>
 
 </figure>
-<h5 id="autosec-100"> 7. Discuss the connection between Kv, zeta, margins and the response of the closed loop
-system.</h5><a id="autopage-100"></a>
+<h5 id="autosec-99"> 7. Discuss the connection between Kv, zeta, margins and the response of the closed loop
+system.</h5><a id="autopage-99"></a>
 
 <p>The value of Kv is 1, so the steady state velocity error is constant. Additionally the system is stable because of a
 positive phase and gain margin. Finally, the value of \(\zeta = 0.7071\) corresponds to a gain of 0.427.<br />
@@ -573,21 +599,11 @@ positive phase and gain margin. Finally, the value of \(\zeta = 0.7071\) corresp
 </div>
 
 <p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
-Number:</b> V00818631</td>
-<td class="tdc"></td>
-<td class="td"></td>
-<td class="td"></td>
-</tr>
-<tr>
-<td class="tdc tvertbarl tvertbarr"><b>Due Date:</b> Friday, 26 January 2018, 11:30 AM <span
-style="width:16.99585pt; display:inline-block"></span> <b>Assignment:</b> Number 2</td>
-<td class="tdc"></td>
-<td class="td"></td>
-<td class="td"></td>
-</tr>
-<tr>
-<td class="tdc tvertbarl tvertbarr"></p>
-<p><span class="paragraph" id="autosec-102"> B-2-7</span><a id="autopage-102"></a> Obtain the
+Number:</b> V00818631<br />
+<b>Due Date:</b> Friday, 26 January 2018, 11:30 AM <span style="width:16.99585pt;
+display:inline-block"></span> <b>Assignment:</b> Number 2<br />
+</p>
+<p><span class="paragraph" id="autosec-101"> B-2-7</span><a id="autopage-101"></a> Obtain the
 z-transform of the curve.</p>
 
 
@@ -595,11 +611,23 @@ z-transform of the curve.</p>
 \end {cases} \]</p>
 
 
-<figure id="autoid-19" class="figure">
+<figure id="autoid-20" class="figure">
 
 <p><span id="lateximage7" class="lateximagesource">
 <!--
-x(t)t
+  1
+       x(t)
+
+0.75
+
+
+ 0.5
+
+
+0.25
+
+                                      t
+          1   2   3   4   5   6   7       8
 -->
 <img src="lateximages\lateximage-7.svg" alt="image" style="" class="lateximage"></span></p>
 
@@ -694,7 +722,7 @@ _{k=0}^{\infty } x_k z^{-k} = \frac {1}{3}z^{-3}+\frac {2}{3}z^{-4}+z^{-5}+z^{-6
 {z^{-3}(1-z^{-1})+2z^{-4}(1-z^{-1})+3z^{-5}}{3(1-z^{-1})} \\ &amp; = \frac
 {z^{-3}+z^{-4}+z^{-5}}{3(1-z^{-1})} \end{align*}
 </p>
-<p><span class="paragraph" id="autosec-105"> B-2-12</span><a id="autopage-105"></a> Obtain the inverse
+<p><span class="paragraph" id="autosec-104"> B-2-12</span><a id="autopage-104"></a> Obtain the inverse
 z-transform of </p>
 
 
@@ -738,7 +766,7 @@ Az^2-0.2Az+Bz^2-Bz+Cz^2-1.2z+0.2C \\ &amp; C = 5, A+B=-5, \quad 0.2A+B=0 \quad A
 5/4 \\ &amp; X(z) = \frac {-25/4}{z-1}+\frac {5/4}{z-0.2}+\frac {5}{z} \\ &amp; x(k) = 5 \delta
 (0)(k-1)+1.25-6.25(0.2)^{k-1} \quad \text {for } k =1,2,3, .. \end{align*}
 </p>
-<p><span class="paragraph" id="autosec-106"> B-2-17</span><a id="autopage-106"></a> Solve the following
+<p><span class="paragraph" id="autosec-105"> B-2-17</span><a id="autopage-105"></a> Solve the following
 difference equation: </p>
 
 
@@ -835,7 +863,7 @@ x(k) = 4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
 
 <figcaption>
 
-<p>Listing&nbsp;6.1:&nbsp;Matlab Code for B-2-17 </p>
+<p><a id="autoid-21"></a>Listing&nbsp;6.1:&nbsp;Matlab Code for B-2-17 </p>
 
 
 
@@ -858,7 +886,7 @@ print ( 'B -2 -17 - matlab . png ' , ' - dpng ' , ' - r300 ')
 
 </figcaption>
 
-<figure id="autoid-20" class="figure">
+<figure id="autoid-22" class="figure">
 
 <p>
 <a href="Assignments/A2/B-2-17-matlab.png" target="_blank"
@@ -879,15 +907,56 @@ class="inlineimage"
 <a id="fig:b-2-17-matlab"></a>
 
 </figure>
+<h4 id="autosec-107"> <span class="sectionnumber">6.3&#x2001;</span>Assignment 4</h4><a
+id="autopage-107"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
 
-</section>
 
-<footer>
+</div>
 
-</footer>
+<p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
+Number:</b> V00818631<br />
+<b>Due Date:</b> February 20, 2018, 11:30 AM <span style="width:16.99585pt;
+display:inline-block"></span> <b>Assignment</b> 4<br />
+</p>
+<h6 id="autosec-109"> Problem B-3-20</h6><a id="autopage-109"></a>
 
-<nav class="botnavigation"><a href="index.html" class="linkhome"
->Home</a></nav>
+<p>Assuming that the sampling period is 0.2 sec, and the gain constant K is unity, determine the response c(kT) for
+k = 0,1,2,3 and 4 when the input r(t) is a unit-step function. Also, determine the final value \(c(\infty )\).</p>
 
-</body>
-</html>
+
+<figure id="autoid-23" class="figure">
+
+<p>
+<a href="Assignments/A4/Diagrams/samplerBlock.pdf" target="_blank"
+><img src="Assignments/A4/Diagrams/samplerBlock.pdf"
+style="width:260pt;"
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;6.11:&nbsp;Block Diagram for B-3-20</p>
+
+
+
+
+</figcaption>
+
+<a id="fig:samplerblock"></a>
+
+</figure>
+
+<p>Table 3-1 from the textbook \(C(z)=\frac {[GR(z)]}{1+GH(z)}\), where \(GH(z) = \left [G(s)H(s)\right ]^\ast
+=[1-z^{-1}] \mathcal {Z} \left \{\frac {1}{s(s+1)}\right \}\) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {6} \) </span> </p>
+
+
+
+<!--
+
+
+           
