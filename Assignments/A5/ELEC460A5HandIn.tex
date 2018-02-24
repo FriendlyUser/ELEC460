@@ -74,7 +74,7 @@
 {\textbf{Due Date:} February 27, 2018 \hspace{\fill} \textbf{Assignment}  5}\\
 \hrule
 \subsubsection*{Problem B-4-10}
-Consider the control system shown in Figure 4-68. Design a suitable digital controller that includes an intergral control action. The design specficiations are that the damping $\zeta$ of the dominant closed-loop poles is 0.5 and that there be at least eight samples per cycle of damped sinusoidal oscillation. The sampling period is assumed to be 0.2 sec, or $T=0.2$. After the digital controller is designed, determine the static velocity error constant $K_v$.
+%Consider the control system shown in Figure 4-68. Design a suitable digital controller that includes an intergral control action. The design specficiations are that the damping $\zeta$ of the dominant closed-loop poles is 0.5 and that there be at least eight samples per cycle of damped sinusoidal oscillation. The sampling period is assumed to be 0.2 sec, or $T=0.2$. After the digital controller is designed, determine the static velocity error constant $K_v$.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{Diagrams/block410.pdf}
@@ -95,13 +95,13 @@ Let the PI controller be $\displaystyle G_{PI}(z)=K_p+K_i\frac{1}{1-z^{-1}}=(K_p
 	\label{fig:polesZeroess}
 \end{figure}
 
-\begin{align*}
-& \angle \left.\left(z-\frac{K_p}{K_p-K_i}\right)\right\vert_{z=0.5629 +j0.4090} = 125.1015^\circ \quad \cfrac{0.409}{0.5629-\frac{K_p}{K_p-K_i}} = \tan(125.1015^\circ)
-\end{align*}
 \begin{align}
+& \notag \angle \left.\left(z-\frac{K_p}{K_p-K_i}\right)\right\vert_{z=0.5629 +j0.4090} = 125.1015^\circ \quad \cfrac{0.409}{0.5629-\frac{K_p}{K_p-K_i}} = \tan(125.1015^\circ) \\
 &
-\frac{K_p}{K_p-K_i}= 0.850366 \label{eq:kipi1} \\
-\notag & (K_p+K_i)\left|\frac{\left(z+0.6714\right)\,\left(0.13711\,z-0.028038995\right)}{(z-0.3679)\,(z-0.8187)}\right|_{z=0.5629 +j0.4090}=1 \\ 
+\frac{K_p}{K_p-K_i}= 0.850366 \label{eq:kipi1}
+\end{align}
+\begin{align}
+& \notag  (K_p+K_i)\left|\frac{\left(z+0.6714\right)\,\left(0.13711\,z-0.028038995\right)}{(z-0.3679)\,(z-0.8187)}\right|_{z=0.5629 +j0.4090}=1 \\ 
 &
 0.44357786197\,K_i+0.44357786197\,K_p=1.0 \label{eq:kipi2} 
 \end{align}
@@ -115,12 +115,12 @@ G_{PI}G(z)=2.254396\cfrac{z-0.850366}{z-1}\frac{0.13711\,(z+0.6714)}{\left(z-0.3
 & K_v = \lim\limits_{z \rightarrow 1} \frac{z-1}{z \ T} G_{PI}G(z) = \frac{1}{0.2(1)} \frac{0.149634(0.13711(1.6714))}{(0.6321)(0.1813)}=1.496119
 \end{align*}
 \subsubsection*{Problem B-4-15}
-Using the Bode diagram approach in the $w$ plane, design a digital controller for the system shown in Figure 4-72. The design specifications are that the phase margin be $50^\circ$, the gain margin be at least 10 dB, and the static velocity error constant $K_v$ be 20 $\text{sec}^{-1}$. The sampling period is assumed to be 0.1 sec, or $T = 0.1$. After the controller is designed, calculate the number of samples per cycle of damped sinusoidal oscillation.
+%Using the Bode diagram approach in the $w$ plane, design a digital controller for the system shown in Figure 4-72. The design specifications are that the phase margin be $50^\circ$, the gain margin be at least 10 dB, and the static velocity error constant $K_v$ be 20 $\text{sec}^{-1}$. The sampling period is assumed to be 0.1 sec, or $T = 0.1$. After the controller is designed, calculate the number of samples per cycle of damped sinusoidal oscillation.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{Diagrams/block415.pdf}
-	\caption*{Figure 4-72}
+	%\caption*{Figure 4-72}
 	\label{fig:samplerblock415}
 \end{figure}
 
@@ -130,16 +130,25 @@ Using the Bode diagram approach in the $w$ plane, design a digital controller fo
 
 Running the \lstinline[language=Matlab]|ass_5.m| in Matlab as with the parameters specified in \textbf{ass\_5.out} results in:
 \[
-\frac{0.32774 z^3 - 0.27218 z^2 - 0.31605 z + 0.26423}{z^4 - 2.7603 z^3 + 2.3775 z^2 - 0.47208 z - 0.14507}
+G_DG(z)=\frac{0.32774 z^3 - 0.27218 z^2 - 0.31605 z + 0.26423}{z^4 - 2.7603 z^3 + 2.3775 z^2 - 0.47208 z - 0.14507}
 \]
-\begin{figure}
+\begin{minipage}[h]{0.5\linewidth}
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\linewidth]{MatlabPlots/bodePlotUnComp.png}
+	\includegraphics[width=1\linewidth]{MatlabPlots/stepREsp.png}
+	\caption{Step Response}
+	\label{fig:bodePlotUnComp}
+\end{figure}
+\end{minipage}
+\begin{minipage}[h]{0.5\linewidth}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{MatlabPlots/bodePlotUnComp.png}
 	\caption{Bode Plot for uncompensated System}
 	\label{fig:bodePlotUnComp}
 \end{figure}
-
-\begin{figure}
+\end{minipage}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\linewidth]{MatlabPlots/stepRespCTSDS.png}
 	\caption{Bode Plot for uncompensated System}

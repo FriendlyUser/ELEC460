@@ -95,3 +95,19 @@ EQN2 = eqn2express == 1
 Answer = solve([EQN1,EQN2],[Ki,Kp])
 Kinum = vpa(Answer.Ki,15)
 Kpnum = vpa(Answer.Kp,15)
+
+%%
+% 
+syms z w
+tfFunc = 0.004918*(z+0.9835)/((z-1)*(z-0.9512))
+tfFunction = subs(tfFunc,z,(1+0.05*w)/(1-0.05*w))
+simplify(tfFunction)
+top = [-0.0000207941 0.0495782 0.999882]
+bot = [1 0.500205 0]
+transFunc = tf(top,bot)
+bode(transFunc)
+%%
+diary on
+diary Ogata4-15.txt
+ass_5
+diary off

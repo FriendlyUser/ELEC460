@@ -23,7 +23,7 @@ d0d=poly([1 0.9512])
 [att,btt,ctt,dtt]=tf2ss(n0d,d0d);
 [adt,bdt,cdt,ddt]=d2cm(att,btt,ctt,dtt,Tts,'tustin');
 [n1,d1]=ss2tf(adt,bdt,cdt,ddt)
-
+%Test = tf(n1,d1)
 
 % Design the lead part of the l-l compensator using tr. fuct. [n1,d1]
 
@@ -94,5 +94,3 @@ plot(tarc,y1,tard,y2,'*')
 grid on
 string=['Step Resp.  of continuous and discrete systems '];
 title(string)
-
-

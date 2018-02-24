@@ -1,0 +1,298 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ass_5</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-02-23"><meta name="DC.source" content="ass_5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%  ass_5.m</span>
+
+<span class="comment">%  This program designs  a lead-lag</span>
+<span class="comment">%  (l-l) compensator and analyses the</span>
+<span class="comment">%  performance of the closed-loop system</span>
+<span class="comment">%  for  question B-4-15</span>
+
+<span class="comment">%  Based on lead_c_15.m and lag_c_15.m, prepared for ELEC360/460</span>
+<span class="comment">%  Revised Feb. 2015</span>
+
+<span class="comment">% Tts is the sampling period</span>
+
+Tts=.1
+
+<span class="comment">% Enter the discrete tr. fuct. of the plant and ZOH</span>
+
+n0d=0.004918*[0 1 0.9835]
+d0d=poly([1 0.9512])
+
+<span class="comment">% Apply the bilinear transformation</span>
+
+[att,btt,ctt,dtt]=tf2ss(n0d,d0d);
+[adt,bdt,cdt,ddt]=d2cm(att,btt,ctt,dtt,Tts,<span class="string">'tustin'</span>);
+[n1,d1]=ss2tf(adt,bdt,cdt,ddt)
+
+
+<span class="comment">% Design the lead part of the l-l compensator using tr. fuct. [n1,d1]</span>
+
+lead_c
+
+<span class="comment">% Save lead compensator and compensated open-loop transfer function</span>
+
+le_c_n=Kc*[ 1 Tt];
+le_c_d=[1 aTt];
+n2=num1
+d2=den1
+
+<span class="comment">% Step responce of compensated closed-loop system</span>
+
+step(n2,(n2+d2))
+grid
+
+<span class="comment">% Design the  lag part of the l-l compensator using tr. fct. [n2,d2]</span>
+
+lag_c
+
+<span class="comment">% Save lag compensator and compensated open-loop transfer function</span>
+
+la_c_n=Kc*[ 1 Tt];
+la_c_d=[1 bTt];
+n3=num1
+d3=den1
+
+<span class="comment">% Step responce of compensated closed-loop system</span>
+
+step(n3,(n3+d3))
+grid
+
+<span class="comment">% Apply the bilinear transformation to the l-l compensator</span>
+
+c_n=conv(le_c_n,la_c_n);
+c_d=conv(le_c_d,la_c_d);
+[att,btt,ctt,dtt]=tf2ss(c_n,c_d);
+[adt,bdt,cdt,ddt]=c2dm(att,btt,ctt,dtt,Tts,<span class="string">'tustin'</span>);
+[c_nd,c_dd]=ss2tf(adt,bdt,cdt,ddt);
+
+disp(<span class="string">' Discrete Compensator): '</span>)
+printsys(c_nd,c_dd,<span class="string">'z'</span>)
+
+disp(<span class="string">'Open loop compensated discrete system transfer function'</span>)
+n4=conv(n0d,c_nd);
+d4=conv(d0d,c_dd);
+printsys(n4,d4,<span class="string">'z'</span>)
+
+<span class="comment">% Zeros and poles of the discrete closed-loop system</span>
+
+disp(<span class="string">'Closed loop zeros and poles of discrete system'</span>)
+zeros=roots(n4)
+poles=roots(d4+n4)
+
+disp(<span class="string">'Number of samples per cycle:'</span>)
+2*pi/max(abs(angle(poles)))
+
+<span class="comment">% Step responce of continuous and discrete closed loop systems</span>
+
+figure
+tarc=[0:0.01:2];
+y1=step(n3,(n3+d3),tarc);
+tard=[0:0.1:2];
+<span class="comment">%y2=dstep(n4,(n4+d4),tard);</span>
+y2=filter(n4,(n4+d4),ones([1,length(tard)]));
+plot(tarc,y1,tard,y2,<span class="string">'*'</span>)
+grid <span class="string">on</span>
+string=[<span class="string">'Step Resp.  of continuous and discrete systems '</span>];
+title(string)
+</pre><pre class="codeoutput">
+Tts =
+
+    0.1000
+
+
+n0d =
+
+         0    0.0049    0.0048
+
+
+d0d =
+
+    1.0000   -1.9512    0.9512
+
+
+n1 =
+
+   -0.0000   -0.0496    0.9999
+
+
+d1 =
+
+    1.0000    0.5002         0
+
+Enter the vectors of the numerator (numo) and denominator (denum) pol.
+Start with the highest order term. Ex: [1 2 3] corr. (s^2 + 2 s + 3)
+</pre><pre class="codeoutput error">Error using input
+Cannot call INPUT from EVALC.
+
+Error in lead_c (line 18)
+numo=input('Enter numo: ')
+
+Error in ass_5 (line 30)
+lead_c
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+%  ass_5.m
+
+%  This program designs  a lead-lag
+%  (l-l) compensator and analyses the
+%  performance of the closed-loop system 
+%  for  question B-4-15
+
+%  Based on lead_c_15.m and lag_c_15.m, prepared for ELEC360/460
+%  Revised Feb. 2015
+
+% Tts is the sampling period
+
+Tts=.1
+
+% Enter the discrete tr. fuct. of the plant and ZOH 
+
+n0d=0.004918*[0 1 0.9835]
+d0d=poly([1 0.9512])
+
+% Apply the bilinear transformation
+
+[att,btt,ctt,dtt]=tf2ss(n0d,d0d);
+[adt,bdt,cdt,ddt]=d2cm(att,btt,ctt,dtt,Tts,'tustin');
+[n1,d1]=ss2tf(adt,bdt,cdt,ddt)
+
+
+% Design the lead part of the l-l compensator using tr. fuct. [n1,d1]
+
+lead_c
+
+% Save lead compensator and compensated open-loop transfer function
+
+le_c_n=Kc*[ 1 Tt];
+le_c_d=[1 aTt];
+n2=num1
+d2=den1
+
+% Step responce of compensated closed-loop system
+
+step(n2,(n2+d2))
+grid
+
+% Design the  lag part of the l-l compensator using tr. fct. [n2,d2]
+
+lag_c
+
+% Save lag compensator and compensated open-loop transfer function
+
+la_c_n=Kc*[ 1 Tt];
+la_c_d=[1 bTt];
+n3=num1
+d3=den1
+
+% Step responce of compensated closed-loop system
+
+step(n3,(n3+d3))
+grid
+
+% Apply the bilinear transformation to the l-l compensator
+
+c_n=conv(le_c_n,la_c_n);
+c_d=conv(le_c_d,la_c_d);
+[att,btt,ctt,dtt]=tf2ss(c_n,c_d);
+[adt,bdt,cdt,ddt]=c2dm(att,btt,ctt,dtt,Tts,'tustin');
+[c_nd,c_dd]=ss2tf(adt,bdt,cdt,ddt);
+
+disp(' Discrete Compensator): ')
+printsys(c_nd,c_dd,'z')
+
+disp('Open loop compensated discrete system transfer function')
+n4=conv(n0d,c_nd);
+d4=conv(d0d,c_dd);
+printsys(n4,d4,'z')
+
+% Zeros and poles of the discrete closed-loop system
+
+disp('Closed loop zeros and poles of discrete system')
+zeros=roots(n4)
+poles=roots(d4+n4)
+
+disp('Number of samples per cycle:')
+2*pi/max(abs(angle(poles)))
+
+% Step responce of continuous and discrete closed loop systems
+
+figure
+tarc=[0:0.01:2];
+y1=step(n3,(n3+d3),tarc);
+tard=[0:0.1:2];
+%y2=dstep(n4,(n4+d4),tard);
+y2=filter(n4,(n4+d4),ones([1,length(tard)]));
+plot(tarc,y1,tard,y2,'*')
+grid on
+string=['Step Resp.  of continuous and discrete systems '];
+title(string)
+##### SOURCE END #####
+--></body></html>
