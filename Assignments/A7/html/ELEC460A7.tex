@@ -1,0 +1,81 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+
+\section*{ELEC 460 Assignment 7}
+
+\begin{par}
+State-Space Model
+\end{par} \vspace{1em}
+\begin{verbatim}
+format compact
+syms z
+\end{verbatim}
+\begin{par}
+Consider the discrete-time state equation
+\end{par} \vspace{1em}
+\begin{par}
+$$
+\begin{bmatrix} x_1(k+1) \\
+x_2(k+1)
+\end{bmatrix} = \begin{bmatrix}
+0     &  1 \\
+-0.24 & -1
+\end{bmatrix}\begin{bmatrix}
+x_1(k) \\
+x_2(k)
+\end{bmatrix}
+$$
+\end{par} \vspace{1em}
+\begin{par}
+Obtain the state transition matrix $\Psi(k)$
+\end{par} \vspace{1em}
+\begin{par}
+Since $\displaystyle \psi(k)=G^k= \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\}$, and
+\end{par} \vspace{1em}
+\begin{par}
+$$
+A=\begin{bmatrix}
+a     &  b \\
+c &  d
+\end{bmatrix}^{-1}= \frac{1}{ad-bc}\begin{bmatrix}
+d     &  -b \\
+-c &  a
+\end{bmatrix}
+$$
+\end{par} \vspace{1em}
+\begin{par}
+$$
+\begin{align*}
+& \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\} = z \begin{bmatrix}
+z     &  -1 \\
+0.24 & z+1
+\end{bmatrix}^{-1}= \mathcal{Z}^{-1} \left\{\frac{z}{z^2+z-(-1)(0.24)}\begin{bmatrix}
+z+1     &  1 \\
+-0.24 & z
+\end{bmatrix} \right\} \\
+& \frac{F(z)}{z}=\mathcal{Z}^{-1} \left\{\frac{1}{(z+0.4)(z-0.6)}\begin{bmatrix}
+z+1     &  1 \\
+-0.24 & z
+\end{bmatrix} \right\}
+\end{align*}
+$$
+\end{par} \vspace{1em}
+
+
+
+\end{document}
+    
