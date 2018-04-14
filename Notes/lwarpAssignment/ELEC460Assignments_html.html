@@ -1,0 +1,4588 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+<header>
+
+
+</header>
+<section class="textbody">
+
+</section>
+
+<footer>
+
+</footer>
+
+</body>
+</html>
+<!--|Start file|Assignment-1-Reduced.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 1 Reduced</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-2"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-3"> <span class="sectionnumber">0.1&#x2001;</span>Assignment 1 Reduced</h4><a
+id="autopage-3"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> Thursday, 11 January 2018, 11:30 AM <span style="width:17pt;
+display:inline-block"></span> <b>Assignment:</b> Number 1<br />
+</p>
+<h5 id="autosec-5"> 1. Sketch the root locus</h5><a id="autopage-5"></a>
+<h4 id="autosec-6"> </h4><a id="autopage-6"></a>
+
+<figcaption>
+
+</figcaption>
+<p></p>
+<pre class="programlisting" >
+G1 = zpk([],[0,-1,-20],20) % create transfer function
+figure(1); rlocus(G1) % Plot root locus
+</pre>
+<p></p>
+
+<figcaption>
+</figcaption>
+
+<figure id="autoid-1" class="figure">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_01.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_01.png"
+style="width:304pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.1:&nbsp;Root Locus when K =1</p>
+
+
+</figcaption>
+
+</figure>
+<h5 id="autosec-8"> 2. Find Kv.</h5><a id="autopage-8"></a>
+<h4 id="autosec-9"> </h4><a id="autopage-9"></a>
+
+<p>Using the final value theorem: \(x(\infty ) = \mathop {\lim }\limits _{s \to 0} sX(s)\)<br />
+</p>
+
+
+<figcaption>
+
+</figcaption>
+<p></p>
+<pre class="programlisting" >
+syms s ;Kv = limit(s*20/(s*(s+1)*(s+20)),s,0)% compute Kv using limits
+</pre>
+<p></p>
+
+<figcaption>
+</figcaption>
+<h5 id="autosec-11"> 3. Sketch Bode and Nyquist plots.</h5><a id="autopage-11"></a>
+
+<figcaption>
+
+</figcaption>
+<p></p>
+<pre class="programlisting" >
+figure(2); bode(G1)
+figure(3); nyquist(G1)
+</pre>
+<p></p>
+
+<figcaption>
+</figcaption>
+
+<figure id="autoid-2" class="figure">
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:231pt ; ">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_02.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_02.png"
+style="width:206pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.2:&nbsp;Bode plot when K=1</p>
+
+
+</figcaption>
+
+</div>
+
+&#x2001;
+
+&#x2001;
+<div class="minipage" style="vertical-align:bottom ; justify-content:flex-start ; width:231pt ; ">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_03.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_03.png"
+style="width:206pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.3:&nbsp;Nyquist plot when K=1</p>
+
+
+</figcaption>
+
+</div>
+
+</figure>
+<h5 id="autosec-15"> 4. Find K so that \(\zeta =\sqrt (2)/2\) for the closed loop system.</h5><a
+id="autopage-15"></a>
+
+<p>Using the root locus the value K at which \(\zeta \) is 0.7071 is: 0.476.</p>
+<h5 id="autosec-16"> 5. Find phase and gain margins for this K.</h5><a id="autopage-16"></a>
+
+<figcaption>
+
+</figcaption>
+<p></p>
+<pre class="programlisting" >
+G1new = zpk([],[0,-1,-20],20*K)
+figure(5); margin(G1new)
+</pre>
+<p></p>
+
+<figcaption>
+</figcaption>
+
+<figure id="autoid-3" class="figure">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_05.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_05.png"
+style="width:304pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.4:&nbsp;Phase and Gain Margin in Bode Plot</p>
+
+
+</figcaption>
+
+</figure>
+<h5 id="autosec-18"> 6. Sketch the step and ramp responses of the closed loop system for this K</h5><a
+id="autopage-18"></a>
+
+<figcaption>
+
+</figcaption>
+<p></p>
+<pre class="programlisting" >
+G1tfnew = tf(G1new)
+subplot(2,1,1); step(G1tfnew); %% create subplot for step function
+ramps = tf([1,0],[1]);
+subplot(2,1,2); step(G1tfnew/ramps); %% create subplot for ramp function
+</pre>
+<p></p>
+
+<figcaption>
+</figcaption>
+
+<figure id="autoid-4" class="figure">
+
+<p>
+<a href="Assignments/A1/ELEC460A1_06.png" target="_blank"
+><img src="Assignments/A1/ELEC460A1_06.png"
+style="width:304pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.5:&nbsp;Step Response of Transfer function with K = 0.479</p>
+
+
+</figcaption>
+
+</figure>
+<h5 id="autosec-20"> 7. Discuss the connection between Kv, zeta, margins and the response of the closed loop
+system.</h5><a id="autopage-20"></a>
+
+<p>The value of Kv is 1, so the steady state velocity error is constant. Additionally the system is stable because of a
+positive phase and gain margin. Finally, the value of \(\zeta = 0.7071\) corresponds to a gain of 0.427.<br />
+</p>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> Friday, 26 January 2018, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment:</b> Number 2<br />
+</p>
+<p><span class="paragraph" id="autosec-22"> B-2-7</span><a id="autopage-22"></a> Obtain the z-transform
+of the curve.</p>
+
+
+<p>\[ f(x)= \begin {cases} &amp; x &lt; 2 = 0\\ &amp; 2 \geq x \leq 5 = \frac {x-2}{3} \\ &amp; x \geq 5 = 1
+\end {cases} \]</p>
+
+
+<figure id="autoid-5" class="figure">
+
+<p><span id="lateximage1" class="lateximagesource"><!--
+  1
+       x(t)
+
+0.75
+
+
+ 0.5
+
+
+0.25
+
+                                      t
+          1   2   3   4   5   6   7       8
+--><img src="lateximages\lateximage-1.svg" alt="image" style="" class="lateximage"></span></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.6:&nbsp;Picture for [?] But for discrete systems.</p>
+
+
+</figcaption>
+
+</figure>
+
+<p>The function can be expressing using the heaviside \(u(t)\). </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                                           1
+                                    f (t) =  (x − 2)(u(t − 2) − u(t − 5)) + u(t − 5)
+                                           3
+                                           1
+                                    f (t) = ((t − 2)θ(t − 2) − (t − 5)θ(t − 5))
+                                           3
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; f(t) = \frac {1}{3}(x-2) (u(t-2)-u(t-5)) + u(t-5) \\ &amp; f(t) = \frac {1}{3}((t-2)\theta
+(t-2)-(t-5)\theta (t-5)) \end{align*}
+</p>
+
+
+<p>Using matlab to find the z-transform, the answer is: </p>
+
+
+<p>\[ \frac {z^2+z+1}{3\,z^4\,\left (z-1\right )} \]</p>
+
+
+<p>and wolfram https://www.wolframalpha.com/input/?i=z+transform+1</p>
+
+
+<p>Using the "proper method". </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                  x(0) = 0, x(1) = 0, x(2) = 0, x(3) = 1/3, x(4) = 2/3, x(k) = 1, for k = 5, 6, 7 · · ·
+                                                                      a1
+                  Infinite Series: = a1 + a1 r + a1 r2 + · · · = S =
+                                                                     1−r
+                            ∞
+                           X             1        2
+                  X(z) =       xk z −k = z −3 + z −4 + z −5 + z −6 + z −7 · · ·
+                           k=0
+                                         3        3
+                    1 −3
+                   =  (z   + 2z −4 ) + z −5 + z −5 z −1 + z −5 z −2 · · ·
+                    3
+                    1                     z −5       z −3 (1 − z −1 ) + 2z −4 (1 − z −1 ) + 3z −5
+                   = (z −3 + 2z −4 ) +           =
+                    3                  1 − z −1                       3(1 − z −1 )
+                       z −3 + z −4 + z −5
+                   =
+                          3(1 − z −1 )
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; x(0)=0, x(1) = 0, x(2)=0, x(3)=1/3, x(4) = 2/3, x(k) =1, \text {for k = 5, 6, 7} \cdots \\
+&amp;\text {Infinite Series: } = a_1+a_1r + a_1r^2 + \cdots = S = \frac {a_1}{1-r} \\ &amp; X(z) = \sum
+_{k=0}^{\infty } x_k z^{-k} = \frac {1}{3}z^{-3}+\frac {2}{3}z^{-4}+z^{-5}+z^{-6} + z^{-7} \cdots \\
+&amp; = \frac {1}{3}(z^{-3}+2z^{-4})+z^{-5}+z^{-5}z^{-1} + z^{-5}z^{-2} \cdots \\ &amp; = \frac {1}{3}
+(z^{-3}+2z^{-4}) + \frac {z^{-5}}{1-z^{-1}} = \frac
+{z^{-3}(1-z^{-1})+2z^{-4}(1-z^{-1})+3z^{-5}}{3(1-z^{-1})} \\ &amp; = \frac
+{z^{-3}+z^{-4}+z^{-5}}{3(1-z^{-1})} \end{align*}
+</p>
+<p><span class="paragraph" id="autosec-25"> B-2-12</span><a id="autopage-25"></a> Obtain the inverse
+z-transform of </p>
+
+
+<p>\[ X(z)=\frac {z^{-3}}{(1-z^{-1})(1-0.2z^{-1})} \]</p>
+
+
+<p>in a closed form.</p>
+
+
+<p>Using partial fractions </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                                         z −3                     1            A      B       C
+                    X(z) =                              =                   =     +         +
+                             (1 −   z −1 )(1− 0.2z −1 )   z(z − 1)(z − 0.2)   z−1   z − 0.2   z
+                    1 = Az(z − 0.2) + Bz(z − 1) + C(z − 1)(z − 0.2)
+                    1 = Az 2 − 0.2Az + Bz 2 − Bz + Cz 2 − 1.2z + 0.2C
+                    C = 5, A + B = −5,         0.2A + B = 0   A = −25/4,    B = 5/4
+                           −25/4     5/4     5
+                    X(z) =       +         +
+                           z−1     z − 0.2   z
+                    x(k) = 5δ(0)(k − 1) + 1.25 − 6.25(0.2)k−1     for k = 1, 2, 3, ..
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; X(z) = \frac {z^{-3}}{(1-z^{-1})(1-0.2z^{-1})}=\frac {1}{z(z-1)(z-0.2)}=\frac
+{A}{z-1}+\frac {B}{z-0.2}+ \frac {C}{z}\\ &amp; 1 = Az(z-0.2)+Bz(z-1)+C(z-1)(z-0.2) \\ &amp; 1 =
+Az^2-0.2Az+Bz^2-Bz+Cz^2-1.2z+0.2C \\ &amp; C = 5, A+B=-5, \quad 0.2A+B=0 \quad A=-25/4, \quad B =
+5/4 \\ &amp; X(z) = \frac {-25/4}{z-1}+\frac {5/4}{z-0.2}+\frac {5}{z} \\ &amp; x(k) = 5 \delta
+(0)(k-1)+1.25-6.25(0.2)^{k-1} \quad \text {for } k =1,2,3, .. \end{align*}
+</p>
+<p><span class="paragraph" id="autosec-26"> B-2-17</span><a id="autopage-26"></a> Solve the following
+difference equation: </p>
+
+
+<p>\[x(k+2)-x(k+1)+0.25 x(k)= u(k+2) \]</p>
+
+
+<p>where x(0)=1 and x(1) =2. The input function \(u(k)\) is given by </p>
+
+
+<p>\[u(k)=1, \qquad k=0,1,2 \cdots \]</p>
+
+
+<p>Solve this problem both analytically and computationally with MATLAB.</p>
+
+
+<p>Taking the Z-transform of the difference equation </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                  z 2 X(z) − z 2 x(0) − zx(1) − [zX(z) − zx(0)] + 0.25X(z) = z 2 U (z) − z 2 u(0) − zu(1)
+                                                             z
+                  X(z)[z 2 − z + 0.25] − z 2 − 2z + z = z 2      − z2 − z
+                                                            z−1
+                                            z3
+                  X(z)[z 2 − z + 0.25] =
+                                           z−1
+                             z3          1          4z        3z       0.5z
+                  X(z) =                         =      −          −
+                           z − 1 z 2 − z + 0.25    z−1      2z − 1   (2z − 1)2
+                  x(k) = 4 − (3 + k)(0.5)k      for k = 0, 1, 2 · · ·
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; z^2X(z)-z^2x(0)-zx(1)-[zX(z)-zx(0)]+0.25X(z)= z^2U(z)-z^2u(0)-zu(1) \\ &amp;
+X(z)[z^2-z+0.25]-z^2-2z+z=z^2 \frac {z}{z-1}-z^2-z \\ &amp; X(z)[z^2-z+0.25]=\frac {z^3}{z-1} \\ &amp;
+X(z)=\frac {z^3}{z-1}\frac {1}{z^2-z+0.25}=\frac {4z}{z-1}-\frac {3z}{2z-1}-\frac {0.5z}{(2z-1)^2} \\ &amp;
+x(k) = 4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
+</p>
+
+
+<p>Calling </p>
+
+
+<figcaption>
+
+</figcaption>
+<p><span class="inlineprogramlisting"> p a r t f r a c ( z ^ 2 / ( ( z −1) ∗ ( z −0.5) ^2) ) </span></p>
+
+<figcaption>
+</figcaption>
+
+<p>in Matlab results in the partial fraction decomposition. </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                                               4z     3z       0.5z
+                                     X(z) =       −        −
+                                              z−1   2z − 1   (2z − 1)2
+                                     x(k) = 4 − (3 + k)(0.5)k           for k = 0, 1, 2 · · ·
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; X(z) =\frac {4z}{z-1}-\frac {3z}{2z-1}-\frac {0.5z}{(2z-1)^2} \\ &amp; x(k) =
+4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
+</p>
+
+
+<p>Computing the answer computational</p>
+
+
+<figcaption>
+
+<p><a id="autoid-6"></a>Listing&nbsp;1:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+numerator = [1 0 0]; % z^3
+denomiator = [1 -1 0.25];
+u = ones(1,51);
+k = 0:50;
+xk = filter(numerator,denomiator,u)
+plot(k,xk,'-ro');grid;
+v = [0 50 0 5]; axis(v);
+xlabel('k');ylabel('x(k)')
+title('Unit-Step Response');
+print('B-2-17-matlab.png','-dpng','-r300')
+</pre>
+<figcaption>
+</figcaption>
+
+<figure id="autoid-7" class="figure">
+
+<p>
+<a href="Assignments/A2/B-2-17-matlab.png" target="_blank"
+><img src="Assignments/A2/B-2-17-matlab.png"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.7:&nbsp;Computational Approach to B-2-17 in Matlab</p>
+
+
+</figcaption>
+
+<a id="fig:b-2-17-matlab"></a>
+
+</figure>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-3.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 3</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-28"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-29"> <span class="sectionnumber">0.2&#x2001;</span>Assignment 3</h4><a
+id="autopage-29"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 1, 2018, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 3<br />
+</p>
+<p><span class="paragraph" id="autosec-31"> B-3-4</span><a id="autopage-31"></a> </p>
+
+
+<p>Consider a transfer function system</p>
+
+
+<p>\[ X(s)=\frac {s+3}{(s+1)(s+2)}\]</p>
+
+
+<p>Obtain the pulse transfer function by two different methods</p>
+
+
+<figcaption>
+
+<p><a id="autoid-8"></a>Listing&nbsp;2:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+       syms s z
+       B34Xs = (s+3)/((s+1)*(s+2))
+       % First answer, ignore
+       % B34XzA1 = subs(B34Xs ,s,z)
+       % First answer, get the CTS function and convert that
+       % to the Z-domain,
+       XsTemp = ilaplace(B34Xs)
+       B34XzA2 = ztrans(XsTemp)
+       % Second Answer, convert from laplace domain to z domain using tables
+       % will need to use partial fractions
+       Xs2 = partfrac(B34Xs)
+       % Using the tables
+       % Answer is the same
+</pre>
+<figcaption>
+</figcaption>
+
+<figcaption>
+
+<p><a id="autoid-9"></a>Listing&nbsp;3:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+B34Xs =
+
+
+(s + 3)/((s + 1)*(s + 2))
+
+
+
+XsTemp =
+
+
+2*exp(-t) - exp(-2*t)
+
+
+
+B34XzA2 =
+
+
+(2*z)/(z - exp(-1)) - z/(z - exp(-2))
+
+
+
+Xs2 =
+
+
+2/(s + 1) - 1/(s + 2)
+</pre>
+<figcaption>
+</figcaption>
+
+<p>\[\mathcal {Z} \left \{\frac {1}{s+a} \right \} \rightarrow \frac {1}{1-e^{-at}z^{-1}} \]</p>
+
+
+<p>\[ X(s)= \frac {s+3}{(s+1)(s+2)} \]</p>
+
+
+<p>Using partial fractions with Table 2-1 </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                 s+3            A    B     2     1
+      X(s) =                =     +     =     −
+             (s + 1)(s + 2)   s+1   s+2   s+1   s+2
+             
+           1              1
+      Z          →
+          s+a       1 − e−aT z −1
+                    2               1            1 + e−T (1 − 2e−T )z −1                                     1 + e−T (1 − 2e−T )z −1
+      X(z) =                −               =                                                    X(z) =
+               1 − e−T z −1   1 − e−2T z −1   (1 − e−2T z −1 )(1 − e−T z −1 )                             (1 − e−2T z −1 )(1 − e−T z −1 )
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; X(s) = \frac {s+3}{(s+1)(s+2)}= \frac {A}{s+1}+\frac {B}{s+2} = \frac {2}{s+1}-\frac
+{1}{s+2} \\ &amp; \mathcal {Z} \left \{\frac {1}{s+a}\right \} \rightarrow \frac {1}{1-e^{-aT}z^{-1}} \\
+&amp; X(z) = \frac {2}{1-e^{-T}z^{-1}} - \frac {1}{1-e^{-2T}z^{-1}} = \frac
+{1+e^{-T}(1-2e^{-T})z^{-1}}{(1-e^{-2T}z^{-1})(1-e^{-T}z^{-1})} &amp; X(z) = \frac
+{1+e^{-T}(1-2e^{-T})z^{-1}}{(1-e^{-2T}z^{-1})(1-e^{-T}z^{-1})} \end{align*}
+</p>
+
+
+<p>Computing x(t) and then X(z) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+                                             
+                                 s+3
+                     L                            → 2e−t − e−2t
+                             (s + 1)(s + 2)
+                                                        2                   1                 1 + e−T (1 − 2e−T )z −1
+                     Z 2e−t − e−2t =
+                      
+                                                                  −                    =
+                                                  1−   e−T z −1       1−   e−2T z −1       (1 − e−2T z −1 )(1 − e−T z −1 )
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \mathcal {L} \left \{ \frac {s+3}{(s+1)(s+2)}\right \} \rightarrow 2e^{-t}-e^{-2t}\\
+&amp; \mathcal {Z} \left \{2e^{-t}-e^{-2t}\right \}= \frac {2}{1-e^{-T}z^{-1}}-\frac
+{1}{1-e^{-2T}z^{-1}}=\frac {1+e^{-T}(1-2e^{-T})z^{-1}}{(1-e^{-2T}z^{-1})(1-e^{-T}z^{-1})} \end{align*}
+</p>
+<h5 id="autosec-34"> B-3-6</h5><a id="autopage-34"></a>
+
+<p>Obtain the z transform of </p>
+
+
+<p>\[X(s)=\frac {1-e^{-Ts}}{s}\frac {1}{(s+a)^2}\]</p>
+
+
+<p>Let \(G_1(s) = \frac {1-e^{-Ts}}{s}\), \(G_2(s)=\frac {1}{(s+a)^2}\).</p>
+
+
+<p>\[ X(s)= \frac {1-e^{-Ts}}{s(s+a)^2}=\frac {1-e^{-Ts}}{s}\frac {1}{(s+a)^2} \]</p>
+
+
+<p>\[ (1-z^{-1})\mathcal {Z}\left \{\frac {1}{s(s+a)^2} \right \} \rightarrow \quad \frac {1}{s(s+a)^2} = \frac
+{A}{s} + \frac {B}{s+a} + \frac {C}{(s+a)^2} \]</p>
+
+
+<p>\[ A = \frac {1}{a^2}, \quad B = -\frac {1}{a^2}, \quad C= -\frac {1}{a}, \quad \frac {1}{s(s+a)^2}=\frac
+{1}{a^2}\frac {1}{s} - \frac {1}{a^2}\frac {1}{s+a}-\frac {1}{(s+a)^2}\]</p>
+
+
+<p>\[ (1-z^{-1})\mathcal {Z}\left \{ \frac {1}{a^2}\frac {1}{s} - \frac {1}{a^2}\frac {1}{s+a}-\frac
+{1}{(s+a)^2} \right \} (1-z^{-1})\left (\frac {1}{a^2}\frac {1}{1-z^{-1}}-\frac {1}{a^2}\frac
+{1}{1-e^{-aT}z^{-1}} \right . \]</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                                  T e−aT z −1
+                               (1 − e−aT z −1 )2
+                                        1 (1 − e−aT )z −1   1 (1 − z −1 )T e−aT z −1
+                               X(z) =           −aT   −1
+                                                          −
+                                         2
+                                        a 1−e       z       a (1 − e−aT z −1 )2
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \frac {Te^{-aT}z^{-1}}{(1-e^{-aT}z^{-1})^2} \\ &amp; X(z)=\frac {1}{a^2}\frac
+{(1-e^{-aT})z^{-1}}{1-e^{-aT}z^{-1}}- \frac {1}{a}\frac {(1-z^{-1})Te^{-aT}z^{-1}}{(1-e^{-aT}z^{-1})^2}
+\end{align*}
+</p>
+<p><span class="paragraph" id="autosec-35"> B-3-7</span><a id="autopage-35"></a> </p>
+
+
+<p>Consider the difference equation system</p>
+
+
+<p>\[ y(k+1)+0.5y(k)=x(k)\]</p>
+
+
+<p>where y(0)=0. Obtain the response y(k) when the input x(k) is a unit-step sequence. Also, obtain the MATLAB
+Solution. </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                       Z {(k + 1) + 0.5y(k)} = Z {u(k)}
+                                                       1                 z      1
+                       zY (k) − zy(0) + 0.5Y (k) =           → Y (z) =
+                                                   1 − z −1            z − 1 z + 0.5
+                                                                                       
+                              Y (z)              z      1               2 z       2    z
+                       Z −1           = Z −1                   = Z −1          −
+                                z              z − 1 z + 0.5            3z−1      3 z + 0.5
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \mathcal {Z} \left \{(k+1)+0.5y(k)\right \}= \mathcal {Z} \left \{u(k) \right \} \\
+&amp; zY(k)-zy(0)+0.5Y(k) = \frac {1}{1-z^{-1}} \rightarrow Y(z) = \frac {z}{z-1}\frac {1}{z+0.5} \\ &amp;
+\mathcal {Z}^{-1} \left \{\frac {Y(z)}{z}\right \} = \mathcal {Z}^{-1} \left \{ \frac {z}{z-1} \frac
+{1}{z+0.5}\right \} = \mathcal {Z}^{-1} \left \{ \frac {2}{3}\frac {z}{z-1}-\frac {2}{3}\frac {z}{z+0.5} \right
+\} \end{align*}
+</p>
+
+
+<p>Taking the inverse Z-transform: </p>
+
+
+<p>\[ y(k)=\frac {2}{3}-\frac {2}{3}(-0.5)^k = \frac {2}{3} \left (1-(-0.5)^k\right ) \]</p>
+
+
+<figcaption>
+
+<p><a id="autoid-10"></a>Listing&nbsp;4:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+       num = [0, 1];
+       den = [1, 0.5];
+       n = 45; x = ones(1,n);
+       v = [0,n-1,0 1.2];
+       axis(v);
+       k = 0:n-1;
+       y = filter(num,den,x);
+       plot(k,y,'--ro'); grid;
+       title('Problem B-3-7 Unit Step Response');
+       xlabel('k'); ylabel('y\_k');
+       print('PB-3-7.png','-dpng','-r300');
+</pre>
+<figcaption>
+</figcaption>
+
+<p>
+<a href="Assignments/A3/PB-3-7.png" target="_blank"
+><img src="Assignments/A3/PB-3-7.png"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+<p><span class="paragraph" id="autosec-37"> B-3-15</span><a id="autopage-37"></a> </p>
+
+
+<p>Obtain the closed-loop pulse transfer function of the system shown in the figure below.</p>
+
+
+<figure id="autoid-11" class="figure">
+
+<p>
+<a href="Assignments/A3/samplerTesting.png" target="_blank"
+><img src="Assignments/A3/samplerTesting.png"
+style="width:369pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.8:&nbsp;Block Diagram for Figure B-3-15</p>
+
+
+</figcaption>
+
+<a id="fig:OgataB-3-15"></a>
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+              E(s) = R(s) − H2 (s)M ∗ (s)   C(s) = G(s)E ∗ (s)      M (s) = H1 (s)C(s) = H1 (s)G(s)E ∗ (s)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; E (s) = R(s)- H_2(s)M^\ast (s) \quad C(s)= G(s)E^\ast (s) \quad
+M(s)=H_1(s)C(s)=H_1(s)G(s) E^\ast (s) \end{align*}
+</p>
+
+
+<p>Taking the starred Laplace transforms leads to: </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                                            E ∗ (s) = R∗ (s) − H2∗ M ∗ (s)                                        (0.1)
+                                            C ∗ (s) = G∗ (s)E ∗ (s)                                               (0.2)
+                                            M ∗ (s) = [GH1 (s)]∗ E ∗ (s)                                          (0.3)
+
+
+
+-->
+
+
+<p>
+\begin{align} &amp; E^\ast (s)=R^\ast (s)-H_2^\ast M^\ast (s) \\ &amp; C^\ast (s) = G^\ast (s)E^\ast (s)
+\\ &amp; M^\ast (s)= [GH_1(s)]^\ast E^\ast (s) \end{align}
+</p>
+
+
+<p>Using equations (1) and (3), the </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>           <span class="hidden"> \( \seteqnumber {4} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                        E ∗ = R∗ (s) − H2∗ ([GH1 (s)]∗ E ∗ (s))                                   (0.4)
+                                                    R∗ (s)
+                                        E∗ =                                                                      (0.5)
+                                               H2∗ [GH1 (s)]∗
+
+
+-->
+
+
+<p>
+\begin{align} &amp; E^\ast = R^\ast (s)-H_2^\ast ([GH_1(s)]^\ast E^\ast (s)) \\ &amp; E^\ast = \frac
+{R^\ast (s)}{H_2^\ast [GH_1(s)]^\ast } \end{align}
+</p>
+
+
+<p>Using equation (2) and (5) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>           <span class="hidden"> \( \seteqnumber {6} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                  G∗ (s)R∗ (s)
+                                      C ∗ (s) =
+                                                  H2∗ [GH1 (s)]∗
+                                       ∗                C ∗ (s)      G∗ (s)
+                                      Htransfer (s) =           = ∗
+                                                        R∗ (s)   H2 [GH1 (s)]∗
+                                       ∗                     G(z)
+                                      Htransfer (z) =
+                                                        H2 (z)[GH1 (z)]
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; C^\ast (s) = \frac {G^\ast (s)R^\ast (s)}{H_2^\ast [GH_1(s)]^\ast }\\ &amp; H_{\text
+{transfer}}^\ast (s)=\frac {C^\ast (s)}{R^\ast (s)} = \frac {G^\ast (s)}{H_2^\ast [GH_1(s)]^\ast } \\ &amp;
+H_{\text {transfer}}^\ast (z)= \frac {G(z)}{H_2(z) [GH_1(z)]} \end{align*}
+</p>
+<p><span class="paragraph" id="autosec-38"> B-3-17</span><a id="autopage-38"></a> </p>
+
+
+<figure id="autoid-12" class="figure">
+
+<p>
+<a href="Assignments/A3/OgataB-3-17.png" target="_blank"
+><img src="Assignments/A3/OgataB-3-17.png"
+style="width:369pt; "
+class="inlineimage"
+></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {6} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                     E(s) = R(s) − H(s)C(s) = R(s) − H(s)G2 (s)M ∗ (s)
+                                     C(s) = G2 (s)M ∗ (s)
+                                     M (s) = G1 (s)E ∗ (s) − G2 (s)M ∗ (s)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; E (s) = R(s)- H(s)C(s) = R(s) - H(s)G_2(s)M^\ast (s) \\ &amp; C(s)= G_2(s)M^\ast (s)
+\\ &amp; M(s)=G_1(s) E^\ast (s) - G_2(s)M^\ast (s) \end{align*}
+</p>
+
+
+<p>Taking the starred Laplace Transform of equations</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {6} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                E ∗ (s) = R∗ (s) − [G2 H(s)]∗ M ∗ (s)                                       (0.6)
+                                                C ∗ (s) = G∗2 (s)M ∗ (s)                                                    (0.7)
+                                                M ∗ (s) = G∗1 (s)E ∗ (s) − G∗2 (s)M ∗ (s)                                   (0.8)
+
+
+
+-->
+
+
+<p>
+\begin{align} &amp; E^\ast (s)=R^\ast (s)-[G_2H(s)]^\ast M^\ast (s) \\ &amp; C^\ast (s) = G_2^\ast
+(s)M^\ast (s) \\ &amp; M^\ast (s)=G_1^\ast (s) E^\ast (s) -G_2^\ast (s) M^\ast (s) \end{align}
+</p>
+
+
+<p>Using equations (6) and (8) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {9} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                  M ∗ (s) = G∗1 (s) {R∗ (s) − [G2 H(s)]∗ M ∗ (s)} − G∗2 (s)M ∗ (s)                          (0.9)
+                                  M ∗ (s) [1 + G∗2 (s) + G∗1 (s) [G2 H(s)]∗ ] = G∗1 (s)R∗ (s)                              (0.10)
+                                                         G∗1 (s)R∗ (s)
+                                  M ∗ (s) =                                                                                (0.11)
+                                               1 + G∗2 (s) + G∗1 (s) [G2 H(s)]∗
+
+
+-->
+
+
+<p>
+\begin{align} &amp; M^\ast (s)=G_1^\ast (s) \left \{ R^\ast (s)-[G_2H(s)]^\ast M^\ast (s) \right \} -
+G_2^\ast (s) M^\ast (s) \\ &amp; M^\ast (s) \left [1 +G_2^\ast (s)+G_1^\ast (s) \left [G_2H(s)\right ]^\ast
+\right ]=G_1^\ast (s)R^\ast (s) \\ &amp; M^\ast (s) = \frac {G_1^\ast (s)R^\ast (s)}{1 +G_2^\ast
+(s)+G_1^\ast (s) \left [G_2H(s)\right ]^\ast } \end{align}
+</p>
+
+
+<p>Using equations (11) and (7)</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {12} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                  G∗2 (s)G∗1 (s)R∗ (s)                        R(z)G2 (z)G1 (z)              C ∗ (s)        G∗2 (s)G∗1 (s)R∗ (s)       1              G∗2 (s)G∗1 (s)
+C ∗ (s) =                                       C(z) =                                              =                                     =
+            1+   G2 (s) + G∗1 (s) [G2 H(s)]∗
+                  ∗                                      1 + G2 (z) + G1 (z) [G2 H(z)]        ∗
+                                                                                            R (s)          ∗         ∗             ∗ ∗
+                                                                                                      1 + G2 (s) + G1 (s) [G2 H(s)] R (s)   1 + G2 (s) + G∗1 (s) [G2 H(s)]∗
+                                                                                                                                                 ∗
+
+C(z)           G2 (z)G1 (z)
+     =
+R(z)   1 + G2 (z) + G1 (z) [G2 H(z)]
+
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; C^\ast (s) = \frac {G_2^\ast (s)G_1^\ast (s)R^\ast (s)}{1 +G_2^\ast (s)+G_1^\ast
+(s) \left [G_2H(s)\right ]^\ast } \quad C(z) = \frac {R(z)G_2(z) G_1(z)}{1 +G_2(z)+G_1(z) \left
+[G_2H(z)\right ]} &amp;\frac {C^\ast (s)}{R^\ast (s)} = \frac { G_2^\ast (s) G_1^\ast (s)R^\ast (s)}{1
++G_2^\ast (s)+G_1^\ast (s) \left [G_2H(s)\right ]^\ast }&amp; \frac {1}{R^\ast (s)} = \frac { G_2^\ast (s)
+G_1^\ast (s)}{1 +G_2^\ast (s)+G_1^\ast (s) \left [G_2H(s)\right ]^\ast } \\ &amp; \frac {C(z)}{R(z)} =
+\frac { G_2(z) G_1(z)}{1 +G_2(z)+G_1(z) \left [G_2H(z)\right ]} \\ \end{align*}
+</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-4.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 4</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-39"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-40"> <span class="sectionnumber">0.3&#x2001;</span>Assignment 4</h4><a
+id="autopage-40"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 20, 2018, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 4<br />
+</p>
+<h6 id="autosec-42"> Problem B-3-20</h6><a id="autopage-42"></a>
+
+<p>Assuming that the sampling period is 0.2 sec, and the gain constant K is unity, determine the response c(kT) for
+k = 0,1,2,3 and 4 when the input r(t) is a unit-step function. Also, determine the final value \(c(\infty )\).</p>
+
+
+<figure id="autoid-13" class="figure">
+
+<p>
+<a href="Assignments/A4/Diagrams/samplerBlock.pdf" target="_blank"
+><img src="Assignments/A4/Diagrams/samplerBlock.pdf"
+style="width:260pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.9:&nbsp;Block Diagram for B-3-20</p>
+
+
+</figcaption>
+
+<a id="fig:samplerblock"></a>
+
+</figure>
+
+<p>Table 3-1 from the textbook \(C(z)=\frac {[GR(z)]}{1+GH(z)}\), where \(GH(z) = \left [G(s)H(s)\right ]^\ast
+=[1-z^{-1}] \mathcal {Z} \left \{\frac {1}{s(s+1)}\right \}\) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                     <span class="hidden"> \( \seteqnumber {12} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                              
+                   1                   1    −1
+                                            z            z                   z
+       Z                      =Z         +       −   =            =
+               s(s + 1)                s  z−1
+                                           s+1     z − e−(0.2)(1)   (z − 1)(z − e−0.2 )
+                                                                          1 − e−0.2
+                                                    
+                                                1               z−1                       0.181269
+       GH(z) = [G(s)H(s)]∗ = [1 − z −1 ]Z              =1−         −0.2
+                                                                        =            =
+                                            s(s + 1)          z−e         z − e−0.2     z − 0.818731
+                               
+                      1    1              0.181269z
+       R(z)G(z) = Z               =
+                      s (s + 1)     (z − 1)(z − 0.818731)
+                       0.181269z                   0.181269z
+                   (z−1)(z−0.818731)           (z−1)(z−0.818731)              0.1813z         z − 0.819         0.1813z
+       C(z) =             0.181269
+                                          =   z−0.818731+0.181269
+                                                                    =                       ×           =
+                    1 + z−0.818731                z−0.818731
+                                                                        (z − 1)(z − 0.8187)   z − 0.637   (z − 1)(z − 0.6375)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \mathcal {Z} \left \{\frac {1}{s(s+1)}\right \} = \mathcal {Z} \left \{\frac {1}{s}+\frac
+{-1}{s+1}\right \} = \frac {z}{z-1}-\frac {z}{z-e^{-(0.2)(1)}}=\frac {z}{(z-1)(z-e^{-0.2})} \\ &amp; GH(z) =
+\left [G(s)H(s)\right ]^\ast =[1-z^{-1}] \mathcal {Z} \left \{\frac {1}{s(s+1)}\right \} = 1-\frac
+{z-1}{z-e^{-0.2}}=\frac {1-e^{-0.2}}{z-e^{-0.2}}=\frac {0.181269}{z-0.818731} \\ &amp; R(z)G(z)= \mathcal
+{Z} \left \{\frac {1}{s}\frac {1}{(s+1)}\right \} = \frac {0.181269z}{(z-1)(z-0.818731)} \\ &amp; C(z) =\frac
+{\frac {0.181269z}{(z-1)(z-0.818731)}}{1+\frac {0.181269}{z-0.818731}}= \frac {\frac
+{0.181269z}{(z-1)(z-0.818731)}}{\frac {z-0.818731+0.181269}{z-0.818731}}= \frac {0.1813z}{(z-1)(z-0.8187)}
+\times \frac {z-0.819}{z-0.637}=\frac {0.1813z}{(z-1)(z-0.6375)} \end{align*}
+</p>
+
+
+<p>Using final value theorem:</p>
+
+
+<p>\[ c(\infty )=\lim \limits _{z\rightarrow 1} \left [ \left (1-z^{-1}\right )C(z)\right ]=\lim \limits
+_{z\rightarrow 1} \left [ \left (1-z^{-1}\right )\frac {0.1813z^{-1}}{(1-z^{-1})(1-0.6375z^{-1})} \right
+]=0.5001379 \]</p>
+<h6 id="autosec-43"> Problem B-4-4</h6><a id="autopage-43"></a>
+
+<p>Consider the discrete-time closed-loop control system shown in Figure 4-13. Determine the range of K for
+stability by use of the Jury stability criterion. Assuming that \(T=1\).</p>
+
+
+<figure id="autoid-14" class="figure">
+
+<p>
+<a href="Assignments/A4/Diagrams/sampler413.pdf" target="_blank"
+><img src="Assignments/A4/Diagrams/sampler413.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.10:&nbsp;*</p>
+
+
+</figcaption>
+
+<p>Figure 4-13 <a id="fig:samplerblock413"></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {12} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                                                              T z −1        1 − z −1
+                                                                                                                    
+                             1 1                                 1    −1    1
+         (1 − z −1 )Z                       = (1 − z −1 )Z          +    +           =             −1
+                                                                                                      −1+
+                             s2 s + 1                            s2    s   s+1               1−z          1 − e−1 z −1
+                 z −1       1 − z −1    z −1 − e−1 z −2 − (1 − e−1 z −1 + e−1 z −2 ) + (1 − 2z −1 + z −2 )
+            =       −1
+                       −1+     −1  −1
+                                      =
+                1−z        1−e z                            (1 − z −1 )(1 − e−1 z −1 )
+                e−1 z −1 + (1 − 2e−1 )z −2                   K[e−1 z 1 + (1 − 2e−1 )]        C(s)      G(z)
+            =                                     G(z) =                                          =
+                 (1 − z −1 )(1 − e−1 z −1 )                    (z − 1)(z − e−1 )             R(s)   1 + G(z)(1)
+         P (z) = a0 z 2 + a1 z + a2 = z 2 − (1.3679 − 0.3679K)z + (0.3679 + 0.2642K)
+         |a2 | < |a0 |    |0.3679 + 0.2642K| < |1| → K = 2.3925056
+         P (1) > 0 1 − 1.3679 − 0.3679K + 0.3679 + 0.2642K > 0 → 0.6321K > 0
+         P (−1) > 0 1 + (1.3679 − 0.3679K) + 0.3679 + 0.2642K > 0                    2.7358 − 0.1037K > 0 K > 26.3818
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp;(1-z^{-1}) \mathcal {Z} \left \{ \frac {1}{s^2}\frac {1}{s+1} \right \}= (1-z^{-1})
+\mathcal {Z} \left \{ \frac {1}{s^2}+\frac {-1}{s}+\frac {1}{s+1} \right \} = \left (\frac
+{Tz^{-1}}{1-z^{-1}}-1+\frac {1-z^{-1}}{1-e^{-1}z^{-1}}\right ) \\ &amp; = \frac {z^{-1}}{1-z^{-1}}-1+\frac
+{1-z^{-1}}{1-e^{-1}z^{-1}} =\frac {z^{-1}-e^{-1}z^{-2} -(1-e^{-1}z^{-1}+e^{-1}z^{-2}) +(1-2z^{-1}+z^{-2}
+)}{(1-z^{-1})(1-e^{-1}z^{-1})} \\ &amp; = \frac {e^{-1}z^{-1}+(1-2e^{-1})z^{-2}}{(1-z^{-1})(1-e^{-1}z^{-1})}
+\quad G(z) = \frac {K[e^{-1}z^{1}+(1-2e^{-1})]}{(z-1)(z-e^{-1})} \quad \frac {C(s)}{R(s)}=\frac
+{G(z)}{1+G(z)(1)} \\ &amp; P(z)= a_0z^2+a_1z+a_2=z^2-(1.3679-0.3679K)z+(0.3679+0.2642K) \\ &amp;
+|a_2| &lt; |a_0| \quad |0.3679+0.2642K| &lt; |1| \rightarrow K =2.3925056 \\ &amp; P(1) &gt; 0 \
+1-1.3679-0.3679K + 0.3679+0.2642K &gt; 0 \rightarrow 0.6321K &gt; 0 \\ &amp; P(-1) &gt; 0 \
+1+(1.3679-0.3679K)+0.3679+0.2642K &gt; 0 \quad 2.7358-0.1037K &gt; 0 \ K &gt; 26.3818 \end{align*}
+</p>
+
+
+<p>For stability \(0 &lt; K &lt; 2.3925056\).</p>
+<h6 id="autosec-44"> Problem B-4-8</h6><a id="autopage-44"></a>
+
+<p>Consider the digital control system shown in Figure 4-66. Plot the root loci as the gain K is varied from \(0\) to
+\(\infty \). Determine the critical value of gain K for stability. The sampling period is 0.1 sec, or \(T=0.1\) What
+value of gain K will yield a damping ration \(\zeta \) of the closed-loop poles equal to 0.5? With gain K set to yield
+\(\zeta =0.5\), determine the damped natural frequency \(\omega _d\) and the number of samples per cycle of
+damped sinusoidal oscillation.</p>
+
+
+<figure id="autoid-15" class="figure">
+
+<p>
+<a href="Assignments/A4/Diagrams/B4-8.pdf" target="_blank"
+><img src="Assignments/A4/Diagrams/B4-8.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.11:&nbsp;*</p>
+
+
+</figcaption>
+
+<p>Figure 4-66 with \(T=0.1\) <a id="fig:samplerblock48"></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>         <span class="hidden"> \( \seteqnumber {12} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                  P (z) = (z − 1)(z − 0.6065) + K(z + 1)
+                                      s = z 2 + (K − 1.6065)z + (0.6065 − K)
+                                       |a2 | < |a0 | → |0.6065 + K| < 1   K = 0.3935
+                                       P (1) > 0 → 2K > 0
+                                       P (−1) > 0 → 3.213 > 0
+                                       0 < K < 0.3935
+
+
+
+-->
+
+
+<p>
+\begin{align*} P(z)&amp;=(z-1)(z-0.6065)+K(z+1) \\ s&amp;=z^2+(K-1.6065)z+(0.6065-K) \\ &amp; |a_2|
+&lt; |a_0| \rightarrow |0.6065+K| &lt; 1 \quad K =0.3935 \\ &amp; P(1) &gt; 0 \rightarrow 2K &gt; 0 \\ &amp;
+P(-1) &gt; 0 \rightarrow 3.213 &gt; 0 \\ &amp; 0 &lt; K &lt; 0.3935 \end{align*}
+</p>
+
+
+<figure id="autoid-16" class="figure">
+
+<p>
+<a href="Assignments/A4/Diagrams/B-4-8Rlocus2.png" target="_blank"
+><img src="Assignments/A4/Diagrams/B-4-8Rlocus2.png"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.12:&nbsp;*</p>
+
+
+</figcaption>
+
+<p>Root Locus For Figure 4-66 <a id="fig:Rlocus"></a></p>
+
+
+</figure>
+
+<p>When \(K=0.0646, \zeta =0.5\) with the pole at \(z=0.771+j0.277=|0.8192|e^{j19.7620^\circ }\). </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>         <span class="hidden"> \( \seteqnumber {12} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                             ◦
+                 z =|e−T (ζωn ) |eT ωd = |0.8192|ej19.7620
+                           ln(0.8192)
+                     ωn =              = 3.98854 = 4 rad/s
+                          (−0.1)(0.5)
+                          (19.7629◦ )                   p
+                     ωd =             = 3.449 ωd = ωn 1 − ζ 2 = 3.988(0.866025) = 3.4537 rad/s
+                              0.1
+                                                      360◦     360◦
+                     Number of Samples per Cycle =         =          = 18.22
+                                                      T ωd   19.7629◦
+
+
+-->
+
+
+<p>
+\begin{align*} z= &amp; |e^{-T(\zeta \omega _n)} |e^{T \omega _d} = |0.8192|e^{j19.7620^\circ } \\ &amp;
+\omega _n = \frac {\ln (0.8192)}{(-0.1)(0.5)}=3.98854 = 4 \ \text {rad/s} \\ &amp; \omega _d = \frac
+{(19.7629^\circ )}{0.1} = 3.449 \quad \omega _d = \omega _n \sqrt {1-\zeta ^2}=3.988 (0.866025)=3.4537 \
+\text {rad/s} \\ &amp; \text {Number of Samples per Cycle } = \frac {360^\circ }{T\omega _d}=\frac
+{360^\circ }{19.7629^\circ }=18.22 \end{align*}
+</p>
+<h6 id="autosec-45"> Problem B-4-12</h6><a id="autopage-45"></a>
+
+<p>Design a digital proportional-plus-derivative controller for the plant whose transfer function is \(1/s^2\), as
+shown in Figure 4-70. It is desired that the damping ratio \(\zeta \) of the dominant closed-loop poles be 0.5 and
+the undamped natural frequency be 4 rad/sec. The sampling period is 0.1 sec, or \(T=0.1\). After the controller is
+designed, determine the number of samples per cycle of damped sinusoidal oscillation.</p>
+
+
+<figure id="autoid-17" class="figure">
+
+<p>
+<a href="Assignments/A4/Diagrams/block412.pdf" target="_blank"
+><img src="Assignments/A4/Diagrams/block412.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.13:&nbsp;*</p>
+
+
+</figcaption>
+
+<p>Figure 4-70 <a id="fig:blockB4-12"></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                           <span class="hidden"> \( \seteqnumber {12} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                                            (1 − z −1 )                      (1 − z −1 ) T 2 z −1 (1 + z −1 )
+                                                                                                  
+                                                               1                                2
+       GP D (s) = Kd s + Kp       G(z) = (1 − z −1 )Z                   =               Z                =                                      (0.12)
+                                                               s3               2               s3               2           (1 − z −1 )3
+                                                                     Kd
+                                                           z−       Kp +Kd                      T 2 z −1 (1 + z −1 )          (z + 1)
+       GP D (z) = Kp + Kd (1 − z −1 ) = (Kp + Kd )                             ,    G(z) =                           = 0.005                    (0.13)
+                                                                    z                              2(1 − z −1 )2             (z − 1)2
+                 p                p               √
+       ωd = ωn       1 − ζ2 = 4       1 − 0.52 = 2 3 = 3.4641 rad/s,               |z| = eT ζωn = e−T ζωn = e−0.2 = 0.8187                      (0.14)
+                                                  ◦
+       “z = “T ωd = 0.34641 rad = 19.8478              Desired Pole z = 0.8187“19.8478◦ = 0.7701 + j0.2780                                      (0.15)
+                                               Kd
+                                         z−   Kp +Kd            (z + 1)
+       GP D (z)G(z) = (Kp + Kd )                       0.005                                                                                    (0.16)
+                                              z                (z − 1)2
+
+
+-->
+
+
+<p>
+\begin{align} &amp; G_{PD}(s) = K_ds +K_p \quad G(z) = (1-z^{-1}) \mathcal {Z} \left \{\frac {1}{s^3}
+\right \} = \frac {(1-z^{-1})}{2} \mathcal {Z} \left \{\frac {2}{s^3} \right \} = \frac {(1-z^{-1})}{2} \frac
+{T^2z^{-1}(1+z^{-1})}{(1-z^{-1})^3} \\ &amp; G_{PD}(z) =K_p+K_d(1-z^{-1})= (K_p+K_d)\frac {z-\frac
+{K_d}{K_p+K_d}}{z}, \quad G(z)=\frac {T^2z^{-1}(1+z^{-1})}{2(1-z^{-1})^2}=0.005\frac {(z+1)}{(z-1)^2}
+\\ &amp; \omega _d = \omega _n \sqrt {1-\zeta ^2} = 4 \sqrt {1-0.5^2}= 2 \sqrt {3} =3.4641 \ \text {rad/s},
+\quad |z| = e^{T \zeta \omega _n} = e^{-T \zeta \omega _n} =e^{-0.2} = 0.8187 \\ &amp; \angle z = \angle T
+\omega _d = 0.34641 \ \text {rad} =19.8478^\circ \quad \text {Desired Pole } z = 0.8187 \angle 19.8478^\circ
+=0.7701+j0.2780 \\ &amp; G_{PD}(z)G(z)= (K_p+K_d)\frac {z-\frac {K_d}{K_p+K_d}}{z}0.005\frac
+{(z+1)}{(z-1)^2} \end{align}
+</p>
+
+
+<p>Computing the angle deficiency: Solving for equations (1) and (2),</p>
+
+
+<p>\[ K_p=9.833174968 \quad K_d=32.9474741 \]</p>
+
+
+<p>The controller \(\displaystyle G_{PD}=42.7806\frac {z-0.770149}{z} = 42.7806(1-0.770149z^{-1})\). The
+number of cycles per second \(n=\frac {360^\circ }{19.84918^\circ }=18.13678\).</p>
+<p><span class="paragraph" id="autosec-46"> Matlab Code</span><a id="autopage-46"></a> </p>
+
+
+<figcaption>
+
+</figcaption>
+<p></p>
+<pre class="programlisting" >
+%% ELEC 460 Assignment 4
+%% Question 1
+K =1;
+Gcont = zpk([],[-1],K)
+% GClosed = feedback(Gcont,1)
+c2d(Gcont,0.2,'ZOH')
+Gcont50 = zpk([],[-1,0],K)
+c2d(Gcont50,0.2)
+%% Question 2
+G2 = zpk([],[0,-1],1)
+G2Discrete = c2d(G2,1,'ZOH')
+syms z K
+Pz = (z-1)*(z-exp(-1))+K*[z*exp(-1)+(1-2*exp(-1))]
+vpa(expand(Pz),10)
+%equation = [0.2642411177*K - 1.367879441*z + 0.3678794412*K*z + z^2 +
+    0.3678794412]
+juryStab = [1 0.3679*K-1.368 0.2642*K+0.3679]
+[M,L]=jury(juryStab)
+%% Question 3
+z = tf('z',0.1);
+H = (z + 1) / ((z-1)*(z-0.6065));
+kval = 0:0.005:10;
+% append k =0.500
+% Get more data points for k bewteen 0.591 and 0.0693
+kstart = k(1:15);
+kend = k(16:65);
+kmid = kstart(15):0.00025:kend(1);
+% Create new gain vector
+kuse = [kstart kmid kend ]
+rlocus(H,kuse)
+axis([-3.5 1.25 -2 2])
+roots([1 -1.5419 0.5419])
+%% Question 4
+%
+syms s
+G3 = 1/s^3
+partfrac(G3,s)
+complexTest = (0.7701-1+i*0.2780)^-2
+phi1 = rad2deg(angle(complexTest))
+atan(0.2780/(0.7701-0.7719))+pi
+%%
+% Question 4 Answering Questions
+syms x Kp Kd
+eqn2 = (Kp+Kd)*abs((x-0.770149)/x * (0.005) * (x+1)/(x-1)^2)==1
+eqn2 = subs(eqn2,x,0.7701+j*0.2780)
+eqn1 = Kd/(Kp+Kd)==0.770149
+sol =solve([eqn1, eqn2],[Kp Kd])
+portSol = vpa(sol.Kp,10)
+dervSol = vpa(sol.Kd,10)
+</pre>
+<p></p>
+
+<figcaption>
+</figcaption>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-5.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 5</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-48"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-49"> <span class="sectionnumber">0.4&#x2001;</span>Assignment 5</h4><a
+id="autopage-49"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 27, 2018 <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 5<br />
+</p>
+<h6 id="autosec-51"> Problem B-4-10</h6><a id="autopage-51"></a>
+
+<p>Consider the control system shown in Figure 4-68. Design a suitable digital controller that includes an intergral
+control action. The design specficiations are that the damping \(\zeta \) of the dominant closed-loop poles is 0.5
+and that there be at least eight samples per cycle of damped sinusoidal oscillation. The sampling period is assumed
+to be 0.2 sec, or \(T=0.2\). After the digital controller is designed, determine the static velocity error constant
+\(K_v\).</p>
+
+
+<figure id="autoid-18" class="figure">
+
+<p>
+<a href="Assignments/A5/Diagrams/block410.pdf" target="_blank"
+><img src="Assignments/A5/Diagrams/block410.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.14:&nbsp;*</p>
+
+
+</figcaption>
+
+<p>Figure 4-68 <a id="fig:samplerblock413"></a></p>
+
+
+</figure>
+
+<p>Let the PI controller be \(\displaystyle G_{PI}(z)=K_p+K_i\frac {1}{1-z^{-1}}=(K_p+K_i)\cfrac {z-\frac
+{K_p}{K_p-K_i}}{z-1}\) and discretizing \(G(s)\) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {17} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                                                           Kp
+                                             13711 z    46027827
+                                                     + 500000000                     z−   Kp −Ki    0.13711 z + 0.092055654
+                                             100000
+           GP I (z)G(z) = GP I (z)              3679
+                                                            8187
+                                                                     = (Kp + Ki )
+                                         z   − 10000 z − 10000                          z−1        (z − 0.3679) (z − 0.8187)
+                                                                              !
+                  ωd                                             −2πζ ωd                              360◦
+           Pick      = 0.1,       since ζ = 0.5, |z| = exp      p                 = 0.6958     “z =        = 36◦
+                  ωs                                             1 − ζ 2 ωs                            10
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; G_{PI}(z)G(z)=G_{PI}(z)\frac {\frac {13711\,z}{100000}+\frac
+{46027827}{500000000}}{\left (z-\frac {3679}{10000}\right )\,\left (z-\frac {8187}{10000}\right
+)}=(K_p+K_i)\cfrac {z-\frac {K_p}{K_p-K_i}}{z-1}\frac {0.13711\,z+0.092055654}{\left (z-0.3679\right
+)\,\left (z-0.8187\right )} \\ &amp; \text {Pick } \frac {\omega _d}{\omega _s}=0.1, \quad \text {since } \zeta
+=0.5, |z| = \exp \left (\frac {-2\pi \zeta }{\sqrt {1-\zeta ^2}}\frac {\omega _d}{\omega _s} \right )=0.6958
+\quad \angle z = \frac {360^\circ }{10}= 36^\circ \end{align*}
+</p>
+
+
+<figure id="autoid-19" class="figure">
+
+<p>
+<a href="Assignments/A5/Diagrams/poleszeroes.pdf" target="_blank"
+><img src="Assignments/A5/Diagrams/poleszeroes.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.15:&nbsp;Diagram illustrating that the zero \(z-\frac {K_p}{K_p-K_i}\) must contribute \(125.1015^\circ
+\)</p>
+
+
+</figcaption>
+
+<a id="fig:polesZeroess"></a>
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {17} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                                                       0.409
+                                        
+                                 Kp
+                  “       z−                                    = 125.1015◦                   Kp
+                                                                                                      = tan(125.1015◦ )
+                               Kp − Ki       z=0.5629+j0.4090                     0.5629 −   Kp −Ki
+
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \angle \left .\left (z-\frac {K_p}{K_p-K_i}\right )\right \vert _{z=0.5629 +j0.4090} =
+125.1015^\circ \quad \cfrac {0.409}{0.5629-\frac {K_p}{K_p-K_i}} = \tan (125.1015^\circ ) \end{align*}
+</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {17} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                 Kp
+       (0.17)                          = 0.850366                                                      --><a id="eq:kipi1"></a><!--
+                               Kp − Ki
+                                             (z + 0.6714) (0.13711 z − 0.028038995)
+                           (Kp + Ki )                                                                        =1
+                                                    (z − 0.3679) (z − 0.8187)             z=0.5629+j0.4090
+       (0.18)              0.44357786197 Ki + 0.44357786197 Kp = 1.0                                   --><a id="eq:kipi2"></a><!--
+
+
+
+-->
+
+
+<p>
+\begin{align} &amp; \frac {K_p}{K_p-K_i}= 0.850366 \label {eq:kipi1} \\ \notag &amp; (K_p+K_i)\left
+|\frac {\left (z+0.6714\right )\,\left (0.13711\,z-0.028038995\right )}{(z-0.3679)\,(z-0.8187)}\right |_{z=0.5629
++j0.4090}=1 \\ &amp; 0.44357786197\,K_i+0.44357786197\,K_p=1.0 \label {eq:kipi2} \end{align}
+</p>
+
+
+<p>Solving <span class="textup">(<a href=" Assignment-5.html#eq:kipi1">0.17</a>)</span> and <span
+class="textup">(<a href=" Assignment-5.html#eq:kipi2">0.18</a>)</span> leads to \(K_i=0.33733\) and
+\(K_p=1.9171\).</p>
+
+
+<p>\[ G_{PI}G(z)=2.254396\cfrac {z-0.850366}{z-1}\frac {0.13711\,(z+0.6714)}{\left (z-0.3679\right )\,\left
+(z-0.8187\right )} \]</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                   <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                         z−1               1 0.149634(0.13711(1.6714))
+                           Kv = lim          GP I G(z) =                               = 1.496119
+                                   z→1   zT              0.2(1)   (0.6321)(0.1813)
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; K_v = \lim \limits _{z \rightarrow 1} \frac {z-1}{z \ T} G_{PI}G(z) = \frac {1}{0.2(1)}
+\frac {0.149634(0.13711(1.6714))}{(0.6321)(0.1813)}=1.496119 \end{align*}
+</p>
+<h6 id="autosec-52"> Problem B-4-15</h6><a id="autopage-52"></a>
+
+<p>Using the Bode diagram approach in the \(w\) plane, design a digital controller for the system shown in Figure
+4-72. The design specifications are that the phase margin be \(50^\circ \), the gain margin be at least 10 dB, and
+the static velocity error constant \(K_v\) be 20 \(\text {sec}^{-1}\). The sampling period is assumed to be 0.1
+sec, or \(T = 0.1\). After the controller is designed, calculate the number of samples per cycle of damped sinusoidal
+oscillation.</p>
+
+
+<figure id="autoid-20" class="figure">
+
+<p>
+<a href="Assignments/A5/Diagrams/block415.pdf" target="_blank"
+><img src="Assignments/A5/Diagrams/block415.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.16:&nbsp;*</p>
+
+
+</figcaption>
+
+<p>Figure 4-72 <a id="fig:samplerblock415"></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>             <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                        1 − e−sT
+                                                             
+                                                     K                              z + 0.9835
+                         G(z) = Z                                 = 0.004918K
+                                            s    s(s + 0.5)                     (z − 1)(z − 0.9512)
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; G(z) = \mathcal {Z} \left [\frac {1-e^{-sT}}{s}\frac {K}{s(s+0.5)}\right ]=0.004918K
+\frac {z+0.9835}{(z-1)(z-0.9512)} \end{align*}
+</p>
+
+
+<p>Running the </p>
+
+
+<figcaption>
+
+</figcaption>
+<p><span class="inlineprogramlisting">ass_5.</span>m</p>
+
+<figcaption>
+</figcaption>
+
+<p>in Matlab as with the parameters specified in <b>ass_5.out</b> results in: </p>
+
+
+<p>\[ \frac {0.32774 z^3 - 0.27218 z^2 - 0.31605 z + 0.26423}{z^4 - 2.7603 z^3 + 2.3775 z^2 - 0.47208 z - 0.14507}
+\]</p>
+
+
+<figure id="autoid-21" class="figure">
+
+<p>
+<a href="Assignments/A5/MatlabPlots/bodePlotUnComp.png" target="_blank"
+><img src="Assignments/A5/MatlabPlots/bodePlotUnComp.png"
+style="width:260pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.17:&nbsp;Bode Plot for uncompensated System</p>
+
+
+</figcaption>
+
+<a id="fig:bodePlotUnComp"></a>
+
+</figure>
+
+<figure id="autoid-22" class="figure">
+
+<p>
+<a href="Assignments/A5/MatlabPlots/stepRespCTSDS.png" target="_blank"
+><img src="Assignments/A5/MatlabPlots/stepRespCTSDS.png"
+style="width:260pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.18:&nbsp;Bode Plot for uncompensated System</p>
+
+
+</figcaption>
+
+<a id="fig:Step Response"></a>
+
+</figure>
+
+<figcaption>
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+Discrete Compensator):
+
+
+num/den =
+
+
+66.6418 z^2 - 120.8858 z + 54.6277
+----------------------------------
+z^2 - 0.80914 z - 0.15251
+Open loop compensated discrete system transfer function
+
+
+num/den =
+
+
+0.32774 z^3 - 0.27218 z^2 - 0.31605 z + 0.26423
+---------------------------------------------------
+z^4 - 2.7603 z^3 + 2.3775 z^2 - 0.47208 z - 0.14507
+Closed loop zeros and poles of discrete system
+zeros =
+          -0.9835
+          0.9608
+          0.8532
+poles =
+          0.9607 + 0.0000i
+          0.8039 + 0.0000i
+          0.3340 + 0.2068i
+          0.3340 - 0.2068i
+Number of samples per cycle:
+ans =
+11.3339
+</pre>
+<figcaption>
+</figcaption>
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-6.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 6</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-54"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-55"> <span class="sectionnumber">0.5&#x2001;</span>Assignment 6</h4><a
+id="autopage-55"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 27, 2018 <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 6<br />
+</p>
+<h6 id="autosec-57"> Problem B-5-4</h6><a id="autopage-57"></a>
+
+<p>Obtain a state-space representation of the system described by the equation.</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>        <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                y(k + 2) + y(k + 1) + 0.16y(k) = u(k + 1) + 2u(k)
+                                z 2 Y (z) + z 1 Y (z) + 0.16Y (z) = zU (z) + 2U (z)
+                                Y (z)[z 2 + z 1 + 0.16] = U (z)(z 1 + 2)
+                                Y (z)     z1 + 2
+                                      = 2
+                                U (z)  z + z 1 + 0.16
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; y(k+2)+y(k+1)+0.16 y(k) = u (k+1) + 2u(k) \\ &amp; z^{2}Y(z)+z^{1}Y(z)+0.16Y(z)
+= zU(z)+2U(z) \\ &amp; Y(z) [z^{2}+z^{1}+0.16] = U(z) (z^{1}+2) \\ &amp; \frac {Y(z)}{U(z)} = \frac
+{z^{1}+2}{z^{2}+z^{1}+0.16} \end{align*}
+</p>
+
+
+<p>Using the direct programming method:</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>        <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                    
+                                  x1 (k + 1)        0       1    x1 (k)   0
+                                              =                         +    u(k)
+                                  x2 (k + 1)     −0.16      −1 x2 (k)     1
+                                                     
+                                              x1 (k)
+                                 y(k) = 2 1
+                                                x2 (k)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \end {bmatrix}= \begin {bmatrix} 0 &amp; 1 \\
+-0.16 &amp; -1 \end {bmatrix} \begin {bmatrix} x_1(k) \\ x_2(k) \end {bmatrix} + \begin {bmatrix} 0 \\ 1
+\end {bmatrix} u(k) \\ &amp; y(k)=\begin {bmatrix} 2 &amp; 1 \end {bmatrix}\begin {bmatrix} x_1(k) \\
+x_2(k) \end {bmatrix} \end{align*}
+</p>
+<h6 id="autosec-58"> Problem B-5-5</h6><a id="autopage-58"></a>
+
+<p>Obtain the state equation and output equation for the system shown in Figure 5-11.</p>
+
+
+<figure id="autoid-23" class="figure">
+
+<p>
+<a href="Assignments/A6/OgataB-5-5.png" target="_blank"
+><img src="Assignments/A6/OgataB-5-5.png"
+style="width:260pt; "
+class="inlineimage"
+></a> <a id="fig:ogatab-5-5"></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                      
+                            x1 (k + 1)      0      1       0      x1 (k)       0
+                           x2 (k + 1) =  0      0       1    x2 (k) + 0 u(k)
+                            x3 (k + 1)     a3     −a2     −a1     x3 (k)       1
+                                                                                 
+                                                                       1 x  (k)
+                          y(k) = b3 + a3 b0     b2 − a2 b0 b1 − a1 b0 x2 (k) + b0 u(k)
+                                                                         
+                                                                           x3 (k)
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \\ x_3(k+1) \end {bmatrix}= \begin {bmatrix}
+0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ a_3 &amp; -a_2 &amp; -a_1 \end {bmatrix}\begin {bmatrix}
+x_1(k) \\ x_2(k) \\ x_3(k) \end {bmatrix}+ \begin {bmatrix} 0 \\ 0 \\ 1 \end {bmatrix} u(k) \\ &amp; y(k) =
+\begin {bmatrix} b_3+a_3b_0 &amp; b_2 -a_2b_0 &amp; b_1 -a_1b_0 \end {bmatrix}\begin {bmatrix}
+x_1(k) \\ x_2(k) \\ x_3(k) \end {bmatrix} + b_0 u(k) \end{align*}
+</p>
+<h6 id="autosec-59"> Problem B-5-8</h6><a id="autopage-59"></a>
+
+<p>Figure 5-14 shows a block diagram of a discrete-time multiple-input-multiple-output system. Obtain state-space
+equations for the system by considering \(x_1(k)\), \(x_2(k)\), and \(x_3(k)\) as shown in the diagram to be
+state variables. Then define new state variables such that the state matrix becomes a diagonal matrix.</p>
+
+
+<figure id="autoid-24" class="figure">
+
+<p>
+<a href="Assignments/A6/OgataB-5-8.png" target="_blank"
+><img src="Assignments/A6/OgataB-5-8.png"
+style="width:260pt; "
+class="inlineimage"
+></a></p>
+
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>          <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                 x1 (k + 1) = x2 (k) + u1 (k)
+                                 x2 (k + 1) = 3x1 (k) + 2x3 (k)
+                                 x3 (k + 1) = −12x1 (k) − 7x2 (k) − 6x3 (k) + u2 (k)
+                                 y1 (k) = 2x2 (k) + 2u1 (k)
+                                 y2 (k) = x3 (k) + u2 (k)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; x_1(k+1)= x_2(k)+u_1(k) \\ &amp; x_2(k+1)=3x_1(k)+2x_3(k) \\ &amp;
+x_3(k+1)=-12x_1(k)-7x_2(k)-6x_3(k)+u_2(k) \\ &amp; y_1(k)=2x_2(k)+2u_1(k) \\ &amp;
+y_2(k)=x_3(k)+u_2(k) \end{align*}
+</p>
+
+
+<p>Rewriting the equations in state-space.</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>          <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                                   
+                                                     0   1    0    x1 (k)     1      0        
+                        x1 (k + 1) x2 (k + 1)                                              u (k)
+                                                = 3       0    2  x2 (k) + 0      0 1
+                              x3 (k + 1)                                                   u2 (k)
+                                                     −12 −7     −6   x3 (k)     0      1
+                                                        
+                                               x (k)
+                                    0 2 0  1 
+                                                                  
+                        y1 (k)                              2   0 u1 (k)
+                                =                 x2 (k) +
+                        y2 (k)      0 0 1                   0   1 u2 (k)
+                                                  x3 (k)
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x_1(k+1) \‚x_2(k+1) \\ x_3(k+1) \end {bmatrix} = \begin {bmatrix}
+0 &amp; 1 &amp; 0 \\ 3 &amp; 0 &amp; 2 \\ -12 &amp; -7 &amp; -6 \end {bmatrix}\begin {bmatrix} x_1(k) \\
+x_2(k) \\ x_3(k) \end {bmatrix}+\begin {bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \\ 0 &amp; 1 \end {bmatrix}\begin
+{bmatrix} u_1(k) \\ u_2(k) \end {bmatrix} \\ &amp; \begin {bmatrix} y_1(k) \\ y_2(k) \end {bmatrix}
+=\begin {bmatrix} 0 &amp; 2 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end {bmatrix}\begin {bmatrix} x_1(k) \\ x_2(k)
+\\ x_3(k) \end {bmatrix}+ \begin {bmatrix} 2 &amp; 0 \\ 0 &amp; 1 \end {bmatrix}\begin {bmatrix} u_1(k) \\
+u_2(k) \end {bmatrix} \end{align*}
+</p>
+<h6 id="autosec-60"> Problem B-5-15</h6><a id="autopage-60"></a>
+
+<p>Obtain the pulse transfer function of the system defined by the equations</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                    <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                       x(k + 1) = Gx(k) + Hu(k)
+                                            y(k) = Cx(k) + Du(k)
+                                                                          
+                                                     −a1 −a2 −a3            1
+                                                G= 1        0   0  , H = 0
+                                                       0     1   0          0
+                                                   C = [b1 − a1     b2 − a2 b0   b3 − a3 b0 ], D = b0
+
+
+
+-->
+
+
+<p>
+\begin{align*} \quad x(k+1) &amp; = Gx(k)+Hu(k) \\ \quad y(k) &amp; = Cx(k)+Du(k) \\ &amp; G = \begin
+{bmatrix} -a_1 &amp; -a_2 &amp; -a_3 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end {bmatrix}, H =
+\begin {bmatrix} 1 \\ 0 \\ 0 \end {bmatrix} \\ &amp; C = [b_1-a_1 \quad b_2 - a_2b_0 \quad b_3 - a_3b_0],
+D= b_0 \end{align*}
+</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>                    <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                 
+                   a       b    c
+          let M = d       e    f
+                   g       h    i
+                                                                                          
+                                                            ei − f h ch − bi bf − ce
+            −1                       1                     f g − di ai − cg cd − af 
+          M    =
+                  a(ei − f h) − b(di − f g) + c(dh − eg) dh − eg bg − ah ae − bd
+                                           −1                              2                                   
+                          z + a1 a2 a3                                        z   −(a2 z + a3 )        −a3 z
+                  −1                                            1                      2
+          (zI − G)   =     −1       z    0     = 3                          z     z + a1 z          −a3        
+                             0     −1     z          z + a1 z 2 + a2 z + a3 1          z + a1     z 2 + a1 z + a2
+                            2                                                                 2
+                            z    −(a2 z + a3 )        −a3 z          1                             z
+                  −1                 2                                                1
+          (zI − G) H = z          z + a1 z            −a3         0 = 3
+                                                                                                z
+                             1       z + a1      z 2 + a1 z + a2     0     z + a1 z 2 + a2 z + a3 1
+                                                                                        2
+                                                                                         z
+                    −1                                                    1
+          C(zI − G) H = [b1 − a1 b2 − a2 b0 b3 − a3 b0 ] 3              2
+                                                                                       z
+                                                                z + a1 z + a2 z + a3 1
+
+                                                  (b1 − a1 b0 )z 2 + (b2 − a2 b0 )z(b3 − a3 b0 )
+          F (z) = C(zI − G)−1 H + D =                                                            + b0
+                                                            z 3 + a1 z 2 + a2 z + a3
+                    b0 z 3 + b1 z 2 + b2 z + b3
+          F (z) =
+                     z 3 + a1 z 2 + a2 z + a3
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \textrm {let } M =\begin {pmatrix}a&amp;b&amp;c\\ d&amp;e&amp;f\\ g&amp;h&amp;i
+\end {pmatrix} \\ &amp; M^{-1}=\frac {1}{a(ei-fh) - b(di-fg) + c(dh-eg)} \begin {pmatrix}
+ei-fh&amp;ch-bi&amp;bf-ce\\ fg-di&amp;ai-cg&amp;cd-af\\ dh-eg&amp;bg-ah&amp;ae-bd \end {pmatrix} \\
+&amp; (zI-G)^{-1}= \begin {bmatrix} z+a_1 &amp; a_2 &amp; a_3 \\ -1 &amp; z &amp; 0 \\ 0 &amp; -1
+&amp; z \end {bmatrix}^{-1} = \frac {1}{z^3+a_1z^2+a_2z+a_3} \begin {bmatrix} z^2 &amp; -(a_2z+a_3)
+&amp; -a_3 z \\ z &amp; z^2+a_1z &amp; -a_3 \\ 1 &amp; z+a_1 &amp; z^2+a_1z +a_2 \end {bmatrix} \\
+&amp; (zI-G)^{-1}H= \begin {bmatrix} z^2 &amp; -(a_2z+a_3) &amp; -a_3 z \\ z &amp; z^2+a_1z &amp;
+-a_3 \\ 1 &amp; z+a_1 &amp; z^2+a_1z +a_2 \end {bmatrix}\begin {bmatrix} 1 \\ 0 \\ 0 \end {bmatrix} =
+\frac {1}{z^3+a_1z^2+a_2z+a_3} \begin {bmatrix} z^2 \\ z \\ 1 \end {bmatrix} \\ &amp; C(zI-G)^{-1}H =
+[b_1-a_1 \quad b_2 - a_2b_0 \quad b_3 - a_3b_0]\frac {1}{z^3+a_1z^2+a_2z+a_3} \begin {bmatrix} z^2
+\\ z \\ 1 \end {bmatrix} \\ &amp; F(z) = C(zI-G)^{-1}H +D = \frac {(b_1-a_1b_0)z^2 + (b_2 - a_2b_0)z
+(b_3 - a_3b_0)}{z^3+a_1z^2+a_2z+a_3} + b_0 \\ &amp; F(z)= \frac
+{b_0z^3+b_1z^2+b_2z+b_3}{z^3+a_1z^2+a_2z+a_3} \end{align*}
+</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-7.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 7</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-61"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-62"> <span class="sectionnumber">0.6&#x2001;</span>Assignment 7</h4><a
+id="autopage-62"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> Wednesday, March 14, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment:</b> Number 7<br />
+</p>
+<h6 id="autosec-64"> B-5-18</h6><a id="autopage-64"></a>
+
+<p>Consider the discrete-time state equation</p>
+
+
+<p>\[ \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \end {bmatrix} = \begin {bmatrix} 0 &amp; 1 \\ -0.24 &amp; -1
+\end {bmatrix}\begin {bmatrix} x_1(k) \\ x_2(k) \end {bmatrix} \]</p>
+
+
+<p>Obtain the state transition matrix \(\Psi (k)\)</p>
+
+
+<p>Since \(\displaystyle \psi (k)=G^k= \mathcal {Z}^{-1} \left \{z[zI-G]^{-1}\right \}\), and \(A=\begin
+{bmatrix} a &amp; b \\ c &amp; d \end {bmatrix}^{-1}= \frac {1}{ad-bc}\begin {bmatrix} d &amp; -b \\ -c
+&amp; a \end {bmatrix}\)</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>        <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                −1                                           
+                                       z    −1                            z              z+1 1
+             Z −1 z[zI − G]−1 = z                     = Z −1
+                 
+                                      0.24 z + 1                z 2 + z − (−1)(0.24) −0.24 z
+                                                       "                                   #!
+                                                           15        10       25       25
+                                                                − 5 z+3            − 5 z+3
+                                                
+             F (z)           1           z+1 1           5 z+2              5 z+2
+                   =                               =        6         6       15       10
+               z     (z + 0.4)(z + 0.6) −0.24 z          5 z+3
+                                                                − 5 z+2     5 z+3
+                                                                                   − 5 z+2
+
+                                                 3.0 (−0.4)k − 2.0 (−0.6)k 5.0 (−0.4)k − 5.0 (−0.6)k
+                                                                                                         
+             ψ(k) = Z −1 z[zI − G]−1 = Gk =
+                         
+                                                            k              k              k             k
+                                                 1.2 (−0.6) − 1.2 (−0.4)        3.0 (−0.6) − 2.0 (−0.4)
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \mathcal {Z}^{-1} \left \{z[zI-G]^{-1}\right \} = z \begin {bmatrix} z &amp; -1 \\ 0.24
+&amp; z+1 \end {bmatrix}^{-1}= \mathcal {Z}^{-1} \left \{ \frac {z}{z^2+z-(-1)(0.24)}\begin {bmatrix} z+1
+&amp; 1 \\ -0.24 &amp; z \end {bmatrix} \right \} \\ &amp; \frac {F(z)}{z}= \frac {1}{(z+0.4)(z+0.6)}\begin
+{bmatrix} z+1 &amp; 1 \\ -0.24 &amp; z \end {bmatrix} = \left (\begin {bmatrix} \frac {15}{5\,z+2}-\frac
+{10}{5\,z+3} &amp; \frac {25}{5\,z+2}-\frac {25}{5\,z+3}\\ \frac {6}{5\,z+3}-\frac {6}{5\,z+2} &amp; \frac
+{15}{5\,z+3}-\frac {10}{5\,z+2} \end {bmatrix}\right ) \\ &amp; \psi (k)=\mathcal {Z}^{-1} \left
+\{z[zI-G]^{-1}\right \} = G^k = \begin {bmatrix} 3.0\,{\left (-0.4\right )}^k-2.0\,{\left (-0.6\right )}^k &amp;
+5.0\,{\left (-0.4\right )}^k-5.0\,{\left (-0.6\right )}^k\\ 1.2\,{\left (-0.6\right )}^k-1.2\,{\left (-0.4\right )}^k
+&amp; 3.0\,{\left (-0.6\right )}^k-2.0\,{\left (-0.4\right )}^k\end {bmatrix} \end{align*}
+</p>
+<h6 id="autosec-65"> B-5-22</h6><a id="autopage-65"></a>
+
+<p>Determine the stability of the origin of the following discrete-time system: </p>
+
+
+<p>\[ \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \\ x_3(k+1) \end {bmatrix} = \begin {bmatrix} 1 &amp; 3
+&amp; 0 \\ -3 &amp; -2 &amp; -3 \\ 1 &amp; 0 &amp; 0 \end {bmatrix}\begin {bmatrix} x_1(k) \\ x_2(k) \\
+x_3(k) \end {bmatrix} \]</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                
+                              z−1        −3     0
+          det(zI − G) = det  3        z+2     3 = (z − 1)(z + 2)z − (3)(−3z + 3) = z 3 + z 2 + 7z + 9
+                               −1         0     z
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \det (zI-G) = \det \left (\begin {bmatrix} z-1 &amp; -3 &amp; 0 \\ 3 &amp; z+2 &amp; 3
+\\ -1 &amp; 0 &amp; z \end {bmatrix} \right ) = (z-1)(z+2)z-(3)(-3z+3) = z^3+z^2+7z+9 \end{align*}
+</p>
+
+
+<p>Using the characteristic polynomial and the jury-marden stability criterion.</p>
+
+
+<p>\(P(z)=a_0z^3+a_1z^2+a_2z+a_3=z^3+z^2+7z+9\), and since \(|a_3| &lt; a_0 \rightarrow 9 &lt; 1\), is
+not true, the origin of the system is unstable.</p>
+<h6 id="autosec-66"> B-6-1</h6><a id="autopage-66"></a>
+
+<p>Consider the system defined by </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>   <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                           
+                                    x1 (k + 1)     a b x1 (k)    1
+                                                =              +    u(k)
+                                    x2 (k + 1)      c d x2 (k)   1
+                                                        
+                                                  x (k)
+                                   y(k) = [1 0] 1
+                                                  x2 (k)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \end {bmatrix}= \begin {bmatrix} a &amp; b \\
+c &amp; d \end {bmatrix}\begin {bmatrix} x_1(k) \\ x_2(k) \end {bmatrix}+\begin {bmatrix} 1 \\ 1 \end
+{bmatrix}u(k) \\ &amp; y(k) = [1 \quad 0] \begin {bmatrix} x_1(k) \\ x_2(k) \end {bmatrix} \end{align*}
+</p>
+
+
+<p>Determine the conditions on a,b,c, and d for complete state controllability and complete observability.
+\(\displaystyle G = \begin {bmatrix} a &amp; b\\ c &amp; d \end {bmatrix}, \quad H =\begin {bmatrix} 1 \\ 1
+\end {bmatrix}\)</p>
+
+
+<p>\(\text {rank}\begin {bmatrix} H &amp; GH \end {bmatrix}=\left (\begin {array}{cc} 1 &amp; a+b\\ 1
+&amp; c+d \end {array}\right )=n=2\) &#x2001;&#x2001;
+</p>
+<p><span class="paragraph" id="autosec-67"> Complete State Controllability</span><a id="autopage-67"></a>
+, \(a+b \neq c+d\) &#x2001;&#x2001;
+</p>
+
+
+<p>Since row rank equals column rank, the rank of a matrix is the same of its transpose, \(\text {rank}\left (\begin
+{array}{cc} 1 &amp; 0\\ a &amp; b \end {array}\right ) =n =2\), the condition is \(b \neq 0\)</p>
+<h6 id="autosec-68"> B-6-5</h6><a id="autopage-68"></a>
+
+<p>For the system defined by </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                   
+                                  x1 (k + 1)         0     1    x1 (k)   0
+                                              =                        +    u(k)
+                                  x2 (k + 1)     −0.16     −1 x2 (k)     1
+                                                      
+                                                x (k)
+                                 y(k) = [1 0] 1
+                                                x2 (k)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \end {bmatrix}= \begin {bmatrix} 0 &amp; 1 \\
+-0.16 &amp; -1 \end {bmatrix}\begin {bmatrix} x_1(k) \\ x_2(k) \end {bmatrix}+\begin {bmatrix} 0 \\ 1 \end
+{bmatrix}u(k) \\ &amp; y(k) = [1 \quad 0] \begin {bmatrix} x_1(k) \\ x_2(k) \end {bmatrix} \end{align*}
+</p>
+
+
+<p>assume that the following outputs are observed: \(y(0)=1\) and \(y(1)=2\) The control signals give are
+\(u(0)=2\), \(u(1)=-1\). Determine the initial state x(0). Also determine states x(1) and x(2).</p>
+
+
+<p>Since \(y(0)=x_1(0)=1 \quad y(1)=x_1(1)=2\), \(x(0)= \begin {bmatrix} 1 \\ 2 \end {bmatrix}\) State x(1)
+is: </p>
+
+
+<p>\[ \begin {bmatrix} x_1(1) \\ x_2(1) \end {bmatrix} = \begin {bmatrix} 0 &amp; 1 \\ -0.16 &amp; -1 \end
+{bmatrix} \begin {bmatrix} 1 \\ 2 \end {bmatrix}+ \begin {bmatrix} 0 \\ 1 \end {bmatrix}[2]= \begin
+{bmatrix} 2 \\ -0.16 \end {bmatrix} \]</p>
+
+
+<p>and state x(2) is </p>
+
+
+<p>\[ \begin {bmatrix} x_1(2) \\ x_2(2) \end {bmatrix} = \begin {bmatrix} 0 &amp; 1 \\ -0.16 &amp; -1 \end
+{bmatrix} \begin {bmatrix} 2 \\ -0.16 \end {bmatrix}+ \begin {bmatrix} 0 \\ 1 \end {bmatrix}[-1]= \begin
+{bmatrix} -0.16 \\ -1.16 \end {bmatrix} \]</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-8.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 8</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-69"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-70"> <span class="sectionnumber">0.7&#x2001;</span>Assignment 8</h4><a
+id="autopage-70"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 27, 2018 <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 8<br />
+</p>
+<h6 id="autosec-72"> Problem B-6-11</h6><a id="autopage-72"></a>
+
+<p>Consider the double-integrator system </p>
+
+
+<p>\[ x((k+1)T)=\mathbf {G}x(kT)+\mathbf {H}u(kT) \]</p>
+
+
+<p>where </p>
+
+
+<p>\[ \mathbf {G} = \begin {bmatrix} 1 &amp; T \\ 0 &amp; 1 \end {bmatrix}, \qquad \mathbf {H} = \begin
+{bmatrix} T^2/2 \\ T \end {bmatrix} \]</p>
+
+
+<p>and T is the sampling period. (See Problem A-5-16 for the derivation of this discrete-time state equation for the
+double-integrator system.). &#x2001;&#x2001;<br />
+</p>
+
+
+<p>It is desired that the closed-loop poles be located at \(z=\mu _1\) and \(z=\mu _2\)/ Assuming that the state
+feedback control </p>
+
+
+<p>\[ u(kT) = -Kx(kT) \]</p>
+
+
+<p>is used, determine the state feedback gain matrix K.</p>
+
+
+<p>The controllability matrix has: \(\text {rank}[H \ GH]=\text {rank}\left (\begin {bmatrix} \frac {T^2}{2}
+&amp; \frac {3\,T^2}{2}\\ T &amp; T \end {bmatrix}\right )=2\).</p>
+
+
+<p>Let \(K = \begin {bmatrix} k_1 &amp; k_2 \end {bmatrix}\), and \(u(kT)=-Kx(kT)= \begin {bmatrix} k_1
+&amp; k_2 \end {bmatrix} \begin {bmatrix} x_1(kT) \\ x_2(kT) \end {bmatrix}\)</p>
+
+
+<p>\(\mathbf {H}u(kT)=-\begin {bmatrix} T^2/2 \\ T \end {bmatrix}\begin {bmatrix} k_1 &amp; k_2 \end
+{bmatrix} \begin {bmatrix} x_1(kT) \\ x_2(kT) \end {bmatrix} = -\begin {bmatrix} 0.5T^2 k_1 &amp; 0.5T^2
+k_2 \\ T k_1 &amp; Tk_2 \end {bmatrix}\begin {bmatrix} x_1(kT) \\ x_2(kT) \end {bmatrix}\)</p>
+
+
+<p>\(x((k+1)T)=\mathbf {G}x(kT)+\mathbf {H}u(kT)=\begin {bmatrix} 1 &amp; T \\ 0 &amp; 1 \end
+{bmatrix}\begin {bmatrix} x_1(kT) \\ x_2(kT) \end {bmatrix}-\begin {bmatrix} 0.5T^2 k_1 &amp; 0.5T^2
+k_2 \\ T k_1 &amp; Tk_2 \end {bmatrix}\begin {bmatrix} x_1(kT) \\ x_2(kT) \end {bmatrix}\)</p>
+
+
+<p>The characteristic equation is: </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>             <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                 z − 1 + 0.5T 2 k1    −T + 0.5T 2 k2
+                                                                                      
+                     |zI − (G − HK)| = det
+                                                       T k1            z − 1 + T k2
+                                      = z 2 + (−2 + 0.5T 2 k1 + T k2 )z + 0.5T 2 k1 − T k2 + 1 = 0
+
+
+
+-->
+
+
+<p>
+\begin{align*} |zI-(G-HK)|&amp;= \det \begin {bmatrix} z-1+0.5T^2 k_1 &amp; -T+0.5T^2 k_2 \\ T k_1
+&amp; z-1+Tk_2 \end {bmatrix} \\ &amp; = z^2+(-2+0.5T^2k_1+Tk_2)z+0.5T^2k_1-Tk_2+1=0
+\end{align*}
+</p>
+
+
+<p>\[ (z-\mu _1)(z-\mu _2) = z^2 - (\mu _1+\mu _2)z + \mu _1\mu _2 =0 \]</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>             <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                                               1 2
+                                            µ1 + µ2 = 2 −        T k1 − T k2
+                                                               2
+                                                        1 2
+                                            µ1 µ2 =       T k1 − T k2 + 1
+                                                        2
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \mu _1 + \mu _2 = 2 -\frac {1}{2}T^2k_1 - Tk_2 \\ &amp; \mu _1 \mu _2 = \frac
+{1}{2}T^2k_1-Tk_2+1 \end{align*}
+</p>
+
+
+<p>solving for \(k_1\) and \(k_2\) </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>             <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                               1                                        1
+                          k1 =    (1 − µ1 − µ2 + µ1 µ2 ),       k2 =      (3 − µ1 − µ2 − µ1 µ2 )
+                               T2                                      2T
+                                1                               1
+                          K = [ 2 (1 − µ1 − µ2 + µ1 µ2 )          (3 − µ1 − µ2 − µ1 µ2 )]
+                               T                               2T
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; k_1 = \frac {1}{T^2}(1-\mu _1-\mu _2+\mu _1\mu _2), \quad k_2 = \frac
+{1}{2T}(3-\mu _1-\mu _2-\mu _1\mu _2) \\ &amp; K = [\frac {1}{T^2}(1-\mu _1-\mu _2+\mu _1\mu _2)
+\quad \frac {1}{2T}(3-\mu _1-\mu _2-\mu _1\mu _2) ] \end{align*}
+</p>
+<h6 id="autosec-73"> Problem B-6-12</h6><a id="autopage-73"></a>
+
+<p>Consider the system defined by </p>
+
+
+<p>\[ \begin {bmatrix} x_1(k+1) \\ x_2(k+1) \\ x_3(k+1) \end {bmatrix} = \begin {bmatrix} 0 &amp; 1
+&amp; 0 \\ 0 &amp; 0 &amp; 1 \\ -0.16 &amp; 0.84 &amp; 0 \end {bmatrix} \begin {bmatrix} x_1(k) \\ x_2(k)
+\\ x_3(k) \end {bmatrix} + \begin {bmatrix} 1 \\ 1 \\ 1\end {bmatrix}u(k) \]</p>
+
+
+<p>Determine the state feedback gain matrix \(\mathbf {K}\) such that when the control signal is given by \(u(k)
+= -\mathbf {K} x(k)\) the closed-loop system will exhibit the deadbeat response to any initial state x(0).</p>
+
+
+<p>The controllability matrix has \(\text {rank}[M]=\text {rank}[H \ GH \ G^2H]=\text {rank}\left (\begin
+{bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 0.68 \\ 1 &amp; 0.68 &amp; 0.68 \\ \end {bmatrix}\right
+)=3\), we can determine the necessary state feedback gain matrix K for deadbeat response. For a deadbeat response
+\(\alpha _1=\alpha _2= \alpha _3 =0\)</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>     <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                               K = α3 − a3 α2 − a2 α1 − a1 T −1
+                                                         
+
+                                                                           −0 T −1
+                                                                          
+                                 = −a3 −a2 −a1 = −0.16 0.84
+
+
+
+-->
+
+
+<p>
+\begin{align*} K &amp;= \begin {bmatrix} \alpha _3-a_3 &amp; \alpha _2 -a_2 &amp; \alpha _1-a_1 \end
+{bmatrix}T^{-1} \\ &amp; = \begin {bmatrix} -a_3 &amp; -a_2 &amp; -a_1 \end {bmatrix} = \begin
+{bmatrix} -0.16 &amp; 0.84 &amp; -0 \end {bmatrix}T^{-1} \end{align*}
+</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>     <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                                   
+                             1       1     1             a2 a1       1     −0.84   0   1
+                        M = 1       1    0.68  W = a1        1    0 =  0      1   0
+                             1     0.68   0.68            1     0    0       1     0   0
+                                                      
+                                      0.16     1     1
+                        T = M W = −0.16       1     1
+                                     −0.16 0.68 1
+                                                         
+                                3.125 −3.125         0
+                        T −1 =  0       3.125    −3.125
+                                 0.5    −2.625     3.125
+                                                                           
+                                                3.125     −3.125      0
+                        K = −0.16 0.84 −0  0                3.125    −3.125
+                                                    0.5     −2.625    3.125
+                                                  
+                          = −0.5 3.125 −2.625
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; M = \begin {bmatrix} 1 &amp; 1 &amp; 1 \\ 1 &amp; 1 &amp; 0.68 \\ 1 &amp; 0.68
+&amp; 0.68 \\ \end {bmatrix} \quad W = \begin {bmatrix} a_2 &amp; a_1 &amp; 1 \\ a_1 &amp; 1 &amp; 0
+\\ 1 &amp; 0 &amp; 0 \\ \end {bmatrix} = \begin {bmatrix} -0.84 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \\ 1
+&amp; 0 &amp; 0 \\ \end {bmatrix} \\ &amp; T = MW = \begin {bmatrix} 0.16 &amp; 1 &amp; 1 \\ -0.16
+&amp; 1 &amp; 1 \\ -0.16 &amp; 0.68 &amp; 1 \\ \end {bmatrix} \\ &amp; T^{-1} = \begin {bmatrix} 3.125
+&amp; -3.125 &amp; 0 \\ 0 &amp; 3.125 &amp; -3.125 \\ 0.5 &amp; -2.625 &amp; 3.125 \\ \end {bmatrix} \\
+&amp; K = \begin {bmatrix} -0.16 &amp; 0.84 &amp; -0 \end {bmatrix}\begin {bmatrix} 3.125 &amp; -3.125
+&amp; 0 \\ 0 &amp; 3.125 &amp; -3.125 \\ 0.5 &amp; -2.625 &amp; 3.125 \\ \end {bmatrix} \\ &amp; \ \ =
+\begin {bmatrix} -0.5 &amp; 3.125 &amp; -2.625 \end {bmatrix} \end{align*}
+</p>
+<p><span class="subparagraph" id="autosec-74"> Problem 3</span><a id="autopage-74"></a> Determine the
+feedback gain matrix for the model of B-6-11 so that the closed loop system has settling time of 2 sec and overshoot
+of 18% (T=0.1). &#x2001;&#x2001;<br />
+\(2^{nd}\) Order underdamped system, z-domain characteristic polynomial is: &#x2001;&#x2001;<br />
+</p>
+
+
+<p>\((z-e^{(-\zeta \omega _n+j\omega _d)T})(z-e^{(-\zeta \omega _n-j\omega _d)T})=z^2-2\cos (\omega _d
+T)e^{-\zeta \omega _n T}z+e^{-2 \zeta \omega _n T}\)</p>
+
+
+<p>The damping ratio, \(\zeta = \sqrt {\frac {(\ln ( \% \ OS )^2}{\pi ^2 +(\ln ( \% \ OS ))^2}}= \sqrt {\frac
+{2.9405336}{\pi ^2+2.9405336}}=0.47911\)</p>
+
+
+<p>\(T_s \approx \frac {3.9}{ \zeta \omega _n} \rightarrow \omega _n =\frac {3.9}{\zeta \omega _n T_s}=
+4.07 \ \) rad /s and \(\omega _d = \omega _n \sqrt {1-\zeta ^2}=2.937429 \) rad /s</p>
+
+
+<p><b>Poles</b></p>
+
+
+<p>\(\mu _{1,2}=z_{1,2}=e^{(-\zeta \omega _n \pm j \omega _d)T}=e^{-\zeta \omega _n T} \angle \pm
+\omega _d T = e^{-0.195} \angle \pm 0.2937429 = 0.787592 \pm j0.238241\)</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>       <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                1                                   1
+                          k1 =    (1 − µ1 − µ2 + µ1 µ2 ),   k2 =      (3 − µ1 − µ2 − µ1 µ2 )
+                               T2                                  2T
+                                1                            1
+                          K = [ 2 (1 − µ1 − µ2 + µ1 µ2 )       (3 − µ1 − µ2 − µ1 µ2 )]
+                               T                            2T
+                          K = [10.1876 3.7388]
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; k_1 = \frac {1}{T^2}(1-\mu _1-\mu _2+\mu _1\mu _2), \quad k_2 = \frac
+{1}{2T}(3-\mu _1-\mu _2-\mu _1\mu _2) \\ &amp; K = [\frac {1}{T^2}(1-\mu _1-\mu _2+\mu _1\mu _2)
+\quad \frac {1}{2T}(3-\mu _1-\mu _2-\mu _1\mu _2) ] \\ &amp; K = [10.1876 \quad 3.7388] \end{align*}
+</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>
+<!--|Start file|Assignment-9.html|-->
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 9</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-75"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-76"> <span class="sectionnumber">0.8&#x2001;</span>Assignment 9</h4><a
+id="autopage-76"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> April 3,2018 <span style="width:17pt; display:inline-block"></span> <b>Assignment</b>
+9<br />
+</p>
+<h6 id="autosec-78"> Problem B-6-17</h6><a id="autopage-78"></a>
+
+<p>Figure 6-24 shows a servo system where the integral controller has a time delay of one sampling period.
+(Compare this system with the servo system shown in Figure 6-18)</p>
+
+
+<figure id="autoid-25" class="figure">
+
+<p>
+<a href="Assignments/A9/OgataB6-17.pdf" target="_blank"
+><img src="Assignments/A9/OgataB6-17.pdf"
+style="width:434pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.19:&nbsp;Ogata B-6-17</p>
+
+
+</figcaption>
+
+<a id="fig:ogatab6-17"></a>
+
+</figure>
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>           <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+              v(k + 1) = v(k) + r(k) − y(k)   x(k + 1) = 0.5x(k) + u(k)
+              y(k) = x(k)   u(k) = −K2 x(k) + K1 v(k)         K1 v(k) = u(k) + K2 x(k)
+              u(k + 1) = −K2 x(k + 1) + K1 v(k + 1) = K2 (−0.5x(k) + u(k)) + K1 (v(k) + r(k) − y(k))
+              u(k + 1) = −K2 (−0.5x(k) + u(k)) + (u(k) + K2 x(k)) + K1 r(k) − K1 x(k)
+              u(k + 1) = (0.5K2 − K1 )x(k) + (1 − K − 2)u(k) + K1 (r(k))
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; v(k+1) = v(k) +r(k) - y(k) \quad x(k+1) = 0.5x(k)+u(k) \\ &amp; y(k) = x(k) \quad u(k)
+= -K_2 x(k) +K_1 v(k) \quad K_1v(k) =u(k)+K_2x(k) \\ &amp; u(k+1) = -K_2 x(k+1)+K_1 v(k+1) =
+K_2(-0.5x(k)+u(k)) + K_1(v(k) +r(k) - y(k)) \\ &amp; u(k+1) = -K_2 (-0.5x(k)+u(k)) + (u(k)+K_2x(k))
++K_1 r(k) - K_1x(k) \\ &amp; u(k+1) = (0.5K_2-K_1)x(k)+(1-K-2)u(k)+K_1(r(k)) \end{align*}
+</p>
+
+
+<p>Creating a state-space representation </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>           <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                                
+                 x(k + 1)          0.5             1          x(k)    0
+                           =                                        +    r(k)
+                 u(k + 1)     0.5K2 − K1        1 − K2        u(k)    K1
+                                  
+                            x(k)
+                y(k) = 1 0
+                               u(k)
+                xe (k) = x(k) − x(∞)
+                ue (k) = u(k) − u(∞)
+                                                     
+                  xe (k + 1)       0.5      1      xe (k)
+                  ue (k + 1) 0.5K2 − K1 1 − K2 ue (k)
+                                                    
+                                 z − 0.5      −1
+                (Iz − G) =                              = z 2 + (K2 − 1.5)z + 0.5 − K2 + K1 = 0
+                              −0.5K2 + K1 z − 1 + K2
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x(k+1) \\ u(k+1) \end {bmatrix} = \begin {bmatrix} 0.5 &amp; 1 \\
+0.5K_2-K_1 &amp; 1-K_2 \end {bmatrix}\begin {bmatrix} x(k) \\ u(k) \end {bmatrix} + \begin {bmatrix} 0 \\
+K_1 \end {bmatrix} r(k) \\ &amp; y(k) = \begin {bmatrix} 1 &amp; 0 \end {bmatrix}\begin {bmatrix} x(k) \\
+u(k) \end {bmatrix} \\ &amp; x_e(k) = x(k) - x(\infty ) \\ &amp; u_e(k) = u(k) - u(\infty ) \\ &amp; \begin
+{bmatrix} x_e(k+1) \\ u_e(k+1) \end {bmatrix}\begin {bmatrix} 0.5 &amp; 1 \\ 0.5K_2-K_1 &amp; 1-K_2
+\end {bmatrix}\begin {bmatrix} x_e(k) \\ u_e(k) \end {bmatrix} \\ &amp; (Iz-G)=\begin {bmatrix} z-0.5
+&amp; -1 \\ -0.5K_2 +K_1 &amp; z-1+K_2 \end {bmatrix}=z^2+(K_2-1.5)z+0.5-K_2+K_1=0 \end{align*}
+</p>
+
+
+<p>The desired characteristic equation \(P(z)=0\), \(z^2=0\), choose \(K_2=1.5\), \(K_1=1\). </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>           <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+                                                               
+                             x(k + 1)     0.5         1      x(k)
+                                       =
+                             u(k + 1)    −0.25      −0.5 u(k)
+                                                                       
+                                                                x(0)      a
+                            Assume that the initial state is:          =
+                                                                u(0)      b
+                                                                                 
+                              x(1)      0.5      1      a       0           0.5a + b
+                                    =                      +         =
+                             u(1)     −0.25 −0.5 b              1       −0.25a − 0.5b + 1
+                                                                           
+                              x(2)      0.5      1            0.5a + b           0       0
+                                    =                                         +      =
+                              u(2)    −0.25 −0.5 −0.25a − 0.5b + 1               1      0.5
+                                    
+                              x(k)      1
+                                    =       , for k = 3, 4, 5 · · ·
+                              u(k)     0.5
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \begin {bmatrix} x(k+1) \\ u(k+1) \end {bmatrix}=\begin {bmatrix} 0.5 &amp; 1 \\
+-0.25 &amp; -0.5 \end {bmatrix}\begin {bmatrix} x(k) \\ u(k) \end {bmatrix} \\ &amp; \text {Assume that the
+initial state is:} \begin {bmatrix} x(0) \\ u(0) \end {bmatrix} = \begin {bmatrix} a \\ b \end {bmatrix} \\
+&amp; \begin {bmatrix} x(1) \\ u(1) \end {bmatrix} = \begin {bmatrix} 0.5 &amp; 1 \\ -0.25 &amp; -0.5 \end
+{bmatrix}\begin {bmatrix} a \\ b \end {bmatrix}+ \begin {bmatrix} 0 \\ 1 \end {bmatrix} = \begin {bmatrix}
+0.5a +b \\ -0.25a -0.5b+1 \end {bmatrix} \\ &amp; \begin {bmatrix} x(2) \\ u(2) \end {bmatrix} = \begin
+{bmatrix} 0.5 &amp; 1 \\ -0.25 &amp; -0.5 \end {bmatrix} \begin {bmatrix} 0.5a +b \\ -0.25a -0.5b+1 \end
+{bmatrix} + \begin {bmatrix} 0 \\ 1 \end {bmatrix} =\begin {bmatrix} 0 \\ 0.5 \end {bmatrix} \\ &amp; \begin
+{bmatrix} x(k) \\ u(k) \end {bmatrix}=\begin {bmatrix} 1 \\ 0.5 \end {bmatrix}, \quad \text {for k}=3,4,5
+\cdots \end{align*}
+</p>
+
+
+<p>\(y(0)=x(0)=a \quad y(1)=x(1)=0.5a+b \quad y(k)=x(k)=1 \quad \text {for k}=2,3,4 \cdots \)</p>
+
+
+<figure id="autoid-26" class="figure">
+
+<p>
+<a href="Assignments/A9/stepResponsePlot.pdf" target="_blank"
+><img src="Assignments/A9/stepResponsePlot.pdf"
+style="width:217pt; "
+class="inlineimage"
+></a></p>
+
+
+<figcaption>
+<p>Figure&nbsp;0.20:&nbsp;Step Response</p>
+
+
+</figcaption>
+
+</figure>
+<h6 id="autosec-79"> Problem B-6-13</h6><a id="autopage-79"></a>
+
+<p>Consider the system </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                            x(k + 1) = Gx(k) + Hu(k)
+                                            y(k) = Cx(k)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; x(k+1)=Gx(k)+Hu(k) \\ &amp; y(k) = Cx(k) \end{align*}
+</p>
+
+
+<p>where </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                          x(k) = state vector (2-vector)
+                                          u(k) = control vector (scalar)
+                                          y(k) = output signal (scalar)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; x(k) = \text {state vector (2-vector)} \\ &amp; u(k) = \text {control vector (scalar)} \\
+&amp; y(k) = \text {output signal (scalar)} \end{align*}
+</p>
+
+
+<p>and </p>
+
+
+<p>\[ G = \begin {bmatrix} 0 &amp; 1 \\ -0.16 &amp; -1 \end {bmatrix}, \qquad H = \begin {bmatrix} 0 \\ 1
+\end {bmatrix}, \qquad C = \begin {bmatrix} 0 &amp; 1 \end {bmatrix} \]</p>
+
+
+<p><b>Design a full order prediction observer with deadbeat response for the system of Question B-6-13 in the
+textbook.</b></p>
+
+
+<p>Prediction (full order) observer where the estimate \(x(k+1)\) is obtained based on measurements of up to
+\(y(k)\).</p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                   x̃(k + 1) = Gx̃(k) + Hu(k) + ke [y(k) − ỹ(k)]
+                                   ỹ(k + 1) = cx̃(k + 1)
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \tilde {x}(k+1)=G\tilde {x}(k)+Hu(k)+k_e[y(k)-\tilde {y}(k)] \\ &amp; \tilde {y}(k+1)
+= c\tilde {x}(k+1) \end{align*}
+</p>
+
+
+<p>\(k_e\) for this observer can be obtained using the inverse observability matrix, O</p>
+
+
+<p>\[ k_e = O^{-1} \tilde {A}^{-1}(\alpha -a)^T \]</p>
+
+
+<p>where \(\alpha =0\) since the observer is required to have a deadbeat response. Further, </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span>      <span class="hidden"> \( \seteqnumber {19} \)
+</span> </p>
+
+
+
+<!--
+
+
+
+                                   det(zI − G) = z 2 + z + 0.16     a = [1 0.16]
+                                              
+                                         1 0
+                                   Ã =
+                                         1 1
+                                                       
+                                           c        1    1
+                                   O=         =
+                                          cG       −0.16 0
+                                                
+                                          −5.25
+                                   ke =
+                                           4.25
+
+
+
+-->
+
+
+<p>
+\begin{align*} &amp; \det (zI-G)=z^2+z+0.16 \qquad a =[1 \ \ 0.16] \\ &amp; \tilde {A} = \begin {bmatrix} 1
+&amp; 0 \\ 1 &amp; 1 \end {bmatrix} \\ &amp; O = \begin {bmatrix} c \\ cG \end {bmatrix} = \begin
+{bmatrix} 1 &amp; 1 \\ -0.16 &amp; 0 \end {bmatrix} \\ &amp; k_e = \begin {bmatrix} -5.25 \\ 4.25 \end
+{bmatrix} \end{align*}
+</p>
+
+
+<p>which leads to: </p>
+
+
+<p>\[ \tilde {x}(k+1)= \begin {bmatrix} 1 &amp; 1 \\ -0.16 &amp; 0 \end {bmatrix}\tilde {x}(k) + \begin
+{bmatrix} 0 \\ 1 \end {bmatrix} u(k) + \begin {bmatrix} -5.25 \\ 4.25 \end {bmatrix} (y(k)- \tilde {y}(k)) \]</p>
+
+
+</section>
+
+<footer>
+
+</footer>
+
+<nav class="botnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+</body>
+</html>

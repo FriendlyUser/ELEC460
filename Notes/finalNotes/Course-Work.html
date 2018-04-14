@@ -1,21 +1,36 @@
 
+
 <!DOCTYPE html>
+
 <html lang="en-US">
+
 <head>
+
 <meta charset="UTF-8" />
+
 <meta name="author" content="David Li" />
+
 <meta name="generator" content="LaTeX lwarp package" />
+
 <meta name="description" content="Control Theory Notes" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <!--[if lt IE 9]>
+
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
 <![endif]-->
+
 <title>ELEC 460 Course Notes — Course Work</title>
 <link rel="stylesheet" href="prism.css" type="text/css">
 <script src="prism.js" type="text/javascript"> </script>
+
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
 <!-- https://groups.google.com/forum/#!topic/
-                                      mathjax-users/jUtewUcE2bY -->
+                                            mathjax-users/jUtewUcE2bY -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        var seteqsectionDefault = {name: "", num: 0};
@@ -38,7 +53,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
              seteqsection = seteqsectionDefault;
              } else {
              if (!seteqsections["_"+n])
-                 seteqsections["_"+n] = {name:n, num:0};
+                  seteqsections["_"+n] = {name:n, num:0};
              seteqsection = seteqsections["_"+n];
              }
              AMS.number = seteqsection.num;
@@ -46,11 +61,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        mySetEqNumber: function (name) {
              var n = this.GetArgument(name);
              if (!n || !n.match(/^ *[0-9]+ *$/))
-                 n = ""; else n = parseInt(n)-1;
+                  n = ""; else n = parseInt(n)-1;
              <!-- $ syntax highlighting -->
              if (n === "" || n < 1)
-                 TEX.Error
-                 ("Argument to "+name+" should be a positive integer");
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
              AMS.number = n;
        }
        });
@@ -58,11 +73,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        TeX: {
              equationNumbers: {
              formatTag: function (n)
-                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
              formatID: function (n) {
-                 n = (seteqsection.name+'.'+n).replace
-                        (/[:"'<>&]/g,"").replace(/^\./,"");
-                 return 'mjx-eqn-' + n;
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
              }
              }
        }
@@ -91,7 +106,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        },
       TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
  });
- MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
  </script>
 
 
@@ -119,12 +134,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 </script>
 -->
 
-
 </head>
 <body>
 
 
-<nav class="topnavigation"><a href="index.html" class="linkhome"
+<a id="autopage-77"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
 >Home</a></nav>
 
 <header>
@@ -147,51 +161,51 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 >Home</a></p>
 
 
-<p><a href="index.html#autosec-10" class="tocchapter"
+<p><a href=" index.html#autosec-10" class="tocchapter"
 >Index</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-13" class="tocpart"
+<p><a href=" Control-Theory.html#autosec-13" class="tocpart"
 ><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-14" class="tocchapter"
+<p><a href=" Control-Theory.html#autosec-14" class="tocchapter"
 ><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
 
 
-<p><a href="Introduction-Review.html#autosec-18" class="tocchapter"
+<p><a href=" Introduction-Review.html#autosec-18" class="tocchapter"
 ><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
 
 
-<p><a href="Other-Useful-Concepts.html#autosec-30" class="tocchapter"
+<p><a href=" Other-Useful-Concepts.html#autosec-30" class="tocchapter"
 ><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
 
 
-<p><a href="Example-commands.html#autosec-47" class="tocchapter"
+<p><a href=" Example-commands.html#autosec-47" class="tocchapter"
 ><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
 
 
-<p><a href="Z-transform.html#autosec-71" class="tocchapter"
+<p><a href=" Z-transform.html#autosec-71" class="tocchapter"
 ><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
 
 
-<p><a href="Course-Work.html#autosec-78" class="tocpart"
+<p><a href=" Course-Work.html#autosec-78" class="tocpart"
 ><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
 
 
-<p><a href="Course-Work.html#autosec-79" class="tocchapter"
+<p><a href=" Course-Work.html#autosec-79" class="tocchapter"
 ><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-133" class="tocpart"
+<p><a href=" Back-Matter.html#autosec-153" class="tocpart"
 ><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-136" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >References</a></p>
 
 
-<p><a href="index.html#autosec-137" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >Glossary</a></p>
 
 
@@ -217,13 +231,13 @@ id="autopage-78"></a>
 
 
                                              KT        Ki
-(5.25)                            Kp = K −       =K−        = proportional gain
+                                  Kp = K −       =K−        = proportional gain                          (5.25)
                                              2Ti        2
                                                             KT
-(5.26)                                               Ki =        = integral gain
+                                                     Ki =        = integral gain                         (5.26)
                                                              Ti
                                                         KTd
-(5.27)                                            KD =         = derivative gain
+                                                  KD =         = derivative gain                         (5.27)
                                                           T
 
 
@@ -253,34 +267,38 @@ id="autopage-80"></a>
          <pre><code class = "language-python">
 
 
+
          rom numpy import *
          from pylab import *
-         from control . matlab import *
+         from control.matlab import *
          import time
-         ion ()
-         # # Get transfer function from G ( s ) = 1 * K / ( s *( s +1) *( s +20) ) when K = 1
-         # from sympy import *
+         ion()
+         ## Get transfer function from G(s) = 1 * K / (s*(s+1)*(s+20)) when K =
+              1
+         #from sympy import *
          import sympy as sympy
          from sympy import init_printing
-         # % logstart -o
-         init_printing ()
-         s = sympy . Symbol ( 's ')    # Symbol , `a ` , stored as variable
-         Gs = sympy . expand (( s *( s +1) *( s +20) ) ** -1)
-         print ( Gs )
+         # %logstart -o
+         init_printing()
+         s = sympy.Symbol('s') # Symbol, `a`, stored as variable
+         Gs = sympy.expand((s*(s+1)*(s+20))**-1)
+         print(Gs)
          # Print Rlocus
-         sys = tf ([1] ,[1 ,21 ,20 ,0])
-         rvect , kvect = rlocus ( sys )
+         sys = tf([1],[1,21,20,0])
+         rvect, kvect = rlocus(sys)
          </code>
 </pre>
 
-<p>                                                                                             </p>
+<p>                                                                                      </p>
 
 
 <div class="epigraph">
 
 <div class="qitem">
 
-<p>This assignment will contain output from matlab and python.</p>
+<p>This assignment will contain output from matlab and python.
+
+<p></p>
 
 
 <div class="epigraphsource">
@@ -293,10 +311,8 @@ id="autopage-80"></a>
 </div>
 
 </div>
-1/(s**3
-<pre    + 21*s**2 + 20*s)
-     class="verbatim" >
-
+<pre class="verbatim" >
+1/(s**3 + 21*s**2 + 20*s)
 </code>
 </pre>
 
@@ -306,15 +322,13 @@ id="autopage-80"></a>
 <p>
 <a href="Assignments/A1/ipython_files/qt_img486735758753796.png" target="_blank"
 ><img src="Assignments/A1/ipython_files/qt_img486735758753796.png"
-style="width:304pt;"
+style="width:304pt; "
 class="inlineimage"
 ></a></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.1:&nbsp;Root Locus created using matplotlib and python control library</p>
-
-
 
 
 </figcaption>
@@ -331,11 +345,12 @@ class="inlineimage"
          <pre><code class = "language-python">
 
 
-         v = sympy . limit ( s * Gs , s , 0)
-              print ( ' The velocity error Kv is : ')
-              print ( Kv )
-              mag , phase , omega = bode ( sys )
-              real , imag , freq = nyquist ( sys , labelFreq =10)
+
+         v = sympy.limit(s*Gs, s, 0)
+            print('The velocity error Kv is:')
+            print(Kv)
+            mag, phase, omega = bode(sys)
+            real, imag, freq = nyquist(sys,labelFreq=10)
          </code>
 </pre>
 
@@ -347,15 +362,13 @@ class="inlineimage"
 <p>
 <a href="Assignments/A1/ipython_files/qt_img494204706881540.png" target="_blank"
 ><img src="Assignments/A1/ipython_files/qt_img494204706881540.png"
-style="width:304pt;"
+style="width:304pt; "
 class="inlineimage"
 ></a></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.2:&nbsp;Bode Plot</p>
-
-
 
 
 </figcaption>
@@ -367,15 +380,13 @@ class="inlineimage"
 <p>
 <a href="Assignments/A1/ipython_files/qt_img492813137477636.png" target="_blank"
 ><img src="Assignments/A1/ipython_files/qt_img492813137477636.png"
-style="width:304pt;"
+style="width:304pt; "
 class="inlineimage"
 ></a></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.3:&nbsp;Nyquist Plot</p>
-
-
 
 
 </figcaption>
@@ -389,9 +400,9 @@ id="autopage-82"></a>
 
 </div>
 
-<p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
-Number:</b> V00818631<br />
-<b>Due Date:</b> Thursday, 11 January 2018, 11:30 AM <span style="width:16.99585pt;
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> Thursday, 11 January 2018, 11:30 AM <span style="width:17pt;
 display:inline-block"></span> <b>Assignment:</b> Number 1<br />
 </p>
 <h5 id="autosec-84"> 1. Sketch the root locus</h5><a id="autopage-84"></a>
@@ -399,19 +410,17 @@ display:inline-block"></span> <b>Assignment:</b> Number 1<br />
 
 <figcaption>
 
-
 </figcaption>
 <p></p>
 <pre><code class = "language-matlab">
-G1 = zpk ([] ,[0 , -1 , -20] ,20) % create transfer function
-figure (1); rlocus ( G1 ) % Plot root locus
+G1 = zpk([],[0,-1,-20],20) % create transfer function
+figure(1); rlocus(G1) % Plot root locus
 </code>
 </pre>
 
 <p></p>
 
 <figcaption>
-
 </figcaption>
 
 <figure id="autoid-16" class="figure">
@@ -419,15 +428,13 @@ figure (1); rlocus ( G1 ) % Plot root locus
 <p>
 <a href="Assignments/A1/ELEC460A1_01.png" target="_blank"
 ><img src="Assignments/A1/ELEC460A1_01.png"
-style="width:304pt;"
+style="width:304pt; "
 class="inlineimage"
 ></a></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.4:&nbsp;Root Locus when K =1</p>
-
-
 
 
 </figcaption>
@@ -442,36 +449,32 @@ class="inlineimage"
 
 <figcaption>
 
-
 </figcaption>
 <p></p>
 <pre><code class = "language-matlab">
-syms s ; Kv = limit ( s *20/( s *( s +1)*( s +20)) , s ,0) % compute Kv using limits
+syms s ;Kv = limit(s*20/(s*(s+1)*(s+20)),s,0)% compute Kv using limits
 </code>
 </pre>
 
 <p></p>
 
 <figcaption>
-
 </figcaption>
 <h5 id="autosec-90"> 3. Sketch Bode and Nyquist plots.</h5><a id="autopage-90"></a>
 
 <figcaption>
 
-
 </figcaption>
 <p></p>
 <pre><code class = "language-matlab">
-figure (2); bode ( G1 )
-figure (3); nyquist ( G1 )
+figure(2); bode(G1)
+figure(3); nyquist(G1)
 </code>
 </pre>
 
 <p></p>
 
 <figcaption>
-
 </figcaption>
 
 <figure id="autoid-17" class="figure">
@@ -480,7 +483,7 @@ figure (3); nyquist ( G1 )
 <p>
 <a href="Assignments/A1/ELEC460A1_02.png" target="_blank"
 ><img src="Assignments/A1/ELEC460A1_02.png"
-style="width:206pt;"
+style="width:206pt; "
 class="inlineimage"
 ></a></p>
 
@@ -489,12 +492,9 @@ class="inlineimage"
 <p>Figure&nbsp;6.5:&nbsp;Bode plot when K=1</p>
 
 
-
-
 </figcaption>
 
 </div>
-
 
 &#x2001;
 
@@ -504,7 +504,7 @@ class="inlineimage"
 <p>
 <a href="Assignments/A1/ELEC460A1_03.png" target="_blank"
 ><img src="Assignments/A1/ELEC460A1_03.png"
-style="width:206pt;"
+style="width:206pt; "
 class="inlineimage"
 ></a></p>
 
@@ -513,12 +513,9 @@ class="inlineimage"
 <p>Figure&nbsp;6.6:&nbsp;Nyquist plot when K=1</p>
 
 
-
-
 </figcaption>
 
 </div>
-
 
 </figure>
 <h5 id="autosec-94"> 4. Find K so that \(\zeta =\sqrt (2)/2\) for the closed loop system.</h5><a
@@ -529,19 +526,17 @@ id="autopage-94"></a>
 
 <figcaption>
 
-
 </figcaption>
 <p></p>
 <pre><code class = "language-matlab">
-G1new = zpk ([] ,[0 , -1 , -20] ,20* K )
-figure (5); margin ( G1new )
+G1new = zpk([],[0,-1,-20],20*K)
+figure(5); margin(G1new)
 </code>
 </pre>
 
 <p></p>
 
 <figcaption>
-
 </figcaption>
 
 <figure id="autoid-18" class="figure">
@@ -549,15 +544,13 @@ figure (5); margin ( G1new )
 <p>
 <a href="Assignments/A1/ELEC460A1_05.png" target="_blank"
 ><img src="Assignments/A1/ELEC460A1_05.png"
-style="width:304pt;"
+style="width:304pt; "
 class="inlineimage"
 ></a></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.7:&nbsp;Phase and Gain Margin in Bode Plot</p>
-
-
 
 
 </figcaption>
@@ -568,21 +561,19 @@ id="autopage-97"></a>
 
 <figcaption>
 
-
 </figcaption>
 <p></p>
 <pre><code class = "language-matlab">
-G1tfnew = tf ( G1new )
-subplot (2 ,1 ,1); step ( G1tfnew ); % % create subplot for step function
-ramps = tf ([1 ,0] ,[1]);
-subplot (2 ,1 ,2); step ( G1tfnew / ramps ); % % create subplot for ramp function
+G1tfnew = tf(G1new)
+subplot(2,1,1); step(G1tfnew); %% create subplot for step function
+ramps = tf([1,0],[1]);
+subplot(2,1,2); step(G1tfnew/ramps); %% create subplot for ramp function
 </code>
 </pre>
 
 <p></p>
 
 <figcaption>
-
 </figcaption>
 
 <figure id="autoid-19" class="figure">
@@ -590,15 +581,13 @@ subplot (2 ,1 ,2); step ( G1tfnew / ramps ); % % create subplot for ramp functio
 <p>
 <a href="Assignments/A1/ELEC460A1_06.png" target="_blank"
 ><img src="Assignments/A1/ELEC460A1_06.png"
-style="width:304pt;"
+style="width:304pt; "
 class="inlineimage"
 ></a></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.8:&nbsp;Step Response of Transfer function with K = 0.479</p>
-
-
 
 
 </figcaption>
@@ -616,10 +605,10 @@ positive phase and gain margin. Finally, the value of \(\zeta = 0.7071\) corresp
 
 </div>
 
-<p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
-Number:</b> V00818631<br />
-<b>Due Date:</b> Friday, 26 January 2018, 11:30 AM <span style="width:16.99585pt;
-display:inline-block"></span> <b>Assignment:</b> Number 2<br />
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> Friday, 26 January 2018, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment:</b> Number 2<br />
 </p>
 <p><span class="paragraph" id="autosec-101"> B-2-7</span><a id="autopage-101"></a> Obtain the
 z-transform of the curve.</p>
@@ -631,8 +620,7 @@ z-transform of the curve.</p>
 
 <figure id="autoid-20" class="figure">
 
-<p><span id="lateximage7" class="lateximagesource">
-<!--
+<p><span id="lateximage7" class="lateximagesource"><!--
   1
        x(t)
 
@@ -646,13 +634,11 @@ z-transform of the curve.</p>
 
                                       t
           1   2   3   4   5   6   7       8
--->
-<img src="lateximages\lateximage-7.svg" alt="image" style="" class="lateximage"></span></p>
+--><img src="lateximages\lateximage-7.svg" alt="image" style="" class="lateximage"></span></p>
 
 
 <figcaption>
 <p>Figure&nbsp;6.9:&nbsp;Picture for [3] But for discrete systems.</p>
-
 
 
 </figcaption>
@@ -720,9 +706,8 @@ z-transform of the curve.</p>
                    =  (z   + 2z −4 ) + z −5 + z −5 z −1 + z −5 z −2 · · ·
                     3
                     1                     z −5       z −3 (1 − z −1 ) + 2z −4 (1 − z −1 ) + 3z −5
-                   = (z −3 + 2z −4 ) +       −1
-                                                 =
-                    3                  1−z                            3(1 − z −1 )
+                   = (z −3 + 2z −4 ) +           =
+                    3                  1 − z −1                       3(1 − z −1 )
                        z −3 + z −4 + z −5
                    =
                           3(1 − z −1 )
@@ -821,7 +806,7 @@ difference equation: </p>
                              z3          1          4z        3z       0.5z
                   X(z) =                         =      −          −
                            z − 1 z 2 − z + 0.25    z−1      2z − 1   (2z − 1)2
-                  x(k) = 4 − (3 + k)(0.5)k        for k = 0, 1, 2 · · ·
+                  x(k) = 4 − (3 + k)(0.5)k      for k = 0, 1, 2 · · ·
 
 
 
@@ -841,12 +826,10 @@ x(k) = 4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
 
 <figcaption>
 
-
 </figcaption>
-<p><span class="inlineprogramlisting"> p a r t f r a c ( z ^ 2 / ( ( z −1)∗( z </span> − 0 . 5 ) ^ 2 ) ) </p>
+<p><span class="inlineprogramlisting"> p a r t f r a c ( z ^ 2 / ( ( z −1) ∗ ( z −0.5) ^2) ) </span></p>
 
 <figcaption>
-
 </figcaption>
 
 <p>in Matlab results in the partial fraction decomposition. </p>
@@ -860,10 +843,10 @@ x(k) = 4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
 
 
 
-                                                 4z     3z       0.5z
-                                       X(z) =       −        −
-                                                z−1   2z − 1   (2z − 1)2
-                                       x(k) = 4 − (3 + k)(0.5)k           for k = 0, 1, 2 · · ·
+                                               4z     3z       0.5z
+                                     X(z) =       −        −
+                                              z−1   2z − 1   (2z − 1)2
+                                     x(k) = 4 − (3 + k)(0.5)k           for k = 0, 1, 2 · · ·
 
 
 
@@ -881,29 +864,28 @@ x(k) = 4-(3+k)(0.5)^k \qquad \text {for } k = 0,1,2 \cdots \end{align*}
 
 <figcaption>
 
-<p><a id="autoid-21"></a>Listing&nbsp;6.1:&nbsp;Matlab Code for B-2-17 </p>
-
+<p><a id="autoid-21"></a>Listing&nbsp;6.1:&nbsp;Matlab Code for B-2-17</p>
 
 
 </figcaption>
 <pre><code class = "language-matlab">
 
 
-numerator = [1 0 0]; % z ^3
+
+numerator = [1 0 0]; % z^3
 denomiator = [1 -1 0.25];
-u = ones (1 ,51);
+u = ones(1,51);
 k = 0:50;
-xk = filter ( numerator , denomiator , u )
-plot (k , xk , ' - ro ' ); grid ;
-v = [0 50 0 5]; axis ( v );
-xlabel ( 'k ' ); ylabel ( 'x ( k ) ')
-title ( ' Unit - Step ␣ Response ' );
-print ( 'B -2 -17 - matlab . png ' , ' - dpng ' , ' - r300 ')
+xk = filter(numerator,denomiator,u)
+plot(k,xk,'-ro');grid;
+v = [0 50 0 5]; axis(v);
+xlabel('k');ylabel('x(k)')
+title('Unit-Step Response');
+print('B-2-17-matlab.png','-dpng','-r300')
 </code>
 </pre>
 
 <figcaption>
-
 </figcaption>
 
 <figure id="autoid-22" class="figure">
@@ -911,7 +893,7 @@ print ( 'B -2 -17 - matlab . png ' , ' - dpng ' , ' - r300 ')
 <p>
 <a href="Assignments/A2/B-2-17-matlab.png" target="_blank"
 ><img src="Assignments/A2/B-2-17-matlab.png"
-style="width:434pt;"
+style="width:434pt; "
 class="inlineimage"
 ></a></p>
 
@@ -920,14 +902,12 @@ class="inlineimage"
 <p>Figure&nbsp;6.10:&nbsp;Computational Approach to B-2-17 in Matlab</p>
 
 
-
-
 </figcaption>
 
 <a id="fig:b-2-17-matlab"></a>
 
 </figure>
-<h4 id="autosec-107"> <span class="sectionnumber">6.3&#x2001;</span>Assignment 4</h4><a
+<h4 id="autosec-107"> <span class="sectionnumber">6.3&#x2001;</span>Assignment 3</h4><a
 id="autopage-107"></a>
 <div class="center">
 <p><b> ELEC 460 — Control Theory II</b></p>
@@ -935,41 +915,100 @@ id="autopage-107"></a>
 
 </div>
 
-<p><b>Name:</b> David Li <span style="width:16.99585pt; display:inline-block"></span> <b>Student
-Number:</b> V00818631<br />
-<b>Due Date:</b> February 20, 2018, 11:30 AM <span style="width:16.99585pt;
-display:inline-block"></span> <b>Assignment</b> 4<br />
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 1, 2018, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 3<br />
 </p>
-<h6 id="autosec-109"> Problem B-3-20</h6><a id="autopage-109"></a>
-
-<p>Assuming that the sampling period is 0.2 sec, and the gain constant K is unity, determine the response c(kT) for
-k = 0,1,2,3 and 4 when the input r(t) is a unit-step function. Also, determine the final value \(c(\infty )\).</p>
+<p><span class="paragraph" id="autosec-109"> B-3-4</span><a id="autopage-109"></a> </p>
 
 
-<figure id="autoid-23" class="figure">
+<p>Consider a transfer function system</p>
 
-<p>
-<a href="Assignments/A4/Diagrams/samplerBlock.pdf" target="_blank"
-><img src="Assignments/A4/Diagrams/samplerBlock.pdf"
-style="width:260pt;"
-class="inlineimage"
-></a></p>
+
+<p>\[ X(s)=\frac {s+3}{(s+1)(s+2)}\]</p>
+
+
+<p>Obtain the pulse transfer function by two different methods</p>
 
 
 <figcaption>
-<p>Figure&nbsp;6.11:&nbsp;Block Diagram for B-3-20</p>
 
-
+<p><a id="autoid-23"></a>Listing&nbsp;6.2:&nbsp;Matlab Code for B-2-17</p>
 
 
 </figcaption>
+<pre><code class = "language-matlab">
 
-<a id="fig:samplerblock"></a>
 
-</figure>
 
-<p>Table 3-1 from the textbook \(C(z)=\frac {[GR(z)]}{1+GH(z)}\), where \(GH(z) = \left [G(s)H(s)\right ]^\ast
-=[1-z^{-1}] \mathcal {Z} \left \{\frac {1}{s(s+1)}\right \}\) </p>
+       syms s z
+       B34Xs = (s+3)/((s+1)*(s+2))
+       % First answer, ignore
+       % B34XzA1 = subs(B34Xs ,s,z)
+       % First answer, get the CTS function and convert that
+       % to the Z-domain,
+       XsTemp = ilaplace(B34Xs)
+       B34XzA2 = ztrans(XsTemp)
+       % Second Answer, convert from laplace domain to z domain using tables
+       % will need to use partial fractions
+       Xs2 = partfrac(B34Xs)
+       % Using the tables
+       % Answer is the same
+</code>
+</pre>
+
+<figcaption>
+</figcaption>
+
+<figcaption>
+
+<p><a id="autoid-24"></a>Listing&nbsp;6.3:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre><code class = "language-matlab">
+
+
+
+B34Xs =
+
+
+(s + 3)/((s + 1)*(s + 2))
+
+
+
+XsTemp =
+
+
+2*exp(-t) - exp(-2*t)
+
+
+
+B34XzA2 =
+
+
+(2*z)/(z - exp(-1)) - z/(z - exp(-2))
+
+
+
+Xs2 =
+
+
+2/(s + 1) - 1/(s + 2)
+</code>
+</pre>
+
+<figcaption>
+</figcaption>
+
+<p>\[\mathcal {Z} \left \{\frac {1}{s+a} \right \} \rightarrow \frac {1}{1-e^{-at}z^{-1}} \]</p>
+
+
+<p>\[ X(s)= \frac {s+3}{(s+1)(s+2)} \]</p>
+
+
+<p>Using partial fractions with Table 2-1 </p>
 
 
 <p><span class="hidden"> \( \seteqsection {6} \) </span> </p>
@@ -979,4 +1018,8 @@ class="inlineimage"
 <!--
 
 
-           
+
+                 s+3            A    B     2     1
+      X(s) =                =     +     =     −
+             (s + 1)(s + 2)   s+1   s+2   s+1   s+2
+        

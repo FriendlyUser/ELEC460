@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+
+<meta charset="UTF-8" />
+
+<meta name="author" content="David Li" />
+
+<meta name="generator" content="LaTeX lwarp package" />
+
+<meta name="description" content="Control Theory Notes" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!--[if lt IE 9]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+
+<title>ELEC 460 Course Notes — Assignment 3</title>
+
+<link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
+<!-- https://groups.google.com/forum/#!topic/
+                                            mathjax-users/jUtewUcE2bY -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
+       var seteqsectionDefault = {name: "", num: 0};
+       var seteqsections = {}, seteqsection = seteqsectionDefault;
+       var TEX = MathJax.InputJax.TeX, PARSE = TEX.Parse;
+       var AMS = MathJax.Extension["TeX/AMSmath"];
+       TEX.Definitions.Add({
+       macros: {
+             seteqsection: "mySection",
+             seteqnumber: "mySetEqNumber"
+       }
+       });
+
+
+       PARSE.Augment({
+       mySection: function (name) {
+             seteqsection.num = AMS.number;
+             var n = this.GetArgument(name);
+             if (n === "") {
+             seteqsection = seteqsectionDefault;
+             } else {
+             if (!seteqsections["_"+n])
+                  seteqsections["_"+n] = {name:n, num:0};
+             seteqsection = seteqsections["_"+n];
+             }
+             AMS.number = seteqsection.num;
+       },
+       mySetEqNumber: function (name) {
+             var n = this.GetArgument(name);
+             if (!n || !n.match(/^ *[0-9]+ *$/))
+                  n = ""; else n = parseInt(n)-1;
+             <!-- $ syntax highlighting -->
+             if (n === "" || n < 1)
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
+             AMS.number = n;
+       }
+       });
+       MathJax.Hub.Config({
+       TeX: {
+             equationNumbers: {
+             formatTag: function (n)
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+             formatID: function (n) {
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
+             }
+             }
+       }
+       });
+});
+</script>
+
+
+<!-- http://docs.mathjax.org/en/latest/options/ThirdParty.html -->
+<script type="text/x-mathjax-config">
+  MathJax.Ajax.config.path["Contrib"] =
+       "https://cdn.mathjax.org/mathjax/contrib";
+</script>
+
+
+<!-- https://github.com/burnpanck/MathJax-siunitx -->
+
+
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({
+      extensions: ["tex2jax.js","[siunitx]/siunitx.js"],
+      jax: ["input/TeX","output/HTML-CSS"],
+      tex2jax: {
+             inlineMath: [["$","$"],["\\(","\\)"]] ,
+             processClass: "tabbing|verse"
+       },
+      TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
+ });
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ </script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+       TeX: {
+       equationNumbers: {
+             autoNumber: "AMS"
+       }
+       }
+});
+</script>
+
+
+<!-- Alternative CDN provider: -->
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+
+
+<!-- No longer supported after April 30, 2017: -->
+<!--
+<script
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML-full">
+</script>
+-->
+
+</head>
+<body>
+
+
+<a id="autopage-28"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
+>Home</a></nav>
+
+<header>
+
+</header>
+
+<h1>ELEC 460 Course Notes</h1>
+<nav class="sidetoc">
+
+<div class="sidetoctitle">
+
+<p>Contents</p>
+
+
+</div>
+
+<div class="sidetoccontents">
+
+<p><a href="index.html" class="linkhome"
+>Home</a></p>
+
+
+<p></p>
+
+
+</div>
+
+</nav>
+
+<section class="textbody">
+
+<h4 id="autosec-29"> <span class="sectionnumber">0.2&#x2001;</span>Assignment 3</h4><a
+id="autopage-29"></a>
+<div class="center">
+<p><b> ELEC 460 — Control Theory II</b></p>
+
+
+</div>
+
+<p><b>Name:</b> David Li <span style="width:17pt; display:inline-block"></span> <b>Student Number:</b>
+V00818631<br />
+<b>Due Date:</b> February 1, 2018, 11:30 AM <span style="width:17pt; display:inline-block"></span>
+<b>Assignment</b> 3<br />
+</p>
+<p><span class="paragraph" id="autosec-31"> B-3-4</span><a id="autopage-31"></a> </p>
+
+
+<p>Consider a transfer function system</p>
+
+
+<p>\[ X(s)=\frac {s+3}{(s+1)(s+2)}\]</p>
+
+
+<p>Obtain the pulse transfer function by two different methods</p>
+
+
+<figcaption>
+
+<p><a id="autoid-8"></a>Listing&nbsp;2:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+       syms s z
+       B34Xs = (s+3)/((s+1)*(s+2))
+       % First answer, ignore
+       % B34XzA1 = subs(B34Xs ,s,z)
+       % First answer, get the CTS function and convert that
+       % to the Z-domain,
+       XsTemp = ilaplace(B34Xs)
+       B34XzA2 = ztrans(XsTemp)
+       % Second Answer, convert from laplace domain to z domain using tables
+       % will need to use partial fractions
+       Xs2 = partfrac(B34Xs)
+       % Using the tables
+       % Answer is the same
+</pre>
+<figcaption>
+</figcaption>
+
+<figcaption>
+
+<p><a id="autoid-9"></a>Listing&nbsp;3:&nbsp;Matlab Code for B-2-17</p>
+
+
+</figcaption>
+<pre class="programlisting" >
+
+
+
+B34Xs =
+
+
+(s + 3)/((s + 1)*(s + 2))
+
+
+
+XsTemp =
+
+
+2*exp(-t) - exp(-2*t)
+
+
+
+B34XzA2 =
+
+
+(2*z)/(z - exp(-1)) - z/(z - exp(-2))
+
+
+
+Xs2 =
+
+
+2/(s + 1) - 1/(s + 2)
+</pre>
+<figcaption>
+</figcaption>
+
+<p>\[\mathcal {Z} \left \{\frac {1}{s+a} \right \} \rightarrow \frac {1}{1-e^{-at}z^{-1}} \]</p>
+
+
+<p>\[ X(s)= \frac {s+3}{(s+1)(s+2)} \]</p>
+
+
+<p>Using partial fractions with Table 2-1 </p>
+
+
+<p><span class="hidden"> \( \seteqsection {0} \) </span> </p>
+
+
+
+<!--
+
+
+
+                 s+3            A    B     2     1
+      X(s) =                =     +     =     −
+             (s + 1)(s + 2)   s+1   s+2   s+1   s+2
+        

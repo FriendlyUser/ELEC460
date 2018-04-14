@@ -93,6 +93,25 @@ span.underline {
     text-decoration-skip ;
 }
 
+span.overline {
+    text-decoration: overline ;
+    text-decoration-skip ;
+}
+
+/* for diagbox */
+div.diagboxtitleN { border-bottom: 1px solid gray }
+div.diagboxtitleS { border-top: 1px solid gray }
+
+div.diagboxE {
+    padding-left: 2em ;
+    text-align: right ;
+}
+
+div.diagboxW {
+    padding-right: 2em ;
+    text-align: left ;
+}
+
 /* For realscripts */
 .supsubscript {
     display: inline-block;
@@ -439,6 +458,36 @@ html {
 section.textbody>pre.programlisting {
 border-top: 1px solid silver ;
 border-bottom: 1px solid silver ;
+}
+
+div.displaymath {
+    text-align: center ;
+}
+
+div.displaymathnumbered {
+    text-align: right ;
+    margin-left: 5% ;
+    margin-right: 5% ;
+    min-width: 2.5in ;
+}
+
+@media all and (min-width: 400px) {
+    div.displaymathnumbered {
+        margin-left: 10% ;
+        margin-right: 10% ;
+    }
+}
+
+@media all and (min-width: 800px) {
+    div.displaymathnumbered {
+        margin-right: 20% ;
+    }
+}
+
+@media all and (min-width: 1200px) {
+    div.displaymathnumbered {
+        margin-right: 30% ;
+    }
 }
 
 .inlineprogramlisting {
@@ -814,7 +863,7 @@ tr.hline td {border-top: 1px solid #808080 ; margin-top: 0ex ;
 tr.tbrule td {border-top: 1px solid black ; margin-top: 0ex ;
     margin-bottom: 0ex ; } /* for \toprule, \bottomrule */
 
-td {padding: 1ex .5em 1ex .5em ;}
+td {padding: .5ex .5em .5ex .5em ;}
 
 table td.tdl { text-align: left ; vertical-align: middle ; }
 table td.tdc { text-align: center ; vertical-align: middle ; }
@@ -879,6 +928,13 @@ td.tdb , td.tdbrule , td.tdB , td.tdBrule
 
 .tnoteitemheader {margin-right: 1em;}
 
+/* for colortbl and cell color */
+div.cellcolor {
+    width: 100% ;
+    padding: .5ex .5em .5ex .5em ;
+    margin: -.5ex -.5em -.5ex -.5em ;
+}
+
 /* for bigdelim */
 .ldelim, .rdelim { font-size: 200% }
 
@@ -891,7 +947,9 @@ div.flushright{text-align:right;}
 div.flushright table {margin-left:auto ; margin-right: 0em ;}
 
 /* Fancybox */
-div.Btrivlist table tr td { padding: .2ex 0em ; }
+div.Btrivlist table tr td {
+    padding: .2ex 0em ;
+}
 
 /* program listing callouts: */
 span.callout {
@@ -908,6 +966,12 @@ span.callout {
 
 div.programlisting pre.verbatim span.callout{
     font-size: .85em ;
+}
+
+span.verbatim {
+    font-family: "DejaVu Mono", "Bitstream Vera Mono", "Lucida Console",
+        "Nimbus Mono L", "Liberation Mono", "FreeMono", "Andale Mono",
+        "Courier New", monospace;
 }
 
 div.published
@@ -1007,12 +1071,11 @@ a.linkhome { font-weight:bold ; font-size: 1em ;}
 div.lateximagesource { padding: 0px ; margin: 0px ; display: none; }
 
 img.lateximage{
-    padding: 0px 0px 0px 0px ;
+    padding: 0pt ;
+    margin: 0pt ;
     box-shadow: none ;
     border: none ;
     background: none ;
-    margin: 0px 0px -.15ex 0px ;
-        /* pdfcrop leaves a slight margin, adjust to baseline */
     max-width: 100% ;
     border-radius: 0ex ;
     border: none ;

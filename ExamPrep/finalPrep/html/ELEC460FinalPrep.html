@@ -1,0 +1,460 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ELEC460FinalPrep</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-18"><meta name="DC.source" content="ELEC460FinalPrep.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">ELEC 460 Final Exam Prep</a></li><li><a href="#5">Digital Control Systems Phillips</a></li><li><a href="#12">Digital Control Systems: Theoretical Problems and Simulation Tools</a></li></ul></div><h2 id="1">ELEC 460 Final Exam Prep</h2><pre class="codeinput">format <span class="string">compact</span>
+</pre><p>Final Exam Topics</p><p>Good Textbooks to Use</p><div><ul><li>Digital Control Systems Phillips</li><li>Nise Control Systems Chapter 13</li><li>4559_digital_control_engineering_2nd_edition</li><li>Digital Control Systems: Theoretical Problems and Simulation Tools</li><li>Dorf Control System Last Chapter</li></ul></div><h2 id="5">Digital Control Systems Phillips</h2><p>(Always Learning) Chakrabortty, Aranya_ Nagle, H. Troy_ Phillips, Charles L-Digital Control System Analysis &amp; Design_ Global Edition-Pearson Education Limited (2015) Chapters of interest from this textbook are:</p><div><ol><li>Chapter 9, go through examples</li></ol></div><p>Example 9.3 Compute the plant&#8217;s discrete state-space matrices</p><pre class="codeinput">Ac=[0 1;0 -1]; Bc=[0;1]; Cc=[1 0]; Dc=0;
+Sysc=ss(Ac,Bc,Cc,Dc); T=0.1; Sysd=c2d(Sysc,T);
+[A,B,C,D]=ssdata(Sysd);
+<span class="comment">% Set tau and zeta for desired alphac roots</span>
+tau = 1.0; zeta = 0.47462;
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphac = [1 -2*r*cos(theta) r^2], roots_alphac=roots(alphac)
+P = roots(alphac) <span class="comment">% P specifies the acker desired roots</span>
+K = acker(A,B,P) <span class="comment">% Ackermann computation</span>
+<span class="comment">% Set tau and zeta for desired alphae roots</span>
+tau = 0.5, zeta = 1
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphae =[1 -2*r*cos(theta) r^2],
+roots_alphae=roots(alphae)
+Perr = roots(alphae) <span class="comment">% Perr specifies the acker desired roots</span>
+G =(acker(A',C',Perr))' <span class="comment">% Ackermann computation</span>
+
+<span class="comment">% Example 9.4 Append</span>
+<span class="comment">% Append this code to the program for Example 9.3</span>
+Aq = A-B*K-G*C, Bq = G, Cq = -K
+[NUMce, DENce]=ss2tf(Aq,Bq,Cq,0);
+Dce=tf(-NUMce, DENce,0.1);
+Dce=zpk(Dce)
+</pre><pre class="codeoutput">r =
+    0.9048
+theta =
+    0.1855
+alphac =
+    1.0000   -1.7786    0.8187
+roots_alphac =
+   0.8893 + 0.1668i
+   0.8893 - 0.1668i
+P =
+   0.8893 + 0.1668i
+   0.8893 - 0.1668i
+K =
+    4.2124    1.1119
+tau =
+    0.5000
+zeta =
+     1
+r =
+    0.8187
+theta =
+     0
+alphae =
+    1.0000   -1.6375    0.6703
+roots_alphae =
+    0.8187
+    0.8187
+Perr =
+    0.8187
+    0.8187
+G =
+    0.2674
+    0.0779
+Aq =
+    0.7122    0.0898
+   -0.4788    0.7990
+Bq =
+    0.2674
+    0.0779
+Cq =
+   -4.2124   -1.1119
+
+Dce =
+ 
+     1.2129 (z-0.8859)
+  -----------------------
+  (z^2 - 1.511z + 0.6121)
+ 
+Sample time: 0.1 seconds
+Discrete-time zero/pole/gain model.
+
+</pre><p>Example 9.7</p><pre class="codeinput">A =[1 0.095163; 0 0.904837]; B=[0.0048374; 0.095163];
+alphae =[1 -0.818731];
+Aaa = A(1,1); Aab = A(1,2); Aba = A(2,1); Abb = A(2,2);
+Ba=B(1,1); Bb=B(2,1);
+Perr = -alphae(2)
+G =(acker(Abb',Aab',Perr))' <span class="comment">% Substitute Abb--&gt;A and Aab--&gt;C</span>
+</pre><pre class="codeoutput">Perr =
+    0.8187
+G =
+    0.9048
+</pre><pre class="codeinput">A=[-0.2 0;-1 0.8]; B=[1; 1]; C=[-1 1]; D=[1];
+T=1; <span class="comment">%Choose any sampling interval</span>
+Sysd=ss(A,B,C,D,T)
+S_control=[B A*B]
+Rank_S_control=rank(S_control)
+S_observe=[C; C*A]
+rank_S_observe=rank(S_observe)
+Yz_over_Xz = tf(Sysd)
+</pre><pre class="codeoutput">
+Sysd =
+ 
+  A = 
+         x1    x2
+   x1  -0.2     0
+   x2    -1   0.8
+ 
+  B = 
+       u1
+   x1   1
+   x2   1
+ 
+  C = 
+       x1  x2
+   y1  -1   1
+ 
+  D = 
+       u1
+   y1   1
+ 
+Sample time: 1 seconds
+Discrete-time state-space model.
+
+S_control =
+    1.0000   -0.2000
+    1.0000   -0.2000
+Rank_S_control =
+     1
+S_observe =
+   -1.0000    1.0000
+   -0.8000    0.8000
+rank_S_observe =
+     1
+
+Yz_over_Xz =
+ 
+  z^2 - 0.6 z - 0.16
+  ------------------
+  z^2 - 0.6 z - 0.16
+ 
+Sample time: 1 seconds
+Discrete-time transfer function.
+
+</pre><p>Example 9.3 ( Always learning) Original Part Example 9.3 Compute the plant&#8217;s discrete state-space matrices</p><pre class="codeinput">Ac=[0 1;0 -1]; Bc=[0;1]; Cc=[1 0]; Dc=0;
+Sysc=ss(Ac,Bc,Cc,Dc); T=0.1; Sysd=c2d(Sysc,T);
+[A,B,C,D]=ssdata(Sysd);
+<span class="comment">% Set tau and zeta for desired alphac roots</span>
+tau = 1.0; zeta = 0.47462;
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphac = [1 -2*r*cos(theta) r^2], roots_alphac=roots(alphac)
+P = roots(alphac) <span class="comment">% P specifies the acker desired roots</span>
+K = acker(A,B,P) <span class="comment">% Ackermann computation</span>
+<span class="comment">% Set tau and zeta for desired alphae roots</span>
+tau = 0.5, zeta = 1
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphae =[1 -2*r*cos(theta) r^2],
+roots_alphae=roots(alphae)
+Perr = roots(alphae) <span class="comment">% Perr specifies the acker desired roots</span>
+G =(acker(A',C',Perr))' <span class="comment">% Ackermann computation</span>
+<span class="comment">% Alternative method using (9-51)</span>
+<span class="comment">% Store this NICE function</span>
+syms <span class="string">z</span>
+Dce=K*inv((z*eye(2)-A+B*K+G*C))*G;
+[num,den]=nice(Dce,z);
+Dce=tf(num,den,T); Dce=zpk(Dce)
+</pre><pre class="codeoutput">r =
+    0.9048
+theta =
+    0.1855
+alphac =
+    1.0000   -1.7786    0.8187
+roots_alphac =
+   0.8893 + 0.1668i
+   0.8893 - 0.1668i
+P =
+   0.8893 + 0.1668i
+   0.8893 - 0.1668i
+K =
+    4.2124    1.1119
+tau =
+    0.5000
+zeta =
+     1
+r =
+    0.8187
+theta =
+     0
+alphae =
+    1.0000   -1.6375    0.6703
+roots_alphae =
+    0.8187
+    0.8187
+Perr =
+    0.8187
+    0.8187
+G =
+    0.2674
+    0.0779
+</pre><h2 id="12">Digital Control Systems: Theoretical Problems and Simulation Tools</h2><p>Pages of Interest</p><div><ul><li><b>CHAPTER 3 Pages to Read</b></li><li>p.54 (Do Block Diagram)</li><li>p.65-72 (Do Example, Discreting Block Diagram)</li><li>p.81-88</li></ul></div><p>Problems Calculation of denominator&#8217;s roots</p><pre class="codeinput">A=[1 5 2 -8];
+riz=roots(A);
+<span class="comment">% Calculation of numerators of the partial fractions</span>
+syms <span class="string">z</span>
+X =(z^2 +3*z +1)/(z^3 +5*z^2 +2*z-8);
+c1 =limit((z-riz(1))*X,z,riz(1))
+c2 =limit((z-riz(2))*X,z,riz(2))
+c3 =limit((z-riz(3))*X,z,riz(3))
+</pre><pre class="codeoutput">c1 =
+1/2
+c2 =
+1/6
+c3 =
+1/3
+</pre><p>Prefer to use residue method Define the coefficients of numerator and denominator</p><pre class="codeinput">num=[ 1 3 1];
+den =[ 1 0 -3 2]
+<span class="comment">% Use of residue command</span>
+[R,P,K] =residue(num,den)
+</pre><pre class="codeoutput">den =
+     1     0    -3     2
+R =
+   -0.1111
+    1.1111
+    1.6667
+P =
+   -2.0000
+    1.0000
+    1.0000
+K =
+     []
+</pre><p>Example 9.3 ( Always learning) functions</p><pre class="codeinput"><span class="keyword">function</span> [nr2,dr2]= nice(old,z)
+<span class="comment">% NICE takes the original expression and makes it look nice</span>
+<span class="comment">% Input: (a*z^2 + b*z + c)/(d*z^2 + e*z + f)</span>
+<span class="comment">% Output: (a1*z^2 + b1*z + c1)/(z^2 + e1*z + f1)</span>
+<span class="comment">% old contains symbol of z</span>
+<span class="comment">% rearrange the expression to collect coefficients</span>
+new = collect(old,z);
+<span class="comment">% obtain the coefficients of numerator and denominator</span>
+dr = fliplr(coeffs(feval(symengine,<span class="string">'denom'</span>,new)));
+nr = fliplr(coeffs(feval(symengine,<span class="string">'numer'</span>,new)));
+<span class="comment">% normalize the coefficients with the coeff of dr z^2 term</span>
+dr2 = double(dr/dr(1)); nr2 = double(nr/dr(1));
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+Dce =
+ 
+     1.2129 (z-0.8859)
+  -----------------------
+  (z^2 - 1.511z + 0.6121)
+ 
+Sample time: 0.1 seconds
+Discrete-time zero/pole/gain model.
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ELEC 460 Final Exam Prep
+%
+format compact
+%%
+% Final Exam Topics
+%%
+% Good Textbooks to Use 
+%%
+% 
+% * Digital Control Systems Phillips
+% * Nise Control Systems Chapter 13
+% * 4559_digital_control_engineering_2nd_edition
+% * Digital Control Systems: Theoretical Problems and Simulation Tools
+% * Dorf Control System Last Chapter
+
+%% Digital Control Systems Phillips
+% (Always Learning) Chakrabortty, Aranya_ Nagle, H. Troy_ Phillips, Charles L-Digital Control System Analysis & Design_ Global Edition-Pearson Education Limited (2015)
+% Chapters of interest from this textbook are:
+%%
+% # Chapter 9, go through examples
+%%
+% Example 9.3
+% Compute the plant’s discrete state-space matrices
+Ac=[0 1;0 -1]; Bc=[0;1]; Cc=[1 0]; Dc=0;
+Sysc=ss(Ac,Bc,Cc,Dc); T=0.1; Sysd=c2d(Sysc,T);
+[A,B,C,D]=ssdata(Sysd);
+% Set tau and zeta for desired alphac roots
+tau = 1.0; zeta = 0.47462;
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphac = [1 -2*r*cos(theta) r^2], roots_alphac=roots(alphac)
+P = roots(alphac) % P specifies the acker desired roots
+K = acker(A,B,P) % Ackermann computation
+% Set tau and zeta for desired alphae roots
+tau = 0.5, zeta = 1
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphae =[1 -2*r*cos(theta) r^2],
+roots_alphae=roots(alphae)
+Perr = roots(alphae) % Perr specifies the acker desired roots
+G =(acker(A',C',Perr))' % Ackermann computation
+
+% Example 9.4 Append
+% Append this code to the program for Example 9.3
+Aq = A-B*K-G*C, Bq = G, Cq = -K
+[NUMce, DENce]=ss2tf(Aq,Bq,Cq,0);
+Dce=tf(-NUMce, DENce,0.1);
+Dce=zpk(Dce)
+
+
+%% 
+% Example 9.7
+A =[1 0.095163; 0 0.904837]; B=[0.0048374; 0.095163];
+alphae =[1 -0.818731];
+Aaa = A(1,1); Aab = A(1,2); Aba = A(2,1); Abb = A(2,2);
+Ba=B(1,1); Bb=B(2,1);
+Perr = -alphae(2)
+G =(acker(Abb',Aab',Perr))' % Substitute AbbREPLACE_WITH_DASH_DASH>A and AabREPLACE_WITH_DASH_DASH>C
+%%
+%
+%%
+%
+A=[-0.2 0;-1 0.8]; B=[1; 1]; C=[-1 1]; D=[1];
+T=1; %Choose any sampling interval
+Sysd=ss(A,B,C,D,T)
+S_control=[B A*B]
+Rank_S_control=rank(S_control)
+S_observe=[C; C*A]
+rank_S_observe=rank(S_observe)
+Yz_over_Xz = tf(Sysd)
+
+
+%%
+% Example 9.3 ( Always learning)
+% Original Part
+% Example 9.3
+% Compute the plant’s discrete state-space matrices
+Ac=[0 1;0 -1]; Bc=[0;1]; Cc=[1 0]; Dc=0;
+Sysc=ss(Ac,Bc,Cc,Dc); T=0.1; Sysd=c2d(Sysc,T);
+[A,B,C,D]=ssdata(Sysd);
+% Set tau and zeta for desired alphac roots
+tau = 1.0; zeta = 0.47462;
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphac = [1 -2*r*cos(theta) r^2], roots_alphac=roots(alphac)
+P = roots(alphac) % P specifies the acker desired roots
+K = acker(A,B,P) % Ackermann computation
+% Set tau and zeta for desired alphae roots
+tau = 0.5, zeta = 1
+r = exp(-T/tau), theta = sqrt(log(r)^2*(1/zeta^2-1))
+alphae =[1 -2*r*cos(theta) r^2],
+roots_alphae=roots(alphae)
+Perr = roots(alphae) % Perr specifies the acker desired roots
+G =(acker(A',C',Perr))' % Ackermann computation
+% Alternative method using (9-51)
+% Store this NICE function
+syms z 
+Dce=K*inv((z*eye(2)-A+B*K+G*C))*G;
+[num,den]=nice(Dce,z);
+Dce=tf(num,den,T); Dce=zpk(Dce)
+
+%% Digital Control Systems: Theoretical Problems and Simulation Tools
+%
+%%
+% Pages of Interest
+%%
+%
+% * *CHAPTER 3 Pages to Read*
+% * p.54 (Do Block Diagram)
+% * p.65-72 (Do Example, Discreting Block Diagram)
+% * p.81-88
+
+%%
+%
+% Problems
+% Calculation of denominator’s roots
+A=[1 5 2 -8];
+riz=roots(A);
+% Calculation of numerators of the partial fractions
+syms z
+X =(z^2 +3*z +1)/(z^3 +5*z^2 +2*z-8);
+c1 =limit((z-riz(1))*X,z,riz(1))
+c2 =limit((z-riz(2))*X,z,riz(2))
+c3 =limit((z-riz(3))*X,z,riz(3))
+%%
+% Prefer to use residue method
+% Define the coefficients of numerator and denominator
+num=[ 1 3 1];
+den =[ 1 0 -3 2]
+% Use of residue command
+[R,P,K] =residue(num,den)
+%%
+% Example 9.3 ( Always learning) functions
+function [nr2,dr2]= nice(old,z)
+% NICE takes the original expression and makes it look nice
+% Input: (a*z^2 + b*z + c)/(d*z^2 + e*z + f)
+% Output: (a1*z^2 + b1*z + c1)/(z^2 + e1*z + f1)
+% old contains symbol of z
+% rearrange the expression to collect coefficients
+new = collect(old,z);
+% obtain the coefficients of numerator and denominator
+dr = fliplr(coeffs(feval(symengine,'denom',new)));
+nr = fliplr(coeffs(feval(symengine,'numer',new)));
+% normalize the coefficients with the coeff of dr z^2 term
+dr2 = double(dr/dr(1)); nr2 = double(nr/dr(1));
+end
+##### SOURCE END #####
+--></body></html>

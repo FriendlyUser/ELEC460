@@ -1,19 +1,34 @@
 
+
 <!DOCTYPE html>
+
 <html lang="en-US">
+
 <head>
+
 <meta charset="UTF-8" />
+
 <meta name="author" content="David Li" />
+
 <meta name="generator" content="LaTeX lwarp package" />
+
 <meta name="description" content="Control Theory Notes" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <!--[if lt IE 9]>
+
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
 <![endif]-->
+
 <title>ELEC 460 Course Notes — Introduction and Review</title>
+
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
 <!-- https://groups.google.com/forum/#!topic/
-                                      mathjax-users/jUtewUcE2bY -->
+                                            mathjax-users/jUtewUcE2bY -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        var seteqsectionDefault = {name: "", num: 0};
@@ -36,7 +51,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
              seteqsection = seteqsectionDefault;
              } else {
              if (!seteqsections["_"+n])
-                 seteqsections["_"+n] = {name:n, num:0};
+                  seteqsections["_"+n] = {name:n, num:0};
              seteqsection = seteqsections["_"+n];
              }
              AMS.number = seteqsection.num;
@@ -44,11 +59,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        mySetEqNumber: function (name) {
              var n = this.GetArgument(name);
              if (!n || !n.match(/^ *[0-9]+ *$/))
-                 n = ""; else n = parseInt(n)-1;
+                  n = ""; else n = parseInt(n)-1;
              <!-- $ syntax highlighting -->
              if (n === "" || n < 1)
-                 TEX.Error
-                 ("Argument to "+name+" should be a positive integer");
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
              AMS.number = n;
        }
        });
@@ -56,11 +71,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        TeX: {
              equationNumbers: {
              formatTag: function (n)
-                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
              formatID: function (n) {
-                 n = (seteqsection.name+'.'+n).replace
-                        (/[:"'<>&]/g,"").replace(/^\./,"");
-                 return 'mjx-eqn-' + n;
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
              }
              }
        }
@@ -89,7 +104,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        },
       TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
  });
- MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
  </script>
 
 
@@ -117,12 +132,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 </script>
 -->
 
-
 </head>
 <body>
 
 
-<nav class="topnavigation"><a href="index.html" class="linkhome"
+<a id="autopage-17"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
 >Home</a></nav>
 
 <header>
@@ -145,51 +159,51 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 >Home</a></p>
 
 
-<p><a href="index.html#autosec-10" class="tocchapter"
+<p><a href=" index.html#autosec-10" class="tocchapter"
 >Index</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-13" class="tocpart"
+<p><a href=" Control-Theory.html#autosec-13" class="tocpart"
 ><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-14" class="tocchapter"
+<p><a href=" Control-Theory.html#autosec-14" class="tocchapter"
 ><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
 
 
-<p><a href="Introduction-Review.html#autosec-18" class="tocchapter"
+<p><a href=" Introduction-Review.html#autosec-18" class="tocchapter"
 ><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
 
 
-<p><a href="Other-Useful-Concepts.html#autosec-30" class="tocchapter"
+<p><a href=" Other-Useful-Concepts.html#autosec-30" class="tocchapter"
 ><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
 
 
-<p><a href="Example-commands.html#autosec-47" class="tocchapter"
+<p><a href=" Example-commands.html#autosec-47" class="tocchapter"
 ><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
 
 
-<p><a href="Z-transform.html#autosec-71" class="tocchapter"
+<p><a href=" Z-transform.html#autosec-71" class="tocchapter"
 ><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
 
 
-<p><a href="Course-Work.html#autosec-78" class="tocpart"
+<p><a href=" Course-Work.html#autosec-78" class="tocpart"
 ><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
 
 
-<p><a href="Course-Work.html#autosec-79" class="tocchapter"
+<p><a href=" Course-Work.html#autosec-79" class="tocchapter"
 ><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-133" class="tocpart"
+<p><a href=" Back-Matter.html#autosec-153" class="tocpart"
 ><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-136" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >References</a></p>
 
 
-<p><a href="index.html#autosec-137" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >Glossary</a></p>
 
 
@@ -207,15 +221,13 @@ id="autopage-18"></a>
 
 <figure id="autoid-2" class="figure">
 
-<p><span id="lateximage1" class="lateximagesource">
-<!--
+<p><span id="lateximage1" class="lateximagesource"><!--
               Digital Controller
 
 Zreal                                              Z
         A/D        Control         D/A   Process
     −
--->
-<img src="lateximages\lateximage-1.svg" alt="image" style="" class="lateximage"></span></p>
+--><img src="lateximages\lateximage-1.svg" alt="image" style="" class="lateximage"></span></p>
 
 
 </figure>
@@ -229,32 +241,38 @@ Zreal                                              Z
 <table>
 
 <tr class="hline" >
-<td colspan="2" class="tdc tvertbarl tvertbarr"><b>T</b>able of Z Transforms</td>
+<td colspan="2" class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px
+solid #"><b>T</b>able of Z Transforms</td>
 </tr>
 <tr class="hline" >
-<td class="tdc tvertbarl tvertbarr">\((x_k)_{k=0}^\infty \)</td>
-<td class="tdc tvertbarr">\(Z \left [(x_k)_{k=0}^\infty \right ]\)</td>
+<td class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px solid
+#">\((x_k)_{k=0}^\infty \)</td>
+<td class="tdc tvertbarr" style="border-right: 1px solid #">\(Z \left [(x_k)_{k=0}^\infty \right ]\)</td>
 </tr>
 <tr class="hline" >
-<td class="tdc tvertbarl tvertbarr"></td>
-<td class="tdc tvertbarr"></td>
+<td class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px solid
+#"></td>
+<td class="tdc tvertbarr" style="border-right: 1px solid #"></td>
 </tr>
 <tr>
-<td class="tdc tvertbarl tvertbarr">\(x_k =\delta _k= \left \{ \begin {array}{ll} 1 &amp; k = 0\\ 0 &amp;
-k &gt; 0 \end {array} \right .\)</td>
-<td class="tdc tvertbarr">1</td>
+<td class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px solid
+#">\(x_k =\delta _k= \left \{ \begin {array}{ll} 1 &amp; k = 0\\ 0 &amp; k &gt; 0 \end {array} \right .\)</td>
+<td class="tdc tvertbarr" style="border-right: 1px solid #">1</td>
 </tr>
 <tr>
-<td class="tdc tvertbarl tvertbarr">(unit pulse)</td>
-<td class="tdc tvertbarr"></td>
+<td class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px solid
+#">(unit pulse)</td>
+<td class="tdc tvertbarr" style="border-right: 1px solid #"></td>
 </tr>
 <tr>
-<td class="tdc tvertbarl tvertbarr">\(x_k = r^k\)</td>
-<td class="tdc tvertbarr">\(\frac {z}{z-r}\)</td>
+<td class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px solid
+#">\(x_k = r^k\)</td>
+<td class="tdc tvertbarr" style="border-right: 1px solid #">\(\frac {z}{z-r}\)</td>
 </tr>
 <tr>
-<td class="tdc tvertbarl tvertbarr">\(x_k = kr^{k-1}\)</td>
-<td class="tdc tvertbarr">\(\frac {z}{(z-r)^2}\)</td>
+<td class="tdc tvertbarl tvertbarr" style="border-left: 1px solid #; border-right: 1px solid
+#">\(x_k = kr^{k-1}\)</td>
+<td class="tdc tvertbarr" style="border-right: 1px solid #">\(\frac {z}{(z-r)^2}\)</td>
 </tr>
 <tr class="hline" >
 <td class="tdc"></td>
@@ -291,141 +309,141 @@ k &gt; 0 \end {array} \right .\)</td>
 <table>
 
 <tr class="tbrule">
-<td class="tdc tvertbarr">QUANTITY</td>
-<td class="tdc tvertbarr">SYMBOL</td>
-<td class="tdc tvertbarr">UNIT</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">QUANTITY</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">SYMBOL</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">UNIT</td>
 <td class="tdc">UNIT ABBERVIATION</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Time</td>
-<td class="tdc tvertbarr">t</td>
-<td class="tdc tvertbarr">second</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Time</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">t</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">second</td>
 <td class="tdc">s</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Frequency (cyclic)</td>
-<td class="tdc tvertbarr">f</td>
-<td class="tdc tvertbarr">hertz</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Frequency (cyclic)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">f</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">hertz</td>
 <td class="tdc">Hz</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Frequency (radian)</td>
-<td class="tdc tvertbarr">\(\omega \)</td>
-<td class="tdc tvertbarr">radian/sec</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Frequency (radian)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">\(\omega \)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">radian/sec</td>
 <td class="tdc">rad/s</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Phase angle</td>
-<td class="tdc tvertbarr">\(\theta \), \(\varphi \)</td>
-<td class="tdc tvertbarr">degree or radian</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Phase angle</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">\(\theta \), \(\varphi \)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">degree or radian</td>
 <td class="tdc">\(^{\circ }\) or rad</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Energy</td>
-<td class="tdc tvertbarr">w</td>
-<td class="tdc tvertbarr">joule</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Energy</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">w</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">joule</td>
 <td class="tdc">J</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Power</td>
-<td class="tdc tvertbarr">p</td>
-<td class="tdc tvertbarr">watt</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Power</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">p</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">watt</td>
 <td class="tdc">W</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Charge</td>
-<td class="tdc tvertbarr">q</td>
-<td class="tdc tvertbarr">coulomb</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Charge</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">q</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">coulomb</td>
 <td class="tdc">C</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Current</td>
-<td class="tdc tvertbarr">i</td>
-<td class="tdc tvertbarr">ampere</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Current</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">i</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">ampere</td>
 <td class="tdc">A</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Electric field</td>
-<td class="tdc tvertbarr">E</td>
-<td class="tdc tvertbarr">volt/meter</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Electric field</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">E</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">volt/meter</td>
 <td class="tdc">V/m</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Voltage</td>
-<td class="tdc tvertbarr">v</td>
-<td class="tdc tvertbarr">volt</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Voltage</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">v</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">volt</td>
 <td class="tdc">V</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Impedence</td>
-<td class="tdc tvertbarr">Z</td>
-<td class="tdc tvertbarr">ohm</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Impedence</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Z</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">ohm</td>
 <td class="tdc">\(\varOmega \)</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Admittance</td>
-<td class="tdc tvertbarr">Y</td>
-<td class="tdc tvertbarr">siemen</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Admittance</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Y</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">siemen</td>
 <td class="tdc">S</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Resistance</td>
-<td class="tdc tvertbarr">R</td>
-<td class="tdc tvertbarr">ohm</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Resistance</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">R</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">ohm</td>
 <td class="tdc">\(\varOmega \)</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Conductance</td>
-<td class="tdc tvertbarr">G</td>
-<td class="tdc tvertbarr">siemen</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Conductance</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">G</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">siemen</td>
 <td class="tdc">S</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Reactance</td>
-<td class="tdc tvertbarr">X</td>
-<td class="tdc tvertbarr">ohm</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Reactance</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">X</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">ohm</td>
 <td class="tdc">\(\varOmega \)</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Susceptance</td>
-<td class="tdc tvertbarr">B</td>
-<td class="tdc tvertbarr">siemen</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Susceptance</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">B</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">siemen</td>
 <td class="tdc">S</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Inductance, self</td>
-<td class="tdc tvertbarr">L</td>
-<td class="tdc tvertbarr">henry</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Inductance, self</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">L</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">henry</td>
 <td class="tdc">H</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Inductance, mutual</td>
-<td class="tdc tvertbarr">M</td>
-<td class="tdc tvertbarr">henry</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Inductance, mutual</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">M</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">henry</td>
 <td class="tdc">H</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Capacitance</td>
-<td class="tdc tvertbarr">C</td>
-<td class="tdc tvertbarr">farad</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Capacitance</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">C</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">farad</td>
 <td class="tdc">F</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Magnetic flux</td>
-<td class="tdc tvertbarr">\(\phi \)</td>
-<td class="tdc tvertbarr">weber</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Magnetic flux</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">\(\phi \)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">weber</td>
 <td class="tdc">wb</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Flux linkages</td>
-<td class="tdc tvertbarr">\(\lambda \)</td>
-<td class="tdc tvertbarr">weber-turns</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Flux linkages</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">\(\lambda \)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">weber-turns</td>
 <td class="tdc">wb-t</td>
 </tr>
 <tr>
-<td class="tdc tvertbarr">Power ratio</td>
-<td class="tdc tvertbarr">\(log_{10}\frac {p_2}{p_1}\)</td>
-<td class="tdc tvertbarr">Bel</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Power ratio</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">\(log_{10}\frac {p_2}{p_1}\)</td>
+<td class="tdc tvertbarr" style="border-right:    1px solid #">Bel</td>
 <td class="tdc">B</td>
 </tr>
 <tr class="tbrule">
@@ -439,7 +457,6 @@ k &gt; 0 \end {array} \right .\)</td>
 
 <figcaption>
 <p>Table&nbsp;2.1:&nbsp;Electric Quantities</p>
-
 
 
 </figcaption>
@@ -502,7 +519,6 @@ k &gt; 0 \end {array} \right .\)</td>
 
 <figcaption>
 <p>Table&nbsp;2.2:&nbsp;Basic Circuit Relations</p>
-
 
 
 </figcaption>

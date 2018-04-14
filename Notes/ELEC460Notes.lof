@@ -1,0 +1,69 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Error signal: $E=R-C$}}{13}{figure.3.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Systems of types 0, 1 and 2. Note that $N_0, N_1, N_2, D_0, D_1, D_2$ should not be factorizable by $s$.}}{14}{figure.3.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Proportional-derivative control.}}{15}{figure.3.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Lag compensation in series with PD control.}}{15}{figure.3.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {3.5}{\ignorespaces First order system with integral controller.}}{15}{figure.3.5}
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\addvspace {10\p@ }
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Root Locus created using matplotlib and python control library}}{29}{figure.6.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Bode Plot}}{30}{figure.6.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Nyquist Plot}}{30}{figure.6.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Root Locus when K =1}}{31}{figure.6.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Bode plot when K=1}}{32}{figure.6.5}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Nyquist plot when K=1}}{32}{figure.6.6}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Phase and Gain Margin in Bode Plot}}{33}{figure.6.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Step Response of Transfer function with K = 0.479}}{34}{figure.6.8}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Picture for \cite {textbook:ogata} But for discrete systems.}}{34}{figure.6.9}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.10}{\ignorespaces Computational Approach to B-2-17 in Matlab}}{37}{figure.6.10}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.11}{\ignorespaces Block Diagram for Figure B-3-15}}{42}{figure.6.11}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.12}{\ignorespaces Block Diagram for B-3-20}}{45}{figure.6.12}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.13}{\ignorespaces *}}{46}{figure.6.13}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.14}{\ignorespaces *}}{48}{figure.6.14}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.15}{\ignorespaces *}}{49}{figure.6.15}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.16}{\ignorespaces *}}{51}{figure.6.16}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.17}{\ignorespaces *}}{54}{figure.6.17}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.18}{\ignorespaces Diagram illustrating that the zero $z-\frac {K_p}{K_p-K_i}$ must contribute $125.1015^\circ $}}{55}{figure.6.18}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.19}{\ignorespaces *}}{57}{figure.6.19}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.20}{\ignorespaces Bode Plot for uncompensated System}}{58}{figure.6.20}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.21}{\ignorespaces Bode Plot for uncompensated System}}{58}{figure.6.21}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.22}{\ignorespaces Ogata B-6-17}}{68}{figure.6.22}
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6.23}{\ignorespaces Step Response}}{70}{figure.6.23}

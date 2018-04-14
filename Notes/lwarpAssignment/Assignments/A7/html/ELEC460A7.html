@@ -1,0 +1,204 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ELEC 460 Assignment 7</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-10"><meta name="DC.source" content="ELEC460A7.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>ELEC 460 Assignment 7</h1><p>State-Space Model</p><pre class="codeinput">format <span class="string">compact</span>
+syms <span class="string">z</span>
+warning <span class="string">off</span>
+</pre><p>Consider the discrete-time state equation</p><p>$$
+\begin{bmatrix}
+x_1(k+1) \\
+x_2(k+1)
+\end{bmatrix} = \begin{bmatrix}
+0     &amp;  1 \\
+-0.24 &amp; -1
+\end{bmatrix}\begin{bmatrix}
+x_1(k) \\
+x_2(k)
+\end{bmatrix}
+$$</p><pre class="error">Error updating Text.
+
+ Character vector must have valid interpreter syntax: 
+$$ \begin{bmatrix} x_1(k+1) \\ x_2(k+1) \end{bmatrix} = \begin{bmatrix} 0     &amp;  1 \\ -0.24 &amp; -1 \end{bmatrix}\begin{bmatrix} x_1(k) \\ x_2(k) \end{bmatrix} $$
+</pre><p>Obtain the state transition matrix <span class="MathJax_Preview"><img src="ELEC460A7_eq15418474346286746179.png" alt="$\Psi(k)$"></span><script type="math/tex">\Psi(k)</script></p><p>Since <span class="MathJax_Preview"><img src="ELEC460A7_eq09357471010195916458.png" alt="$\displaystyle \psi(k)=G^k= \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\}$"></span><script type="math/tex">\displaystyle \psi(k)=G^k= \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\}</script>, and</p><p>$$
+A=\begin{bmatrix}
+a     &amp;  b \\
+c &amp;  d
+\end{bmatrix}^{-1}= \frac{1}{ad-bc}\begin{bmatrix}
+d     &amp;  -b \\
+-c &amp;  a
+\end{bmatrix}
+$$</p><pre class="error">Error updating Text.
+
+ Character vector must have valid interpreter syntax: 
+$$ A=\begin{bmatrix} a     &amp;  b \\ c &amp;  d \end{bmatrix}^{-1}= \frac{1}{ad-bc}\begin{bmatrix} d     &amp;  -b \\ -c &amp;  a \end{bmatrix} $$
+</pre><p>$$
+\begin{align}
+&amp; \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\} = z \begin{bmatrix}
+z     &amp;  -1 \\
+0.24 &amp; z+1
+\end{bmatrix}^{-1}= \mathcal{Z}^{-1} \left\{\frac{z}{z^2+z-(-1)(0.24)}\begin{bmatrix}
+z+1     &amp;  1 \\
+-0.24 &amp; z
+\end{bmatrix} \right\} \\
+&amp; \frac{F(z)}{z}=\mathcal{Z}^{-1} \left\{\frac{1}{(z+0.4)(z-0.6)}\begin{bmatrix}
+z+1     &amp;  1 \\
+-0.24 &amp; z
+\end{bmatrix} \right\}
+\end{align}
+$$</p><pre class="error">Error updating Text.
+
+ Character vector must have valid interpreter syntax: 
+$$ \begin{align} &amp; \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\} = z \begin{bmatrix} z     &amp;  -1 \\ 0.24 &amp; z+1 \end{bmatrix}^{-1}= \mathcal{Z}^{-1} \left\{\frac{z}{z^2+z-(-1)(0.24)}\begin{bmatrix} z+1     &amp;  1 \\ -0.24 &amp; z \end{bmatrix} \right\} \\ &amp; \frac{F(z)}{z}=\mathcal{Z}^{-1} \left\{\frac{1}{(z+0.4)(z-0.6)}\begin{bmatrix} z+1     &amp;  1 \\ -0.24 &amp; z \end{bmatrix} \right\} \end{align} $$
+</pre><p>Ignore all the previous matlab based errors, doesn't support advanced latex, or just matrices in latex</p><pre class="codeinput">F1 =  1/((z+0.6)*(z+0.4))
+<span class="comment">%F1 = partfrac(F1)</span>
+F2 = [z+1   1; <span class="keyword">...</span>
+      -0.24 z;]
+F = F1*F2
+F = partfrac(F)
+</pre><pre class="codeoutput">F1 =
+1/((z + 2/5)*(z + 3/5))
+F2 =
+[ z + 1, 1]
+[ -6/25, z]
+F =
+[ (z + 1)/((z + 2/5)*(z + 3/5)), 1/((z + 2/5)*(z + 3/5))]
+[   -6/(25*(z + 2/5)*(z + 3/5)), z/((z + 2/5)*(z + 3/5))]
+F =
+[ 15/(5*z + 2) - 10/(5*z + 3), 25/(5*z + 2) - 25/(5*z + 3)]
+[   6/(5*z + 3) - 6/(5*z + 2), 15/(5*z + 3) - 10/(5*z + 2)]
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ELEC 460 Assignment 7
+% State-Space Model
+format compact
+syms z
+warning off
+%%
+% Consider the discrete-time state equation
+
+%%
+% 
+% $$
+% \begin{bmatrix} 
+% x_1(k+1) \\
+% x_2(k+1)
+% \end{bmatrix} = \begin{bmatrix}
+% 0     &  1 \\
+% -0.24 & -1 
+% \end{bmatrix}\begin{bmatrix}
+% x_1(k) \\
+% x_2(k)
+% \end{bmatrix}
+% $$
+% 
+%%
+% Obtain the state transition matrix $\Psi(k)$
+%%
+% Since $\displaystyle \psi(k)=G^k= \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\}$, and 
+%%
+%%
+% 
+% $$ 
+% A=\begin{bmatrix}
+% a     &  b \\
+% c &  d 
+% \end{bmatrix}^{-1}= \frac{1}{ad-bc}\begin{bmatrix}
+% d     &  -b \\
+% -c &  a 
+% \end{bmatrix}
+% $$
+%%
+% $$
+% \begin{align}
+% & \mathcal{Z}^{-1} \left\{z[zI-G]^{-1}\right\} = z \begin{bmatrix}
+% z     &  -1 \\
+% 0.24 & z+1
+% \end{bmatrix}^{-1}= \mathcal{Z}^{-1} \left\{\frac{z}{z^2+z-(-1)(0.24)}\begin{bmatrix}
+% z+1     &  1 \\
+% -0.24 & z
+% \end{bmatrix} \right\} \\
+% & \frac{F(z)}{z}=\mathcal{Z}^{-1} \left\{\frac{1}{(z+0.4)(z-0.6)}\begin{bmatrix}
+% z+1     &  1 \\
+% -0.24 & z
+% \end{bmatrix} \right\} 
+% \end{align}
+% $$
+% 
+
+%%
+% Ignore all the previous matlab based errors, doesn't support advanced
+% latex, or just matrices in latex
+
+F1 =  1/((z+0.6)*(z+0.4))
+%F1 = partfrac(F1)
+F2 = [z+1   1; ...
+      -0.24 z;]
+F = F1*F2
+F = partfrac(F)
+##### SOURCE END #####
+--></body></html>

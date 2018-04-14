@@ -1,0 +1,138 @@
+
+\begin{center}
+	\hrule
+	\vspace{.4cm}
+	{\textbf { \large ELEC 460 --- Control Theory II}}
+\end{center}
+{\textbf{Name:}\ David Li \hspace{\fill} \textbf{Student Number:} \ V00818631  \\}
+{\textbf{Due Date:} February 27, 2018 \hspace{\fill} \textbf{Assignment}  8}\\
+\hrule
+\subsubsection*{Problem B-6-11}
+Consider the double-integrator system
+\[ x((k+1)T)=\mathbf{G}x(kT)+\mathbf{H}u(kT) \]
+where 
+\[
+\mathbf{G} = \begin{bmatrix} 1 & T \\ 0 & 1 \end{bmatrix}, \qquad
+\mathbf{H} = \begin{bmatrix} T^2/2  \\ T \end{bmatrix}
+\]
+and T is the sampling period. (See Problem A-5-16 for the derivation of this discrete-time state equation for the double-integrator system.). \hfill \linebreak
+
+It is desired that the closed-loop poles be located at $z=\mu_1$ and $z=\mu_2$/ Assuming that the state feedback control
+\[
+u(kT) = -Kx(kT)
+\]
+is used, determine the state feedback gain matrix K.
+
+The controllability matrix has: $\text{rank}[H \ GH]=\text{rank}\left(\begin{bmatrix} \frac{T^2}{2} & \frac{3\,T^2}{2}\\ T & T \end{bmatrix}\right)=2$.
+
+Let $K = \begin{bmatrix} k_1 & k_2 \end{bmatrix}$, and $u(kT)=-Kx(kT)= \begin{bmatrix} k_1 & k_2 \end{bmatrix} \begin{bmatrix} x_1(kT) \\ x_2(kT) \end{bmatrix}$ %\hfill \linebreak
+
+$\mathbf{H}u(kT)=-\begin{bmatrix} T^2/2  \\ T \end{bmatrix}\begin{bmatrix} k_1 & k_2 \end{bmatrix} \begin{bmatrix} x_1(kT) \\ x_2(kT) \end{bmatrix} = -\begin{bmatrix} 0.5T^2 k_1 & 0.5T^2 k_2 \\ T k_1 & Tk_2 \end{bmatrix}\begin{bmatrix} x_1(kT) \\ x_2(kT) \end{bmatrix}$
+
+$x((k+1)T)=\mathbf{G}x(kT)+\mathbf{H}u(kT)=\begin{bmatrix} 1 & T \\ 0 & 1 \end{bmatrix}\begin{bmatrix} x_1(kT) \\ x_2(kT) \end{bmatrix}-\begin{bmatrix} 0.5T^2 k_1 & 0.5T^2 k_2 \\ T k_1 & Tk_2 \end{bmatrix}\begin{bmatrix} x_1(kT) \\ x_2(kT) \end{bmatrix}$
+
+The characteristic equation is:
+\vspace{-0.25cm}
+\begin{align*}
+|zI-(G-HK)|&= \det\begin{bmatrix} z-1+0.5T^2 k_1 & -T+0.5T^2 k_2 \\ T k_1 & z-1+Tk_2 \end{bmatrix} \\
+& = z^2+(-2+0.5T^2k_1+Tk_2)z+0.5T^2k_1-Tk_2+1=0
+\end{align*}
+
+\[
+(z-\mu_1)(z-\mu_2) = z^2 - (\mu_1+\mu_2)z + \mu_1\mu_2 =0
+\]
+
+\begin{align*}
+& \mu_1 + \mu_2 = 2 -\frac{1}{2}T^2k_1 - Tk_2 \\
+& \mu_1 \mu_2 = \frac{1}{2}T^2k_1-Tk_2+1 
+\end{align*}
+
+solving for $k_1$ and $k_2$
+\begin{align*}
+& k_1 = \frac{1}{T^2}(1-\mu_1-\mu_2+\mu_1\mu_2), \quad k_2 = \frac{1}{2T}(3-\mu_1-\mu_2-\mu_1\mu_2) \\
+& K = [\frac{1}{T^2}(1-\mu_1-\mu_2+\mu_1\mu_2) \quad \frac{1}{2T}(3-\mu_1-\mu_2-\mu_1\mu_2) ]
+\end{align*}
+ %$\mathbf{G} x(kT) = \begin{bmatrix} 1 & T \\ 0 & 1 \end{bmatrix}\begin{bmatrix} x_1(kT) \\ x_2(kT) \end{bmatrix}= $
+
+\subsubsection*{Problem B-6-12}
+Consider the system defined by
+\[
+\begin{bmatrix} x_1(k+1) \\ x_2(k+1) \\ x_3(k+1) \end{bmatrix} = 
+\begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ -0.16 & 0.84 & 0 \end{bmatrix} 
+\begin{bmatrix} x_1(k) \\ x_2(k) \\ x_3(k) \end{bmatrix} + \begin{bmatrix} 1 \\ 1 \\ 1\end{bmatrix}u(k)
+\]
+Determine the state feedback gain matrix $\mathbf{K}$ such that when the control signal is given by $u(k) = -\mathbf{K} x(k)$ the closed-loop system will exhibit the deadbeat response to any initial state x(0).
+
+The controllability matrix has $\text{rank}[M]=\text{rank}[H \ GH \ G^2H]=\text{rank}\left(\begin{bmatrix} 
+1 & 1    &  1     \\ 
+1 & 1    &   0.68 \\ 
+1 & 0.68 &   0.68 \\ \end{bmatrix}\right)=3$, we can determine the necessary state feedback gain matrix K for deadbeat response. For a deadbeat response $\alpha_1=\alpha_2= \alpha_3 =0$
+
+\begin{align*}
+ K &= \begin{bmatrix}
+ \alpha_3-a_3 & \alpha_2 -a_2 & \alpha_1-a_1
+\end{bmatrix}T^{-1} \\
+   & = \begin{bmatrix}
+   -a_3 & -a_2 & -a_1 
+   \end{bmatrix} = \begin{bmatrix}
+   -0.16 & 0.84 & -0 
+   \end{bmatrix}T^{-1}
+\end{align*}
+
+%T = MW,
+\begin{align*}
+& M = \begin{bmatrix} 
+1 & 1    &  1     \\ 
+1 & 1    &   0.68 \\ 
+1 & 0.68 &   0.68 \\ \end{bmatrix} \quad W = \begin{bmatrix} 
+a_2 & a_1    &  1 \\ 
+a_1 & 1      &  0 \\ 
+1   & 0      &  0 \\ \end{bmatrix} = \begin{bmatrix} 
+-0.84 & 0      &  1 \\ 
+0     & 1      &  0 \\ 
+1     & 0      &  0 \\ \end{bmatrix} \\
+& T = MW = \begin{bmatrix} 
+ 0.16     & 1      &  1 \\ 
+-0.16     & 1      &  1 \\ 
+-0.16     & 0.68   &  1 \\ \end{bmatrix} \\
+& T^{-1} = \begin{bmatrix} 
+3.125     & -3.125      &  0 \\ 
+0         & 3.125       &  -3.125 \\ 
+0.5       & -2.625      &  3.125 \\ \end{bmatrix} \\
+& K = \begin{bmatrix}
+-0.16 & 0.84 & -0 
+\end{bmatrix}\begin{bmatrix} 
+3.125     & -3.125      &  0 \\ 
+0         & 3.125       &  -3.125 \\ 
+0.5       & -2.625      &  3.125 \\ \end{bmatrix} \\
+& \ \ = \begin{bmatrix}
+-0.5 & 3.125 & -2.625 
+\end{bmatrix}
+\end{align*}
+\subparagraph*{Problem 3}
+Determine the feedback gain matrix for the model of B-6-11 so that the closed loop system has settling time of 2 sec and overshoot of 18\% (T=0.1). \hfill \linebreak 
+$2^{nd}$ Order underdamped system, z-domain characteristic polynomial is: \hfill \linebreak
+
+ $(z-e^{(-\zeta \omega_n+j\omega_d)T})(z-e^{(-\zeta \omega_n-j\omega_d)T})=z^2-2\cos(\omega_d T)e^{-\zeta \omega_n T}z+e^{-2 \zeta \omega_n T}$ 
+
+%\hfill \linebreak
+
+
+The damping ratio, $\zeta= \sqrt{\frac{(\ln( \% \ OS )^2}{\pi^2 +(\ln( \% \ OS ))^2}}= \sqrt{\frac{2.9405336}{\pi^2+2.9405336}}=0.47911$
+
+
+ $T_s \approx \frac{3.9}{ \zeta \omega_n} \rightarrow \omega_n =\frac{3.9}{\zeta \omega_n T_s}= 4.07 \ $ rad /s and $\omega_d = \omega_n \sqrt{1-\zeta^2}=2.937429 $ rad /s
+ 
+ 
+ \textbf{Poles} %\hfill \linebreak
+ 
+ % See https://www.wolframalpha.com/input/?i=e%5E%7B(-0.47911(4.07)+%2B+i*2.937429)0.1%7D
+ $ \mu_{1,2}=z_{1,2}=e^{(-\zeta \omega_n \pm j \omega_d)T}=e^{-\zeta \omega_n T} \angle \pm \omega_d T = %e^{(-0.47911(4.07) \pm j2.937429)0.1}=
+ e^{-0.195} \angle \pm 0.2937429 =
+ 0.787592 \pm j0.238241$
+ 
+ \begin{align*}
+ & k_1 = \frac{1}{T^2}(1-\mu_1-\mu_2+\mu_1\mu_2), \quad k_2 = \frac{1}{2T}(3-\mu_1-\mu_2-\mu_1\mu_2) \\
+ & K = [\frac{1}{T^2}(1-\mu_1-\mu_2+\mu_1\mu_2) \quad \frac{1}{2T}(3-\mu_1-\mu_2-\mu_1\mu_2) ] \\
+ & K = [10.1876 \quad 3.7388]
+ \end{align*}

@@ -1,0 +1,205 @@
+
+\begin{center}
+	\hrule
+	\vspace{.4cm}
+	{\textbf { \large ELEC 460 --- Control Theory II}}
+\end{center}
+{\textbf{Name:}\ David Li \hspace{\fill} \textbf{Student Number:} \ V00818631  \\}
+{\textbf{Due Date:} April 3,2018 \hspace{\fill} \textbf{Assignment}  9}\\
+\hrule
+\subsubsection*{Problem B-6-17}
+\vspace*{-0.5cm}
+ Figure 6-24 shows a servo system where the integral controller has a time delay of one sampling period. (Compare this system with the servo system shown in Figure 6-18)
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{OgataB6-17.pdf}
+	\caption{Ogata B-6-17}
+	\label{fig:ogatab6-17}
+\end{figure}
+
+\vspace*{-1cm}
+\begin{align*}
+& v(k+1) = v(k) +r(k) - y(k) \quad x(k+1) = 0.5x(k)+u(k) \\
+& y(k) = x(k) \quad  u(k) = -K_2 x(k) +K_1 v(k) \quad K_1v(k) =u(k)+K_2x(k) \\
+& u(k+1) = -K_2 x(k+1)+K_1 v(k+1) = K_2(-0.5x(k)+u(k)) + K_1(v(k) +r(k) - y(k)) \\
+& u(k+1) = -K_2 (-0.5x(k)+u(k)) + (u(k)+K_2x(k)) +K_1 r(k) - K_1x(k) \\
+& u(k+1) = (0.5K_2-K_1)x(k)+(1-K-2)u(k)+K_1(r(k)) 
+\end{align*}
+Creating a state-space representation
+\vspace*{-0.25cm}
+\begin{align*}
+& \begin{bmatrix}
+x(k+1) \\
+u(k+1)
+\end{bmatrix} = \begin{bmatrix}
+0.5       &  1 \\
+0.5K_2-K_1 & 1-K_2
+\end{bmatrix}\begin{bmatrix}
+x(k) \\
+u(k)
+\end{bmatrix} + \begin{bmatrix}
+0  \\
+K_1
+\end{bmatrix} r(k) \\
+& y(k) = \begin{bmatrix}
+1 & 0
+\end{bmatrix}\begin{bmatrix}
+x(k) \\
+u(k)
+\end{bmatrix} \\
+& x_e(k) = x(k) - x(\infty) \\
+& u_e(k) = u(k) - u(\infty) \\
+& \begin{bmatrix}
+x_e(k+1) \\
+u_e(k+1)
+\end{bmatrix}\begin{bmatrix}
+0.5        & 1    \\
+0.5K_2-K_1 & 1-K_2
+\end{bmatrix}\begin{bmatrix}
+x_e(k) \\
+u_e(k)
+\end{bmatrix} \\
+& (Iz-G)=\begin{bmatrix}
+z-0.5        & -1  \\
+-0.5K_2 +K_1 & z-1+K_2
+\end{bmatrix}=z^2+(K_2-1.5)z+0.5-K_2+K_1=0
+\end{align*}
+The desired characteristic equation $P(z)=0$, $z^2=0$, choose $K_2=1.5$, $K_1=1$. 
+\begin{align*}
+& \begin{bmatrix}
+x(k+1) \\
+u(k+1)
+\end{bmatrix}=\begin{bmatrix}
+0.5       &  1 \\
+-0.25     & -0.5
+\end{bmatrix}\begin{bmatrix}
+x(k) \\      
+u(k) 
+\end{bmatrix} \\
+& \text{Assume that the initial state is:} \begin{bmatrix}
+x(0) \\      
+u(0) 
+\end{bmatrix} = \begin{bmatrix}
+a \\      
+b 
+\end{bmatrix} \\
+& \begin{bmatrix}
+x(1) \\      
+u(1) 
+\end{bmatrix} = \begin{bmatrix}
+0.5       &  1 \\
+-0.25     & -0.5
+\end{bmatrix}\begin{bmatrix}
+a \\      
+b 
+\end{bmatrix}+ \begin{bmatrix}
+0  \\
+1
+\end{bmatrix} = \begin{bmatrix}
+0.5a +b \\
+-0.25a -0.5b+1
+\end{bmatrix} \\
+& \begin{bmatrix}
+x(2) \\      
+u(2) 
+\end{bmatrix} = \begin{bmatrix}
+0.5       &  1 \\
+-0.25     & -0.5
+\end{bmatrix} \begin{bmatrix}
+0.5a +b \\
+-0.25a -0.5b+1
+\end{bmatrix} + \begin{bmatrix}
+0  \\
+1
+\end{bmatrix} =\begin{bmatrix}
+0  \\
+0.5
+\end{bmatrix} \\
+& \begin{bmatrix}
+ x(k) \\
+ u(k)
+\end{bmatrix}=\begin{bmatrix}
+1  \\
+0.5
+\end{bmatrix}, \quad \text{for k}=3,4,5 \cdots 
+\end{align*}
+ $y(0)=x(0)=a \quad y(1)=x(1)=0.5a+b \quad y(k)=x(k)=1 \quad  \text{for k}=2,3,4 \cdots $
+ 
+ \begin{figure}[H]
+ 	\centering
+ 	\includegraphics[width=0.5\linewidth]{stepResponsePlot.pdf}
+ 	\caption{Step Response}
+ 	%\label{fig:ogatab6-17}
+ \end{figure}
+
+\subsubsection*{Problem B-6-13}
+Consider the system
+\begin{align*}
+& x(k+1)=Gx(k)+Hu(k) \\
+& y(k) = Cx(k)
+\end{align*}
+where 
+\begin{align*}
+& x(k) = \text{state vector (2-vector)} \\
+& u(k) = \text{control vector (scalar)} \\
+& y(k) =  \text{output signal (scalar)}
+\end{align*}
+and 
+\[
+G = \begin{bmatrix}
+0     & 1 \\
+-0.16 & -1
+\end{bmatrix}, \qquad
+H = \begin{bmatrix}
+0    \\
+1
+\end{bmatrix}, \qquad 
+C = \begin{bmatrix}
+0  & 1
+\end{bmatrix}
+\]
+\textbf{Design a full order prediction observer with deadbeat response for the system of Question B-6-13 in the textbook.}
+
+Prediction (full order) observer where the estimate $x(k+1)$ is obtained based on measurements of up to $y(k)$.
+
+\vspace*{-1cm}
+
+\begin{align*}
+& \tilde{x}(k+1)=G\tilde{x}(k)+Hu(k)+k_e[y(k)-\tilde{y}(k)] \\
+& \tilde{y}(k+1) = c\tilde{x}(k+1) 
+\end{align*}
+$k_e$ for this observer can be obtained using the inverse observability matrix, O
+
+\[
+k_e = O^{-1} \tilde{A}^{-1}(\alpha-a)^T
+\]
+where $\alpha=0$ since the observer is required to have a deadbeat response. Further,
+\begin{align*}
+& \det(zI-G)=z^2+z+0.16 \qquad a =[1 \ \ 0.16] \\
+& \tilde{A} = \begin{bmatrix}
+1 & 0 \\
+1 & 1 
+\end{bmatrix} \\
+& O = \begin{bmatrix}
+c \\
+cG
+\end{bmatrix} = \begin{bmatrix}
+1     & 1 \\
+-0.16 & 0
+\end{bmatrix} \\
+& k_e = \begin{bmatrix}
+-5.25 \\ 4.25
+\end{bmatrix}
+\end{align*}
+which leads to:
+\[
+\tilde{x}(k+1)=  \begin{bmatrix}
+1     & 1 \\
+-0.16 & 0
+\end{bmatrix}\tilde{x}(k) + \begin{bmatrix}
+0 \\ 1
+\end{bmatrix} u(k) +  \begin{bmatrix}
+-5.25 \\ 4.25
+\end{bmatrix} (y(k)- \tilde{y}(k))
+\]
+

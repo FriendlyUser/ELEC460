@@ -1,0 +1,194 @@
+\documentclass{scrreprt}
+%% verbatim -- > latex code listing
+%% listing -- > matlab code listing
+%% does not compile glossary or images at the moment
+% \nonstopmode
+\usepackage{morewrites}
+\usepackage[
+HomeHTMLFilename=index,     % Filename of the homepage.
+%HTMLFilename={node-},       % Filename prefix of other pages.
+IndexLanguage=english,      % Language for xindy index, glossary.
+%latexmk,                    % Use latexmk to compile.
+%   OSWindows,                  % Force Windows. (Usually automatic.)
+mathjax,                    % Use MathJax to display math.
+]{lwarp}
+\usepackage{import}
+\title{ELEC 460 Course Notes}
+\author{David Li}
+\setcounter{tocdepth}{2} % Include subsections in the \TOC.
+\setcounter{secnumdepth}{2} % Number down to subsections.
+\setcounter{FileDepth}{1} % Split \HTML\ files at sections, in this case chapters?, 0 for chapters?
+\booltrue{CombineHigherDepths} % Combine parts/chapters/sections
+\setcounter{SideTOCDepth}{0} % Include subsections in the side\TOC
+\HTMLAuthor{David Li} % Sets the HTML meta author tag.
+\HTMLLanguage{en-US} % Sets the HTML meta language.
+\HTMLDescription{Control Theory Notes}%
+
+%\title{ELEC 460 Course Notes}
+%\author{David Li}
+\date{January 2018 --- April 2018}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes,arrows} 
+\usepackage{float}
+
+%\HTMLFirstPageTop{Name and \fbox{HOMEPAGE LOGO}}
+%\HTMLPageTop{\fbox{LOGO}}
+%\HTMLPageBottom{David Li,  \\ according the academic policy of \textbf{UVIC}, everything I do for a course is owned by me. Contact \url{lidavid@uvic.ca} for more info}
+\CSSFilename{lwarp_sagebrush.css}
+
+
+%% Trying out mdframed in lwarp
+\usepackage[framemethod=tikz]{mdframed}
+\newmdenv[
+topline=false,
+bottomline=false,
+rightline=false,
+innerrightmargin=0pt
+]{siderule}
+\newenvironment{note}%
+{\begin{siderule}\textbf{Note:}}
+	{\end{siderule}}
+
+\usepackage{hyperref}
+
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=black}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{multirow}
+\usetikzlibrary{bending}
+\usepackage{circuitikz}
+
+%% https://tex.stackexchange.com/questions/301993/create-custom-note-environment-with-tcolorbox
+\usepackage{enumitem}
+\usepackage[listings,theorems]{tcolorbox}
+
+%% See https://tex.stackexchange.com/questions/86711/tcolorbox-list-of-listings
+% add tcblistings to \jobname.lol (list of listings), perhaps undefined in lwarp
+%\makeatletter
+%% add tcblistings to \jobname.lol (list of listings)
+%\tcbset{
+%	addtolol/.style={list entry={\kvtcb@title},add to list={lol}{section}},
+%}
+%\makeatother
+\tcbuselibrary{listings}
+\tcbuselibrary{breakable}
+\newtcblisting[auto counter,number within=chapter]{matlaboutput}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries,colback=white, colframe=black!90, listing only, 
+	listing options={language=Matlab, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Matlab Output \thetcbcounter #1}
+
+\newtcblisting[auto counter,number within=chapter]{pythonscript}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries, colback=gray!5, colframe=green!75, listing only, 
+	listing options={language=python, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Python Script \thetcbcounter  #1}
+
+\newtcblisting[auto counter,number within=chapter]{latexcmd}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries,colback=gray!10, colframe=red!65, listing only, 
+	listing options={language=TeX, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Latex Commands \thetcbcounter  #1}
+
+\newtcblisting[auto counter,number within=chapter]{bashcmd}[2][]{sharp corners, breakable,
+	fonttitle=\bfseries,colback=gray!15, colframe=blue!65, listing only, 
+	listing options={language=bash, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+	title=Bash Script \thetcbcounter #1}
+
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{listings}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+%\newtheorem{corollary}{Corollary}[section]
+\newtheorem{lemma}{Lemma}[theorem]
+%\newtheorem{example}{Example}[theorem]
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}{Example}[section]
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+%\theoremstyle{proof}
+%\newtheorem{myproof}{Proof}[section]
+\renewcommand\qedsymbol{$\blacksquare$}
+%\newtheorem{definition}{Definition}[section]
+%% Added for bibilography and title page
+% Using pandoc approach, convert to html and copy and paste back in
+
+\usepackage{marginnote}
+
+\usepackage{algorithmicx}
+
+%%% New package that I didn't know worked with lwarp
+%\usepackage{changebar}
+%\setlength{\changebarsep}{2ex}
+\usepackage[xindy]{glossaries}
+%\setglossarystyle{mcolalttree}
+%\input{glossary.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%	Command to ensure  glossary can be properly updated/printed %%%%%%%%%%
+%%%% makeindex -l -s ELEC360Notes.ist -o ELEC360Notes.gls ELEC360Notes.glo %%%%%%%%%
+%%%%	Use name of latex document								%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\makeglossaries
+
+\usepackage{moreverb}
+\usepackage{epigraph}
+\usepackage{csquotes}
+\usepackage{pgfplots}
+\usepackage{steinmetz}
+
+\definecolor{lightgray}{gray}{0.5}
+% \definecolor{myText}{HTML}{2B2B2B}
+\definecolor{fontColor}{HTML}{171717}
+\setlength{\parindent}{0pt}
+
+\makeindex
+
+\usepackage{listings}
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	%numbers=left,%
+	%numberstyle={\tiny \color{black}},% size of the numbers
+	%numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},  
+	%captionpos=b,
+	%caption={Matlab Code Snippet:},
+}
+\begin{document}
+\section{Assignment 1 Reduced}
+\subimport*{Assignments/A1/}{A1Reduced.tex}
+\subimport*{Assignments/A2/}{ELEC460A2Content.tex}
+
+\section{Assignment 3}
+\subimport*{Assignments/A3/}{ELEC460A3Work.tex}
+\section{Assignment 4}
+\subimport*{Assignments/A4/}{ELEC460A4.tex}
+
+\section{Assignment 5}
+\subimport*{Assignments/A5/}{ELEC460A5.tex}
+
+\section{Assignment 6}
+\subimport*{Assignments/A6/}{elec460A6.tex}
+
+\section{Assignment 7}
+\subimport*{Assignments/A7/}{ELEC460A7PrintHandIn.tex}
+
+\section{Assignment 8}
+\subimport*{Assignments/A8/}{ELEC460A8HandIn.tex}
+
+\section{Assignment 9}
+\subimport*{Assignments/A9/}{ELEC460A9.tex}
+\end{document}

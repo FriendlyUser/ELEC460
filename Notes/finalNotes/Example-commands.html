@@ -1,21 +1,36 @@
 
+
 <!DOCTYPE html>
+
 <html lang="en-US">
+
 <head>
+
 <meta charset="UTF-8" />
+
 <meta name="author" content="David Li" />
+
 <meta name="generator" content="LaTeX lwarp package" />
+
 <meta name="description" content="Control Theory Notes" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <!--[if lt IE 9]>
+
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
 <![endif]-->
+
 <title>ELEC 460 Course Notes — Example commands</title>
 <link rel="stylesheet" href="prism.css" type="text/css">
 <script src="prism.js" type="text/javascript"> </script>
+
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
 <!-- https://groups.google.com/forum/#!topic/
-                                      mathjax-users/jUtewUcE2bY -->
+                                            mathjax-users/jUtewUcE2bY -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        var seteqsectionDefault = {name: "", num: 0};
@@ -38,7 +53,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
              seteqsection = seteqsectionDefault;
              } else {
              if (!seteqsections["_"+n])
-                 seteqsections["_"+n] = {name:n, num:0};
+                  seteqsections["_"+n] = {name:n, num:0};
              seteqsection = seteqsections["_"+n];
              }
              AMS.number = seteqsection.num;
@@ -46,11 +61,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        mySetEqNumber: function (name) {
              var n = this.GetArgument(name);
              if (!n || !n.match(/^ *[0-9]+ *$/))
-                 n = ""; else n = parseInt(n)-1;
+                  n = ""; else n = parseInt(n)-1;
              <!-- $ syntax highlighting -->
              if (n === "" || n < 1)
-                 TEX.Error
-                 ("Argument to "+name+" should be a positive integer");
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
              AMS.number = n;
        }
        });
@@ -58,11 +73,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        TeX: {
              equationNumbers: {
              formatTag: function (n)
-                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
              formatID: function (n) {
-                 n = (seteqsection.name+'.'+n).replace
-                        (/[:"'<>&]/g,"").replace(/^\./,"");
-                 return 'mjx-eqn-' + n;
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
              }
              }
        }
@@ -91,7 +106,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        },
       TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
  });
- MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
  </script>
 
 
@@ -119,12 +134,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 </script>
 -->
 
-
 </head>
 <body>
 
 
-<nav class="topnavigation"><a href="index.html" class="linkhome"
+<a id="autopage-46"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
 >Home</a></nav>
 
 <header>
@@ -147,51 +161,51 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 >Home</a></p>
 
 
-<p><a href="index.html#autosec-10" class="tocchapter"
+<p><a href=" index.html#autosec-10" class="tocchapter"
 >Index</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-13" class="tocpart"
+<p><a href=" Control-Theory.html#autosec-13" class="tocpart"
 ><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-14" class="tocchapter"
+<p><a href=" Control-Theory.html#autosec-14" class="tocchapter"
 ><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
 
 
-<p><a href="Introduction-Review.html#autosec-18" class="tocchapter"
+<p><a href=" Introduction-Review.html#autosec-18" class="tocchapter"
 ><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
 
 
-<p><a href="Other-Useful-Concepts.html#autosec-30" class="tocchapter"
+<p><a href=" Other-Useful-Concepts.html#autosec-30" class="tocchapter"
 ><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
 
 
-<p><a href="Example-commands.html#autosec-47" class="tocchapter"
+<p><a href=" Example-commands.html#autosec-47" class="tocchapter"
 ><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
 
 
-<p><a href="Z-transform.html#autosec-71" class="tocchapter"
+<p><a href=" Z-transform.html#autosec-71" class="tocchapter"
 ><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
 
 
-<p><a href="Course-Work.html#autosec-78" class="tocpart"
+<p><a href=" Course-Work.html#autosec-78" class="tocpart"
 ><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
 
 
-<p><a href="Course-Work.html#autosec-79" class="tocchapter"
+<p><a href=" Course-Work.html#autosec-79" class="tocchapter"
 ><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-133" class="tocpart"
+<p><a href=" Back-Matter.html#autosec-153" class="tocpart"
 ><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-136" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >References</a></p>
 
 
-<p><a href="index.html#autosec-137" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >Glossary</a></p>
 
 
@@ -214,28 +228,29 @@ id="autopage-48"></a>
       <pre><code class = "language-matlab">
 
 
-           % M - file : prob7_17 . m
-           % M - file create a plot of the induced torque power
-           % converted power out and efficiency of the induction
-           % motor of Problem 7 -14 as a function of slip .
-           % First , initialize the values needed in this program .
-           r1 = 0.075; % Stator resistance
-           x1 = 0.170; % Stator reactance
-           r2 = 0.065; % Rotor resistance
-           x2 = 0.170; % Rotor reactance
-           xm = 7.2; % Magnetization branch reactance
-           v_phase = 440 / sqrt (3) ; % Phase voltage
-           n_sync = 3000; % Synchronous speed ( r / min )
-           w_sync = 314.2; % Synchronous speed ( rad / s )
-           p_mech = 1000; % Mechanical losses ( W )
-           p_core = 1100; % Core losses ( W )
-           p_misc = 150; % Miscellaneous losses ( W )
-           % Calculate the Thevenin voltage and impedance from Equations
-           % 7 -41 a and 7 -43.
-           v_th = v_phase * ( xm / sqrt ( r1 ^2 + ( x1 + xm ) ^2) ) ;
-           z_th = (( j * xm ) * ( r1 + j * x1 ) ) / ( r1 + j *( x1 + xm ) ) ;
-           r_th = real ( z_th ) ;
-           x_th = imag ( z_th ) ;
+
+          % M-file: prob7_17.m
+          % M-file create a plot of the induced torque power
+          % converted power out and efficiency of the induction
+          % motor of Problem 7-14 as a function of slip.
+          % First, initialize the values needed in this program.
+          r1 = 0.075; % Stator resistance
+          x1 = 0.170; % Stator reactance
+          r2 = 0.065; % Rotor resistance
+          x2 = 0.170; % Rotor reactance
+          xm = 7.2; % Magnetization branch reactance
+          v_phase = 440 / sqrt(3); % Phase voltage
+          n_sync = 3000; % Synchronous speed (r/min)
+          w_sync = 314.2; % Synchronous speed (rad/s)
+          p_mech = 1000; % Mechanical losses (W)
+          p_core = 1100; % Core losses (W)
+          p_misc = 150; % Miscellaneous losses (W)
+          % Calculate the Thevenin voltage and impedance from Equations
+          % 7-41a and 7-43.
+          v_th = v_phase * ( xm / sqrt(r1^2 + (x1 + xm)^2) );
+          z_th = ((j*xm) * (r1 + j*x1)) / (r1 + j*(x1 + xm));
+          r_th = real(z_th);
+          x_th = imag(z_th);
       </code>
 </pre>
 
@@ -251,29 +266,31 @@ id="autopage-49"></a>
       <pre><code class = "language-python">
 
 
-      # -* - coding : utf -8 -* -
+
+      # -*- coding: utf-8 -*-
       """
       Created on Sun Dec 31 09:50:49 2017
 
 
-      @author : David Li
-      Helper script to create lwarpnotes , latex file should be set to \ nonstopmode
+      @author: David Li
+      Helper script to create lwarpnotes, latex file should be set to
+            \nonstopmode
       """
 
 
-      import subprocess , os , sys
-      # consider using command line arguments to prompt the user for input if being
-            run from command line or hardcoded value if any arguements are passed
-            through .
-      if len ( sys . argv ) > 1:
-      inpu t_tex_ file = ' ELEC460Notes . tex '
-      else :
-      inpu t_tex_ file = input ( " Enter the tex name . " )
-      input_name , i np u t_ ex t en s io n = os . path . splitext ( input_ tex_fi le )
-      if os . path . isfile ( inpu t_tex_ file ) :
-      print ( ' Proceeding to produce : ' + input_name + '. pdf and ' + input_name
-            + ' _html ' + '\ n ' )
-      else :
+      import subprocess,os,sys
+      # consider using command line arguments to prompt the user for input
+            if being run from command line or hardcoded value if any
+            arguements are passed through.
+      if len(sys.argv) > 1:
+      input_tex_file = 'ELEC460Notes.tex'
+      else:
+      input_tex_file = input("Enter the tex name. ")
+      input_name, input_extension = os.path.splitext(input_tex_file)
+      if os.path.isfile(input_tex_file):
+      print('Proceeding to produce: ' + input_name + '.pdf and ' +
+            input_name +'_html' + '\n' )
+      else:
       </code>
 </pre>
 
@@ -292,8 +309,9 @@ id="autopage-50"></a>
 
 
 
+
       pdflatex file
-      pdflatex file_html . tex
+      pdflatex file_html.tex
       lwarpmk limages
       lwarpmk html
       lwarpmk pdftohtml
@@ -328,8 +346,9 @@ id="autopage-52"></a>
        <pre><code class = "language-latex">
 
 
-            Testing out latex commands
-            Tiks
+
+           Testing out latex commands
+           Tiks
        </code>
 </pre>
 
@@ -348,8 +367,9 @@ id="autopage-53"></a>
       <pre><code class = "language-bash">
 
 
-           Testing out latex commands
-           Tiks
+
+          Testing out latex commands
+          Tiks
       </code>
 </pre>
 
@@ -380,8 +400,8 @@ class="textup">4.5.0.1</span></span>.&nbsp; A lemma to go with my Theorem!</p>
 <li>
 
 <p><span class="amsthmnameplain">Theorem</span><span class="amsthmnumberplain"> <span
-class="textup">4.5.1</span></span>.&nbsp; <b>Circuits</b> A set \(\mathcal {D}(G)\) in dense in
-\(L^2(G)\), \(|\cdot |_0\).</p>
+class="textup">4.5.1</span></span>.&nbsp; <b>Circuits</b> A set \(\mathcal {D}(G)\) in dense in \(L^2(G)\),
+\(|\cdot |_0\).</p>
 
 
 </li>
@@ -396,12 +416,12 @@ id="autopage-56"></a>
 
 <figcaption>
 
-<p><a id="autoid-11"></a>Listing&nbsp;4.1:&nbsp;This is a caption </p>
-
+<p><a id="autoid-11"></a>Listing&nbsp;4.1:&nbsp;This is a caption</p>
 
 
 </figcaption>
 <pre><code class = "language-matlab">
+
 
 
 hmm
@@ -409,7 +429,6 @@ hmm
 </pre>
 
 <figcaption>
-
 </figcaption>
 
 <p>This is an example of a definition. A definition could be mathematical or it could define a concept.</p>
@@ -417,12 +436,12 @@ hmm
 
 <figcaption>
 
-<p><a id="autoid-12"></a>Listing&nbsp;4.2:&nbsp;This is a caption </p>
-
+<p><a id="autoid-12"></a>Listing&nbsp;4.2:&nbsp;This is a caption</p>
 
 
 </figcaption>
 <pre><code class = "language-matlab">
+
 
 
 foo bar = 5;
@@ -430,11 +449,9 @@ foo bar = 5;
 </pre>
 
 <figcaption>
-
 </figcaption>
-\tikzstyle{block}
-<pre              = [draw,
-     class="verbatim" >    fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
+<pre class="verbatim" >
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=4em]
 \tikzstyle{block2} = [draw, fill=blue!20, rectangle, minimum height=2em, minimum width=2em]
 \tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
 \tikzstyle{input} = [coordinate]
@@ -455,7 +472,6 @@ foo bar = 5;
 \draw [-] (y) |- (h) {} ;
 \draw [->] (h) -| node[pos=0.99] {$-$}   node [near end] {} (sum);
 \end{tikzpicture}
-
 </code>
 </pre>
 
@@ -473,7 +489,9 @@ foo bar = 5;
 
 <div class="qitem">
 
-<p>I recall seeing a package to make quotes</p>
+<p>I recall seeing a package to make quotes
+
+<p></p>
 
 
 <div class="epigraphsource">
@@ -520,9 +538,9 @@ denoted \(||\cdot ||\), \(E\) in \(\mathbb {R}^+=[0,+\infty [\) such that: </p>
 
 
 
-(4.1)                                       ||x|| = 0 ⇒ x = 0
-(4.2)                                       ||λx|| = |λ| · ||x||
-(4.3)                                       ||x + y|| ≤ ||x|| + ||y||
+                                            ||x|| = 0 ⇒ x = 0                                              (4.1)
+                                            ||λx|| = |λ| · ||x||                                           (4.2)
+                                            ||x + y|| ≤ ||x|| + ||y||                                      (4.3)
 
 
 
@@ -563,11 +581,11 @@ functions \(\varphi \) are: </p>
 <ul style="list-style-type:none">
 
 <li>
-<p>1. Bounded support \(G\);</p>
+<p>1.Bounded support \(G\);</p>
 
 </li>
 <li>
-<p>2. Infinitely differentiable;</p>
+<p>2.Infinitely differentiable;</p>
 
 </li>
 </ul>
@@ -650,8 +668,8 @@ properties are easily extended to \(\mathbb {K}=\mathbb {C}\).</p>
 
 <li>
 
-<p><span class="amsthmproofname">This is a proof.</span> Lwarp can solve my problems of creating good quality
-latex notes in html. <span class="theoremendmark">&#x2001;&#x2001;&#x2001;&#x220E;</span></p>
+<p><span class="amsthmproofname">This is a proof.</span>Lwarp can solve my problems of creating good quality
+latex notes in html. <span class="theoremendmark">&#x2001;&#x220E;</span></p>
 
 
 </li>

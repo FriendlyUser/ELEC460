@@ -1,0 +1,168 @@
+
+%% Creator David Li
+% Modified matlab xsl latex template file to suit needs
+% This LaTeX was auto-generated from an M-file by MATLAB.
+% To make changes, update the M-file and republish this document.
+
+\documentclass[12pt]{scrartcl}
+\nonstopmode
+
+\title{Matlab}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage[ocgcolorlinks]{hyperref}
+\usepackage{bookmark}
+\usepackage[hmargin=2cm,vmargin=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{booktabs}
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+% \definecolor{myText}{HTML}{2B2B2B}
+\definecolor{fontColor}{HTML}{171717}
+\setlength{\parindent}{0pt}
+
+\makeindex
+
+\usepackage{listings}
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\lstset{language=Matlab,%
+	%basicstyle=\color{red},
+	breaklines=true,%
+	morekeywords={matlab2tikz},
+	keywordstyle=\color{blue},%
+	morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+	identifierstyle=\color{black},%
+	stringstyle=\color{mylilas},
+	commentstyle=\color{mygreen},%
+	showstringspaces=false,%without this there will be a symbol in the places where there is a space
+	%numbers=left,%
+	%numberstyle={\tiny \color{black}},% size of the numbers
+	%numbersep=9pt, % this defines how far the numbers are from the text
+	emph=[1]{for,end,break},emphstyle=[1]\color{red}, %some words to emphasise
+	%emph=[2]{word1,word2}, emphstyle=[2]{style},  
+    captionpos=b,
+    caption={Matlab Code Snippet:},
+}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings}
+\tcbuselibrary{breakable}
+
+
+\newtcblisting[auto counter,number within=section*]{matlaboutput}[2][]{sharp corners, breakable,
+    fonttitle=\bfseries,colback=white, colframe=black!90, listing only, 
+    listing options={language=Matlab, showstringspaces=false, breakatwhitespace=true, breaklines=true, tabsize=4}, 
+    title=Matlab Output \thetcbcounter: #1} 
+
+\usepackage{fancyhdr} 
+\fancyhf{}
+\cfoot{\thepage}
+\pagestyle{fancy}
+
+\begin{document}
+
+\begin{center}
+	\hrule
+	\vspace{.4cm}
+	{\textbf { \large ELEC 460 --- Applied Electromagnetics and Photonics}}
+\end{center}
+{\textbf{Name:}\ David Li \hspace{\fill} \textbf{Student Number:} \ V00818631  \\
+{\textbf{Due Date:} Thursday, 11 January 2018, 11:30 AM \hspace{\fill} \textbf{Assignment}  1}\\
+\hrule
+
+    
+    
+\section*{ELEC 460 -- Control Theory II}
+      
+\tableofcontents
+\newpage
+
+
+\subsection*{B-6-11}
+
+
+
+        \begin{par}
+Finding the rank of the controlability matrix
+\end{par} \vspace{1em}
+\begin{lstlisting}[language = Matlab,frame=single,caption={}]
+syms T
+G = [1 T; 0 1]; H = [T^2/2; T]
+test = [H G*H]
+\end{lstlisting}
+
+ \begin{matlaboutput}{} 
+H =
+ 
+ T^2/2
+     T
+ 
+ 
+test =
+ 
+[ T^2/2, (3*T^2)/2]
+[     T,         T]
+ 
+\end{matlaboutput}
+    \begin{lstlisting}[language = Matlab,frame=single,caption={}]
+syms u1 u2
+J = [u1 0; ...
+     0  u2;]
+% p =  CHARPOLY(J)
+\end{lstlisting}
+
+ \begin{matlaboutput}{} 
+J =
+ 
+[ u1,  0]
+[  0, u2]
+ 
+\end{matlaboutput}
+    
+
+\subsection*{B-6-12}
+
+
+
+        \begin{par}
+Last question quick check
+\end{par} \vspace{1em}
+\begin{lstlisting}[language = Matlab,frame=single,caption={}]
+u1 = 0.787592+j*0.238241
+u2 = 0.787592-j*0.238241
+T  = 0.1
+K = [1/T^2*(1-u1-u2+u1*u2) 1/(2*T)*(3-u1-u2-u1*u2)]
+% testing = zpk([],[],1), can't figure out how to plot to verify, need open
+% loop transfer function
+\end{lstlisting}
+
+ \begin{matlaboutput}{}
+u1 =
+
+   0.7876 + 0.2382i
+
+
+u2 =
+
+   0.7876 - 0.2382i
+
+
+T =
+
+    0.1000
+
+
+K =
+
+   10.1876    3.7388
+
+\end{matlaboutput}
+    
+
+
+\end{document}
+    

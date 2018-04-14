@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Matlab</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Matlab</h1>
+</div>
+<hr />
+<p><span><strong>Name:</strong> David Li <strong>Student Number:</strong>  V00818631<br />
+</span> <span><strong>Due Date:</strong> February 27, 2018 <strong>Assignment</strong> 5</span><br />
+</p>
+<hr />
+<h3 id="problem-b-4-10" class="unnumbered">Problem B-4-10</h3>
+<p>Consider the control system shown in Figure 4-68. Design a suitable digital controller that includes an intergral control action. The design specficiations are that the damping <span class="math inline">\(\zeta\)</span> of the dominant closed-loop poles is 0.5 and that there be at least eight samples per cycle of damped sinusoidal oscillation. The sampling period is assumed to be 0.2 sec, or <span class="math inline">\(T=0.2\)</span>. After the digital controller is designed, determine the static velocity error constant <span class="math inline">\(K_v\)</span>.</p>
+<div class="figure">
+<embed src="Diagrams/block410.pdf" />
+<p class="caption">Figure 4-68<span data-label="fig:samplerblock413"></span></p>
+</div>
+<p>Let the PI controller be <span class="math inline">\(\displaystyle G_{PI}(z)=K_p+K_i\frac{1}{1-z^{-1}}=(K_p+K_i)\cfrac{z-\frac{K_p}{K_p-K_i}}{z-1}\)</span> and discretizing <span class="math inline">\(G(s)\)</span> <span class="math display">\[\begin{aligned}
+&amp; G_{PI}(z)G(z)=G_{PI}(z)\frac{\frac{13711\,z}{100000}+\frac{46027827}{500000000}}{\left(z-\frac{3679}{10000}\right)\,\left(z-\frac{8187}{10000}\right)}=(K_p+K_i)\cfrac{z-\frac{K_p}{K_p-K_i}}{z-1}\frac{0.13711\,z+0.092055654}{\left(z-0.3679\right)\,\left(z-0.8187\right)} \\
+&amp; \text{Pick } \frac{\omega_d}{\omega_s}=0.1, \quad \text{since } \zeta=0.5, |z| = \exp \left(\frac{-2\pi \zeta}{\sqrt{1-\zeta^2}}\frac{\omega_d}{\omega_s} \right)=0.6958 \quad \angle z = \frac{360^\circ}{10}= 36^\circ %, z=0.5629 + j0.4090\end{aligned}\]</span></p>
+<div class="figure">
+<embed src="Diagrams/poleszeroes.pdf" />
+<p class="caption">Diagram illustrating that the zero <span class="math inline">\(z-\frac{K_p}{K_p-K_i}\)</span> must contribute <span class="math inline">\(125.1015^\circ\)</span><span data-label="fig:polesZeroess"></span></p>
+</div>
+<p><span class="math display">\[\begin{aligned}
+&amp; \angle \left.\left(z-\frac{K_p}{K_p-K_i}\right)\right\vert_{z=0.5629 +j0.4090} = 125.1015^\circ \quad \cfrac{0.409}{0.5629-\frac{K_p}{K_p-K_i}} = \tan(125.1015^\circ)\end{aligned}\]</span></p>
+<p><span class="math display">\[\begin{aligned}
+&amp; (K_p+K_i)\left|\frac{\left(z+0.6714\right)\,\left(0.13711\,z-0.028038995\right)}{(z-0.3679)\,(z-0.8187)}\right|_{z=0.5629 +j0.4090}=1 \\ \notag
+&amp;
+0.44357786197\,K_i+0.44357786197\,K_p=1.0\end{aligned}\]</span></p>
+<h3 id="problem-b-4-15" class="unnumbered">Problem B-4-15</h3>
+<p>Using the Bode diagram approach in the <span class="math inline">\(w\)</span> plane, design a digital controller for the system shown in Figure 4-72. The design specifications are that the phase margin be <span class="math inline">\(50^\circ\)</span>, the gain margin be at least 10 dB, and the static velocity error constant <span class="math inline">\(K_v\)</span> be 20 <span class="math inline">\(\text{sec}^{-1}\)</span>. The sampling period is assumed to be 0.1 sec, or <span class="math inline">\(T = 0.1\)</span>. After the controller is designed, calculate the number of samples per cycle of damped sinusoidal oscillation.</p>
+</body>
+</html>

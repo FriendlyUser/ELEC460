@@ -1,19 +1,34 @@
 
+
 <!DOCTYPE html>
+
 <html lang="en-US">
+
 <head>
+
 <meta charset="UTF-8" />
+
 <meta name="author" content="David Li" />
+
 <meta name="generator" content="LaTeX lwarp package" />
+
 <meta name="description" content="Control Theory Notes" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 <!--[if lt IE 9]>
+
 <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
 <![endif]-->
+
 <title>ELEC 460 Course Notes — Control Theory</title>
+
 <link rel="stylesheet" type="text/css" href="lwarp_sagebrush.css" />
+
+
 <!-- https://groups.google.com/forum/#!topic/
-                                      mathjax-users/jUtewUcE2bY -->
+                                            mathjax-users/jUtewUcE2bY -->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        var seteqsectionDefault = {name: "", num: 0};
@@ -36,7 +51,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
              seteqsection = seteqsectionDefault;
              } else {
              if (!seteqsections["_"+n])
-                 seteqsections["_"+n] = {name:n, num:0};
+                  seteqsections["_"+n] = {name:n, num:0};
              seteqsection = seteqsections["_"+n];
              }
              AMS.number = seteqsection.num;
@@ -44,11 +59,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        mySetEqNumber: function (name) {
              var n = this.GetArgument(name);
              if (!n || !n.match(/^ *[0-9]+ *$/))
-                 n = ""; else n = parseInt(n)-1;
+                  n = ""; else n = parseInt(n)-1;
              <!-- $ syntax highlighting -->
              if (n === "" || n < 1)
-                 TEX.Error
-                 ("Argument to "+name+" should be a positive integer");
+                  TEX.Error
+                  ("Argument to "+name+" should be a positive integer");
              AMS.number = n;
        }
        });
@@ -56,11 +71,11 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        TeX: {
              equationNumbers: {
              formatTag: function (n)
-                 {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
+                  {return "("+(seteqsection.name+"."+n).replace(/^\./,"")+")"},
              formatID: function (n) {
-                 n = (seteqsection.name+'.'+n).replace
-                        (/[:"'<>&]/g,"").replace(/^\./,"");
-                 return 'mjx-eqn-' + n;
+                  n = (seteqsection.name+'.'+n).replace
+                      (/[:"'<>&]/g,"").replace(/^\./,"");
+                  return 'mjx-eqn-' + n;
              }
              }
        }
@@ -89,7 +104,7 @@ MathJax.Hub.Register.StartupHook("TeX AMSmath Ready",function () {
        },
       TeX: {extensions: ["AMSmath.js","AMSsymbols.js", "sinuitx.js"]}
  });
- MathJax.Ajax.config.path['siunitx']         = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
+ MathJax.Ajax.config.path['siunitx']               = 'http://rawgit.com/burnpanck/MathJax-siunitx/master/';
  </script>
 
 
@@ -117,12 +132,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 </script>
 -->
 
-
 </head>
 <body>
 
 
-<nav class="topnavigation"><a href="index.html" class="linkhome"
+<a id="autopage-12"></a> <nav class="topnavigation"><a href="index.html" class="linkhome"
 >Home</a></nav>
 
 <header>
@@ -145,51 +159,51 @@ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-
 >Home</a></p>
 
 
-<p><a href="index.html#autosec-10" class="tocchapter"
+<p><a href=" index.html#autosec-10" class="tocchapter"
 >Index</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-13" class="tocpart"
+<p><a href=" Control-Theory.html#autosec-13" class="tocpart"
 ><span class="sectionnumber">I</span>&#x2001;Control Theory</a></p>
 
 
-<p><a href="Control-Theory.html#autosec-14" class="tocchapter"
+<p><a href=" Control-Theory.html#autosec-14" class="tocchapter"
 ><span class="sectionnumber">1</span>&#x2001;Course Information</a></p>
 
 
-<p><a href="Introduction-Review.html#autosec-18" class="tocchapter"
+<p><a href=" Introduction-Review.html#autosec-18" class="tocchapter"
 ><span class="sectionnumber">2</span>&#x2001;Introduction and Review</a></p>
 
 
-<p><a href="Other-Useful-Concepts.html#autosec-30" class="tocchapter"
+<p><a href=" Other-Useful-Concepts.html#autosec-30" class="tocchapter"
 ><span class="sectionnumber">3</span>&#x2001;Other Useful Concepts</a></p>
 
 
-<p><a href="Example-commands.html#autosec-47" class="tocchapter"
+<p><a href=" Example-commands.html#autosec-47" class="tocchapter"
 ><span class="sectionnumber">4</span>&#x2001;Example commands</a></p>
 
 
-<p><a href="Z-transform.html#autosec-71" class="tocchapter"
+<p><a href=" Z-transform.html#autosec-71" class="tocchapter"
 ><span class="sectionnumber">5</span>&#x2001;Z-transform</a></p>
 
 
-<p><a href="Course-Work.html#autosec-78" class="tocpart"
+<p><a href=" Course-Work.html#autosec-78" class="tocpart"
 ><span class="sectionnumber">II</span>&#x2001;Course Work</a></p>
 
 
-<p><a href="Course-Work.html#autosec-79" class="tocchapter"
+<p><a href=" Course-Work.html#autosec-79" class="tocchapter"
 ><span class="sectionnumber">6</span>&#x2001;Assignments</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-133" class="tocpart"
+<p><a href=" Back-Matter.html#autosec-153" class="tocpart"
 ><span class="sectionnumber">III</span>&#x2001;Back Matter</a></p>
 
 
-<p><a href="Back-Matter.html#autosec-136" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >References</a></p>
 
 
-<p><a href="index.html#autosec-137" class="tocchapter"
+<p><a href=" Back-Matter.html#autosec-156" class="tocchapter"
 >Glossary</a></p>
 
 
@@ -224,31 +238,31 @@ discrete systems. Controllability, observability and zero input stability analys
 <ul style="list-style-type:none">
 
 <li>
-<p>— Apply z-Transform to solve difference</p>
+<p>—Apply z-Transform to solve difference</p>
 
 </li>
 <li>
-<p>— Discuss description of discrete systems using transfer functions and state-space description</p>
+<p>—Discuss description of discrete systems using transfer functions and state-space description</p>
 
 </li>
 <li>
-<p>— Analyse stability, transient and steady state system response</p>
+<p>—Analyse stability, transient and steady state system response</p>
 
 </li>
 <li>
-<p>— Demonstrate the digital implementation of lead and lag compensators</p>
+<p>—Demonstrate the digital implementation of lead and lag compensators</p>
 
 </li>
 <li>
-<p>— Analyse controllability and observability for systems in state space description</p>
+<p>—Analyse controllability and observability for systems in state space description</p>
 
 </li>
 <li>
-<p>— Design linear state feedback controllers using pole-placement</p>
+<p>—Design linear state feedback controllers using pole-placement</p>
 
 </li>
 <li>
-<p>— Apply state observers for state estimation of linear systems in state-space description</p>
+<p>—Apply state observers for state estimation of linear systems in state-space description</p>
 
 </li>
 </ul>
@@ -278,7 +292,6 @@ discrete systems. Controllability, observability and zero input stability analys
 <p>Table&nbsp;1.1:&nbsp;Course Assessment</p>
 
 
-
 </figcaption>
 
 </figure>
@@ -297,7 +310,7 @@ discrete systems. Controllability, observability and zero input stability analys
 </dd>
 <dt>Bode Plot</dt>
 <dd>
-<p>— frequency domain plot that contains \(\phi _m\), and \(K\), see <a href="index.html#??">bode
+<p>— frequency domain plot that contains \(\phi _m\), and \(K\), see <a href=" index.html#??">bode
 diagram</a>.</p>
 
 </dd>

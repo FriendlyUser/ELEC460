@@ -1,0 +1,275 @@
+<hr />
+<p><span><strong>Name:</strong> David Li <strong>Student Number:</strong>  V00818631<br />
+</span> <span><strong>Due Date:</strong> February 27, 2018 <strong>Assignment</strong> 5</span><br />
+</p>
+<hr />
+<h3 id="problem-b-4-10" class="unnumbered">Problem B-4-10</h3>
+<p>Consider the control system shown in Figure 4-68. Design a suitable digital controller that includes an intergral control action. The design specficiations are that the damping <span class="math inline"><em>ζ</em></span> of the dominant closed-loop poles is 0.5 and that there be at least eight samples per cycle of damped sinusoidal oscillation. The sampling period is assumed to be 0.2 sec, or <span class="math inline"><em>T</em> = 0.2</span>. After the digital controller is designed, determine the static velocity error constant <span class="math inline"><em>K</em><sub><em>v</em></sub></span>.</p>
+<div class="figure">
+<embed src="Diagrams/block410.pdf" />
+<p class="caption">Figure 4-68<span data-label="fig:samplerblock413"></span></p>
+</div>
+<p>Let the PI controller be <span class="math inline">$\displaystyle G_{PI}(z)=K_p+K_i\frac{1}{1-z^{-1}}=(K_p+K_i)\cfrac{z-\frac{K_p}{K_p-K_i}}{z-1}$</span> and discretizing <span class="math inline"><em>G</em>(<em>s</em>)</span> <br /><span class="math display">$$\begin{aligned}
+&amp; G_{PI}(z)G(z)=G_{PI}(z)\frac{\frac{13711\,z}{100000}+\frac{46027827}{500000000}}{\left(z-\frac{3679}{10000}\right)\,\left(z-\frac{8187}{10000}\right)}=(K_p+K_i)\cfrac{z-\frac{K_p}{K_p-K_i}}{z-1}\frac{0.13711\,z+0.092055654}{\left(z-0.3679\right)\,\left(z-0.8187\right)} \\
+&amp; \text{Pick } \frac{\omega_d}{\omega_s}=0.1, \quad \text{since } \zeta=0.5, |z| = \exp \left(\frac{-2\pi \zeta}{\sqrt{1-\zeta^2}}\frac{\omega_d}{\omega_s} \right)=0.6958 \quad \angle z = \frac{360^\circ}{10}= 36^\circ %, z=0.5629 + j0.4090\end{aligned}$$</span><br /></p>
+<div class="figure">
+<embed src="Diagrams/poleszeroes.pdf" />
+<p class="caption">Diagram illustrating that the zero <span class="math inline">$z-\frac{K_p}{K_p-K_i}$</span> must contribute <span class="math inline">125.1015<sup>∘</sup></span><span data-label="fig:polesZeroess"></span></p>
+</div>
+<p><br /><span class="math display">$$\begin{aligned}
+&amp; \angle \left.\left(z-\frac{K_p}{K_p-K_i}\right)\right\vert_{z=0.5629 +j0.4090} = 125.1015^\circ \quad \cfrac{0.409}{0.5629-\frac{K_p}{K_p-K_i}} = \tan(125.1015^\circ)\end{aligned}$$</span><br /></p>
+<p><br /><span class="math display">$$\begin{aligned}
+&amp;
+\frac{K_p}{K_p-K_i}= 0.850366 \label{eq:kipi1} \\
+\notag &amp; (K_p+K_i)\left|\frac{\left(z+0.6714\right)\,\left(0.13711\,z-0.028038995\right)}{(z-0.3679)\,(z-0.8187)}\right|_{z=0.5629 +j0.4090}=1 \\ 
+&amp;
+0.44357786197\,K_i+0.44357786197\,K_p=1.0 \label{eq:kipi2} \end{aligned}$$</span><br /></p>
+<p>Solving and leads to <span class="math inline"><em>K</em><sub><em>i</em></sub> = 0.33733</span> and <span class="math inline"><em>K</em><sub><em>p</em></sub> = 1.9171</span>.</p>
+<p><br /><span class="math display">$$G_{PI}G(z)=2.254396\cfrac{z-0.850366}{z-1}\frac{0.13711\,(z+0.6714)}{\left(z-0.3679\right)\,\left(z-0.8187\right)}$$</span><br /> <br /><span class="math display">$$\begin{aligned}
+&amp; K_v = \lim\limits_{z \rightarrow 1} \frac{z-1}{z \ T} G_{PI}G(z) = \frac{1}{0.2(1)} \frac{0.149634(0.13711(1.6714))}{(0.6321)(0.1813)}=1.496119\end{aligned}$$</span><br /></p>
+<h3 id="problem-b-4-15" class="unnumbered">Problem B-4-15</h3>
+<p>Using the Bode diagram approach in the <span class="math inline"><em>w</em></span> plane, design a digital controller for the system shown in Figure 4-72. The design specifications are that the phase margin be <span class="math inline">50<sup>∘</sup></span>, the gain margin be at least 10 dB, and the static velocity error constant <span class="math inline"><em>K</em><sub><em>v</em></sub></span> be 20 <span class="math inline">sec<sup>−1</sup></span>. The sampling period is assumed to be 0.1 sec, or <span class="math inline"><em>T</em> = 0.1</span>. After the controller is designed, calculate the number of samples per cycle of damped sinusoidal oscillation.</p>
+<div class="figure">
+<embed src="Diagrams/block415.pdf" />
+<p class="caption">Figure 4-72<span data-label="fig:samplerblock415"></span></p>
+</div>
+<p><br /><span class="math display">$$\begin{aligned}
+&amp; G(z) = \mathcal{Z} \left[\frac{1-e^{-sT}}{s}\frac{K}{s(s+0.5)}\right]=0.004918K \frac{z+0.9835}{(z-1)(z-0.9512)}\end{aligned}$$</span><br /></p>
+<div class="sourceCode" language="Matlab"><pre class="sourceCode matlab"><code class="sourceCode matlab">Tts =
+<span class="fl">0.1000</span>
+n0d =
+<span class="fl">0</span>    <span class="fl">0.0049</span>    <span class="fl">0.0048</span>
+d0d =
+<span class="fl">1.0000</span>   -<span class="fl">1.9512</span>    <span class="fl">0.9512</span>
+n1 =
+-<span class="fl">0.0000</span>   -<span class="fl">0.0496</span>    <span class="fl">0.9999</span>
+d1 =
+<span class="fl">1.0000</span>    <span class="fl">0.5002</span>         <span class="fl">0</span>
+Enter the vectors of the numerator (numo) and denominator (denum) pol.
+Start with the highest order term. Ex: [<span class="fl">1</span> <span class="fl">2</span> <span class="fl">3</span>] corr. (s^<span class="fl">2</span> + <span class="fl">2</span> s + <span class="fl">3</span>)
+Enter numo: n1
+numo =
+-<span class="fl">0.0000</span>   -<span class="fl">0.0496</span>    <span class="fl">0.9999</span>
+Enter deno: d1
+deno =
+<span class="fl">1.0000</span>    <span class="fl">0.5002</span>         <span class="fl">0</span>
+OPEN-LOOP SYSTEM (without Compensator): 
+
+syso =
+
+-<span class="fl">2.079e-05</span> s^<span class="fl">2</span> - <span class="fl">0.04958</span> s + <span class="fl">0.9999</span>
+-----------------------------------
+s^<span class="fl">2</span> + <span class="fl">0.5002</span> s
+
+Continuous-time transfer function.
+
+Enter desired Kv: <span class="fl">20</span>
+Kv =
+<span class="fl">20</span>
+Phase margin: <span class="fl">0.075368</span> at the Gain crossover frq: <span class="fl">3.1629</span>
+Gain margin: <span class="fl">0.072557</span> in dB at the  Phase crossover frq:<span class="fl">3.1765</span>
+Zeros and poles of closed-loop system without compensator:
+zeros =
+<span class="fl">1.0e+03</span> *
+-<span class="fl">2.4042</span>
+<span class="fl">0.0200</span>
+poles =
+-<span class="fl">0.0021</span> + <span class="fl">3.1633i</span>
+-<span class="fl">0.0021</span> - <span class="fl">3.1633i</span>
+Damping: <span class="fl">0.00065785</span>, Overshoot: <span class="fl">0.99794</span>, Settling time: <span class="fl">1922.2057</span>
+Press CR to continue
+Press CR to continue
+Phase lead in degrees: <span class="fl">63</span>
+a =
+<span class="fl">0.0576</span>
+Kc =
+<span class="fl">173.5888</span>
+Warning: The closed-loop system is unstable. 
+&gt; In ctrlMsgUtils.warning (line <span class="fl">25</span>)
+In DynamicSystem/margin (line <span class="fl">65</span>)
+In margin (line <span class="fl">100</span>)
+In lead_c (line <span class="fl">122</span>)
+In ass_5 (line <span class="fl">30</span>) 
+At wc= <span class="fl">6.6156</span> the gain of the transfer function is equal to sqrt(a).
+Use this frequency as the new gain crossover frequency wc
+Enter wc, the new gain crossover frequency : <span class="fl">6.6</span>
+Compensator: 
+
+num/den = 
+
+s + <span class="fl">1.5845</span>
+----------
+s + <span class="fl">27.491</span>
+Compensator gain: <span class="fl">173.5888</span>
+Compensated Open-Loop trsf. function;
+
+num/den = 
+
+-<span class="fl">0.0036096</span> s^<span class="fl">3</span> - <span class="fl">8.6119</span> s^<span class="fl">2</span> + <span class="fl">159.9316</span> s + <span class="fl">275.0225</span>
+---------------------------------------------------
+s^<span class="fl">3</span> + <span class="fl">27.9912</span> s^<span class="fl">2</span> + <span class="fl">13.7511</span> s
+Phase margin: <span class="fl">49.1318</span> at the Gain crossover frq: <span class="fl">6.6301</span>
+Gain margin: <span class="fl">9.7093</span> in dB at the  Phase crossover frq:<span class="fl">22.5492</span>
+Zeros and poles of Closed-loop system with compensator:
+zeros =
+<span class="fl">1.0e+03</span> *
+-<span class="fl">2.4042</span>
+<span class="fl">0.0200</span>
+-<span class="fl">0.0016</span>
+poles =
+-<span class="fl">8.7376</span> + <span class="fl">7.9666i</span>
+-<span class="fl">8.7376</span> - <span class="fl">7.9666i</span>
+-<span class="fl">1.9742</span> + <span class="fl">0.0000i</span>
+Closed loop system has a real dominant pole
+Press CR to continue
+Press CR to continue
+Enter &gt;<span class="fl">0</span> to continue) :<span class="fl">0</span>
+decision =
+<span class="fl">0</span>
+n2 =
+-<span class="fl">0.0036</span>   -<span class="fl">8.6119</span>  <span class="fl">159.9316</span>  <span class="fl">275.0225</span>
+d2 =
+<span class="fl">1.0000</span>   <span class="fl">27.9912</span>   <span class="fl">13.7511</span>         <span class="fl">0</span>
+Enter the vectors of the numerator (numo) and denominator (denum) pol.
+Start with the highest order term. Ex: [<span class="fl">1</span> <span class="fl">2</span> <span class="fl">3</span>] corr. (s^<span class="fl">2</span> + <span class="fl">2</span> s + <span class="fl">3</span>)
+Both vectors should have the same length
+Enter numo: n2
+numo =
+-<span class="fl">0.0036</span>   -<span class="fl">8.6119</span>  <span class="fl">159.9316</span>  <span class="fl">275.0225</span>
+Enter deno: d2
+deno =
+<span class="fl">1.0000</span>   <span class="fl">27.9912</span>   <span class="fl">13.7511</span>         <span class="fl">0</span>
+OPEN-LOOP SYSTEM (without Compensator): 
+
+num/den = 
+
+-<span class="fl">0.0036096</span> s^<span class="fl">3</span> - <span class="fl">8.6119</span> s^<span class="fl">2</span> + <span class="fl">159.9316</span> s + <span class="fl">275.0225</span>
+---------------------------------------------------
+s^<span class="fl">3</span> + <span class="fl">27.9912</span> s^<span class="fl">2</span> + <span class="fl">13.7511</span> s
+Enter desired Kv: <span class="fl">20</span>
+Kv =
+<span class="fl">20</span>
+Phase margin &quot;Pm&quot; at the Gain crossover frq. &quot;Wcp&quot; 
+Pm =
+<span class="fl">49.1318</span>
+Wcp =
+<span class="fl">6.6301</span>
+Gain margin &quot;Gm&quot; in dB at the  Phase crossover frq &quot; Wcg&quot; 
+Gm =
+<span class="fl">9.7093</span>
+Wcg =
+<span class="fl">22.5492</span>
+Zeros and poles of closed-loop system without compensator:
+zeros =
+<span class="fl">1.0e+03</span> *
+-<span class="fl">2.4042</span>
+<span class="fl">0.0200</span>
+-<span class="fl">0.0016</span>
+poles =
+-<span class="fl">8.7376</span> + <span class="fl">7.9666i</span>
+-<span class="fl">8.7376</span> - <span class="fl">7.9666i</span>
+-<span class="fl">1.9742</span> + <span class="fl">0.0000i</span>
+Settling time &quot;sett&quot; and zeta &quot;zeta&quot; of same closed-loop system:
+sett =
+<span class="fl">0.4578</span>
+zeta =
+<span class="fl">0.7390</span>
+Press CR to continue
+Press CR to continue
+Desired Phase margin in degrees (include an allowance for the effect of lag compensator): <span class="fl">52</span>
+Phase margin is &quot;degree&quot; degrees at w = &quot;Wcg&quot;.
+degree =
+<span class="fl">52</span>
+Wcg =
+<span class="fl">5.6755</span>
+Try another Phase margin? (y/n): n
+Enter wc, new gain crossover frequency: <span class="fl">5.6</span>
+wc =
+<span class="fl">5.6000</span>
+Location of the zero of the compensator: <span class="fl">0.4</span>
+beta =
+<span class="fl">1.1876</span>
+bTt =
+<span class="fl">0.3368</span>
+Kc =
+<span class="fl">0.8421</span>
+Compensator: 
+
+num/den = 
+
+s + <span class="fl">0.4</span>
+-----------
+s + <span class="fl">0.33683</span>
+Compensator gain Kc: 
+Kc =
+<span class="fl">0.8421</span>
+Compensated Open-Loop trsf. function;
+
+num/den = 
+
+-<span class="fl">0.0030395</span> s^<span class="fl">4</span> - <span class="fl">7.2531</span> s^<span class="fl">3</span> + <span class="fl">131.7724</span> s^<span class="fl">2</span> + <span class="fl">285.4567</span> s + <span class="fl">92.635</span>
+----------------------------------------------------------------
+s^<span class="fl">4</span> + <span class="fl">28.328</span> s^<span class="fl">3</span> + <span class="fl">23.1793</span> s^<span class="fl">2</span> + <span class="fl">4.6317</span> s
+Phase margin &quot;Pm&quot; at the Gain crossover frq. &quot;Wcp&quot; 
+Pm =
+<span class="fl">51.6267</span>
+Wcp =
+<span class="fl">5.6046</span>
+Gain margin &quot;Gm&quot; in dB at the  Phase crossover frq &quot; Wcg&quot; 
+Gm =
+<span class="fl">11.1797</span>
+Wcg =
+<span class="fl">22.4811</span>
+Zeros and poles of Closed-loop system with compensator:
+zeros =
+<span class="fl">1.0e+03</span> *
+-<span class="fl">2.4042</span>
+<span class="fl">0.0200</span>
+-<span class="fl">0.0016</span>
+-<span class="fl">0.0004</span>
+poles =
+-<span class="fl">9.2826</span> + <span class="fl">4.5388i</span>
+-<span class="fl">9.2826</span> - <span class="fl">4.5388i</span>
+-<span class="fl">2.1736</span> + <span class="fl">0.0000i</span>
+-<span class="fl">0.4004</span> + <span class="fl">0.0000i</span>
+Settling time &quot;sett&quot; and zeta &quot;zeta&quot; of compens. closed-loop system:
+sett =
+<span class="fl">0.4309</span>
+zeta =
+<span class="fl">0.8984</span>
+Press CR to continue
+Press CR to continue
+Enter decision ( &gt;<span class="fl">0</span> to continue) :<span class="fl">0</span>
+decision =
+<span class="fl">0</span>
+n3 =
+-<span class="fl">0.0030</span>   -<span class="fl">7.2531</span>  <span class="fl">131.7724</span>  <span class="fl">285.4567</span>   <span class="fl">92.6350</span>
+d3 =
+<span class="fl">1.0000</span>   <span class="fl">28.3280</span>   <span class="fl">23.1793</span>    <span class="fl">4.6317</span>         <span class="fl">0</span>
+Discrete Compensator): 
+
+num/den = 
+
+<span class="fl">66.6418</span> z^<span class="fl">2</span> - <span class="fl">120.8858</span> z + <span class="fl">54.6277</span>
+----------------------------------
+z^<span class="fl">2</span> - <span class="fl">0.80914</span> z - <span class="fl">0.15251</span>
+Open loop compensated discrete system transfer function
+
+num/den = 
+
+<span class="fl">0.32774</span> z^<span class="fl">3</span> - <span class="fl">0.27218</span> z^<span class="fl">2</span> - <span class="fl">0.31605</span> z + <span class="fl">0.26423</span>
+---------------------------------------------------
+z^<span class="fl">4</span> - <span class="fl">2.7603</span> z^<span class="fl">3</span> + <span class="fl">2.3775</span> z^<span class="fl">2</span> - <span class="fl">0.47208</span> z - <span class="fl">0.14507</span>
+Closed loop zeros and poles of discrete system
+zeros =
+-<span class="fl">0.9835</span>
+<span class="fl">0.9608</span>
+<span class="fl">0.8532</span>
+poles =
+<span class="fl">0.9607</span> + <span class="fl">0.0000i</span>
+<span class="fl">0.8039</span> + <span class="fl">0.0000i</span>
+<span class="fl">0.3340</span> + <span class="fl">0.2068i</span>
+<span class="fl">0.3340</span> - <span class="fl">0.2068i</span>
+Number of samples per cycle:
+ans =
+<span class="fl">11.3339</span></code></pre></div>
